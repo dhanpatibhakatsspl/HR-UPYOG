@@ -175,7 +175,7 @@
 					<tr>
 
 						<td class="greybox" colspan="2"><a
-							href="/services/EGF/resources/app/formats/Budget_Data_Template.xls"><s:text name="lbl.download.template"/> </a></td>
+							href="/services/EGF/resources/app/formats/Budget_Data_Templates.xls"><s:text name="lbl.download.template"/> </a></td>
 					</tr>
 				</table>
 				<div  class="text-left error-msg" style="color: #C00000">&nbsp;* <s:text name="msg.only.xls.files.supprted"/>.</span></div>

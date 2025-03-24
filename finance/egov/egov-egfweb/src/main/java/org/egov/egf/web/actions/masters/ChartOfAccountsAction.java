@@ -277,14 +277,13 @@ public class ChartOfAccountsAction extends BaseFormAction {
             populateAccountCodePurpose();
     		return EDIT;
     	}
+        setPurposeOnCoa();
         updateOnly = true;
         populateAccountDetailType();
         model.setIsActiveForPosting(activeForPosting);
         model.setFunctionReqd(functionRequired);
         model.setBudgetCheckReq(budgetCheckRequired);
         dropdownData.put("mappedAccountDetailTypeList", accountDetailType);
-        setPurposeOnCoa();
-        populateAccountCodePurpose();
         chartOfAccountsService.persist(model);
         saveCoaDetails(model);
         populateAccountDetailTypeList();
@@ -702,7 +701,6 @@ public class ChartOfAccountsAction extends BaseFormAction {
             model.setGlcode(generatedGlcode.concat(newGlcode));
             model.setMajorCode(model.getGlcode().substring(0, majorCodeLength));
             setPurposeOnCoa();
-            populateAccountCodePurpose();
             model.setIsActiveForPosting(activeForPosting);
             populateAccountDetailType();
             chartOfAccountsService.persist(model);

@@ -227,8 +227,7 @@ public class BudgetLoadAction extends BaseFormAction {
                             + budgetInXlsFileName.split("\\.")[1];
             }
 
-            final FileStoreMapper originalFileStore = fileStoreService.store(budgetInXls,
-                    budgetOriginalFileName,
+            final FileStoreMapper originalFileStore = fileStoreService.store(budgetInXls,budgetOriginalFileName,
                     budgetInXlsContentType, FinancialConstants.MODULE_NAME_APPCONFIG,false);
 
             persistenceService.persist(originalFileStore);
