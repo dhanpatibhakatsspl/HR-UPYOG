@@ -133,21 +133,10 @@
 					<td width="20%" class="greybox">&nbsp;</td>
 					<td width="10%" class="greybox"><strong><s:text
 								name="chartOfAccount.name" />:<span class="mandatory1">*</span></strong></td>
-					
-				<!-- 	<td class="greybox"><input type="text" id="model.name"
+					<td class="greybox"><input type="text" id="model.name"
 						name="model.name" onKeyDown="textCounter('model.name',100)"
 						onKeyUp="textCounter('model.name',100)"
-						onblur="textCounter('model.name',100)" /></td> -->
-					
-						<td class="greybox"><select id="model.name" name="model.name">
-							<option value="">-- Select Supplier/Contractor --</option>
-							<%-- <s:iterator value="dropdownList" var="item">
-								<option value="${item.name}">${item.name}</option>
-							</s:iterator> --%>
-					</select></td>
-						
-						
-						
+						onblur="textCounter('model.name',100)" /></td>
 					<td width="10%" class="greybox"><strong><s:text
 								name="chartOfAccount.description" />:</strong></td>
 					<td width="22%" class="greybox"><input type="text"
