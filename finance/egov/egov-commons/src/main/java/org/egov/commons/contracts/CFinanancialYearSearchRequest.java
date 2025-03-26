@@ -48,6 +48,11 @@
 
 package org.egov.commons.contracts;
 
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
+import org.egov.infra.persistence.validator.annotation.DateFormat;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -62,12 +67,36 @@ public class CFinanancialYearSearchRequest {
 	@SafeHtml
 	private String finYearRange;
 
+	@NotNull
+	@DateFormat
+	private Date startingDate;   //added by raju
+
+	@NotNull
+	@DateFormat
+	private Date endingDate;    //added by raju
+
 	public String getFinYearRange() {
 		return finYearRange;
 	}
 
 	public void setFinYearRange(String finYearRange) {
 		this.finYearRange = finYearRange;
+	}
+
+	public Date getStartingDate() {
+		return startingDate;
+	}
+
+	public void setStartingDate(Date startingDate) {
+		this.startingDate = startingDate;
+	}
+
+	public Date getEndingDate() {
+		return endingDate;
+	}
+
+	public void setEndingDate(Date endingDate) {
+		this.endingDate = endingDate;
 	}
 
 }

@@ -78,6 +78,27 @@
 								<form:errors path="finYearRange" cssClass="error-msg" />
 							</div>
 						</div>
+						<!-- code added by raju  start date range-->
+						<div class="form-group">
+						    <label class="col-sm-5 control-label text-right">
+						        <spring:message code="lbl.start.date" />
+						    </label>
+						    <div class="col-sm-3 add-margin">
+						        <form:input path="startingDate" id="startingDate" type="date" cssClass="form-control" required="required"/>
+						        <form:errors path="startingDate" cssClass="error-msg" />
+						    </div>
+						</div>
+						
+						<div class="form-group">
+						    <label class="col-sm-5 control-label text-right">
+						        <spring:message code="lbl.end.date" />
+						    </label>
+						    <div class="col-sm-3 add-margin">
+						        <form:input path="endingDate" id="endingDate" type="date" cssClass="form-control" required="required"/>
+						        <form:errors path="endingDate" cssClass="error-msg" />
+						    </div>
+						</div>
+						<!-- date Range ended -->
 						<input type="hidden" id="mode" name="mode" value="${mode}" />
 						<div class="form-group">
 							<div class="text-center">
