@@ -99,6 +99,7 @@
 						    </div>
 						</div>
 						<!-- date Range ended -->
+						
 						<input type="hidden" id="mode" name="mode" value="${mode}" />
 						<div class="form-group">
 							<div class="text-center">
