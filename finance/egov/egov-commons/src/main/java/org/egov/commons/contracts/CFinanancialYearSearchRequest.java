@@ -50,11 +50,9 @@ package org.egov.commons.contracts;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-
-import org.egov.infra.persistence.validator.annotation.DateFormat;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 
@@ -67,13 +65,12 @@ public class CFinanancialYearSearchRequest {
 	@SafeHtml
 	private String finYearRange;
 
-	@NotNull
-	@DateFormat
-	private Date startingDate;   //added by raju
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd") 
+	private Date startingDate;				 // added by raju
 
-	@NotNull
-	@DateFormat
-	private Date endingDate;    //added by raju
+	@DateTimeFormat(pattern = "yyyy-MM-dd") 
+	private Date endingDate; 				// added by raju
 
 	public String getFinYearRange() {
 		return finYearRange;
