@@ -63,8 +63,7 @@
 					</div>
 					<div class="panel-body">
 						<div class="form-group">
-							<label class="col-sm-5 control-label text-right"><spring:message
-									code="lbl.finyearrange" /> </label>
+							<label class="col-sm-5 control-label text-right"><spring:message code="lbl.finyearrange" /> </label>
 							<div class="col-sm-3 add-margin">
 								<form:select path="finYearRange" id="finYearRange"
 									class="form-control">
@@ -141,6 +140,7 @@
 		} else {
 			e.preventDefault();
 		}
+
 		  // Validate that Start Date is not greater than End Date
 	    function validateEndDate() {
 	        let startDateStr = document.getElementById('startDate').value;
@@ -168,8 +168,8 @@
 
 	  
 	    // Auto-clear financial year when date fields are selected
-/* 	    $('#startDate, #endDate').change(function () {
- */	    
+// 	    $('#startDate, #endDate').change(function () {
+     
  		$('#startDate').change(function () {
 
      		clearFinancialYear();
