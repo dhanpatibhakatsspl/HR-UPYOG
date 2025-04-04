@@ -24,6 +24,7 @@ const styles = {
     width: "21px",
     margin: 0,
     position: "relative",
+    left: "12px",
   },
   arrowIconStyle: {
     right: "-10px",
@@ -37,7 +38,7 @@ const styles = {
     paddingLeft: 0,
   },
   inputIconStyle: {
-    margin: "0",
+    margin: "0px 0px 0px 9px",
     bottom: "15px",
     top: "auto",
     right: "6px",
