@@ -23,10 +23,12 @@ import org.egov.egf.ptscheduler.DemandRegisterReportClient;
 import org.egov.egf.ptscheduler.Mdmstenants;
 import org.egov.egf.ptscheduler.ReceiptRegisterClient;
 import org.egov.egf.web.adaptor.GrantAmountTransferJsonAdaptor;
+import org.egov.infra.microservice.utils.ApplicationConfigManager;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -47,8 +49,8 @@ import com.google.gson.GsonBuilder;
 @Controller
 @RequestMapping(value = "/grantsfund") // Update the context path to match the URL
 public class GrantAmountTransferController {
-
-	private static final String url = "http://uat.sparrowsoftech.info/egov-mdms-service/v1/_search";
+  
+	  
 	private static final String requestBody = "{\"MdmsCriteria\":{\"tenantId\":\"pg\",\"moduleDetails\":[{\"moduleName\":\"tenant\",\"masterDetails\":[{\"name\":\"tenants\"},{\"name\":\"citymodule\"}]}]},\"RequestInfo\":{\"apiId\":\"Rainmaker\",\"msgId\":\"1714627621738|en_IN\",\"plainAccessRequest\":{}}}";
 	private static final String STR_GRANTAMOUNTTRANSFER = "grantAmountTransfer";
 
@@ -61,6 +63,8 @@ public class GrantAmountTransferController {
 	private static final String CANCELLATION_SUCCESS = "grantAmountTransfer-cancellationsuccess";
 	private static String schema = "";
 
+	@Autowired
+	private ApplicationConfigManager applicationConfigManager;
 	@Autowired
 	private GrantAmountTransferService grantAmountTransferService;
 	@Autowired
@@ -123,7 +127,7 @@ public class GrantAmountTransferController {
 	@RequestMapping(value = "/ulbcodeMapping/{ulbName}", method = RequestMethod.POST)
 	@ResponseBody
 	public List<String> populateBank(@PathVariable("ulbName") String ulbName) {
-		Map<String, String> responseMap = grantAmountTransferService.getTenantApi(url, requestBody);
+		Map<String, String> responseMap = grantAmountTransferService.getTenantApi(applicationConfigManager.getEgovMdmsSerUrlForTenantSearch(), requestBody);
 		String ulbCode = responseMap.get(ulbName);
 		schema = ulbCode.substring(ulbCode.indexOf('.') + 1);
 		System.out.println(schema);
@@ -149,7 +153,8 @@ public class GrantAmountTransferController {
 
 	private void prepareNewForm(Model model) {
 
-		Map<String, String> responseMap = grantAmountTransferService.getTenantApi(url, requestBody);
+		System.out.println(applicationConfigManager.getEgovMdmsSerUrlForTenantSearch()+"////////");
+		Map<String, String> responseMap = grantAmountTransferService.getTenantApi(applicationConfigManager.getEgovMdmsSerUrlForTenantSearch(), requestBody);
 		model.addAttribute("ulbMap", responseMap);
 		List<Bankaccount> bankAccounts = bankAccountRepository.findByIsactiveTrue();
 		System.out.println("Bank accounts: " + bankAccounts);
