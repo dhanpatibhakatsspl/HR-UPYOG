@@ -2741,5 +2741,8 @@ public class BudgetDetailService extends PersistenceService<BudgetDetail, Long> 
     public BudgetDetail getBudgetDetailByReferencceBudget(final String uniqueNo, final Long budgetId) {
         return budgetDetailRepository.findByReferenceBudget(uniqueNo, budgetId);
     }
+    public BigDecimal getAllBudgetAmountByDepartment(String department) {
+    	return budgetDetailRepository.getAllBudgetAmountByDepartment(department);
+    }
 
 }
