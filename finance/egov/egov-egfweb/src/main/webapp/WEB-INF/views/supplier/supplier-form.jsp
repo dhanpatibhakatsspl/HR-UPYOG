@@ -48,6 +48,7 @@
 
 
 <div class="form-group">
+	<h1>Test </h1>
 	<label class="col-sm-2 control-label text-right" for="code"> <spring:message code="supplier.code" /><span class="mandatory"></span> 
 	</label>
 	<div class="col-sm-3 add-margin">
