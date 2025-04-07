@@ -110,8 +110,8 @@ public class ApplicationConfigManager {
     @Value("${egov.services.collection.service.payment.modulename.workflow:}")
     private String collSerPaymentModuleNameWorkflow;
 
-	/* Author : Megha 27/03/2025 */
-    @Value("${egov.mdms.service.endpoint.Tenant.search:}")
+	/* Author : Megha 07/03/2025 */
+    @Value("${egov.services.master.mdms.search.url:}")
     private String egovMdmsSerUrlForTenantSearch;
     
     public String getEgovHrmsSerHost(){

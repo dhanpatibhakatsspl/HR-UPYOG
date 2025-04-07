@@ -127,7 +127,9 @@ public class GrantAmountTransferController {
 	@RequestMapping(value = "/ulbcodeMapping/{ulbName}", method = RequestMethod.POST)
 	@ResponseBody
 	public List<String> populateBank(@PathVariable("ulbName") String ulbName) {
-		Map<String, String> responseMap = grantAmountTransferService.getTenantApi(applicationConfigManager.getEgovMdmsSerUrlForTenantSearch(), requestBody);
+        String url = applicationConfigManager.getEgovMdmsSerHost()+applicationConfigManager.getEgovMdmsSerUrlForTenantSearch();
+
+		Map<String, String> responseMap = grantAmountTransferService.getTenantApi(url, requestBody);
 		String ulbCode = responseMap.get(ulbName);
 		schema = ulbCode.substring(ulbCode.indexOf('.') + 1);
 		System.out.println(schema);
