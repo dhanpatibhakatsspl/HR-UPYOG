@@ -381,7 +381,6 @@ public class AjaxCommonController {
 		
 		PurchaseOrder puOrder = purchaseOrderService.getByOrderNumber(purchaseOrder);
 		BigDecimal budgetAmount = budgetDetailService.getAllBudgetAmountByDepartment(puOrder.getDepartment());
-		System.out.println("]]]]]]]]]]]]]]]]]]]"+budgetAmount);
 		 return new BudgetResponse(budgetAmount);
 	}
     
@@ -391,10 +390,15 @@ public class AjaxCommonController {
 		
 		WorkOrder orderNumber = workOrderService.getByOrderNumber(workOrder);
 		BigDecimal budgetAmount = budgetDetailService.getAllBudgetAmountByDepartment(orderNumber.getDepartment());
-		System.out.println("]]]]]]]]]]]]]]]]]]]"+budgetAmount);
 		 return new BudgetResponse(budgetAmount);
 	}
 	
-	
+    @GetMapping("/getBudgetAmountByDepartment")
+    @ResponseBody
+	public BudgetResponse getBudgetByDepartment(@RequestParam("department") String department) {
+		
+		BigDecimal budgetAmount = budgetDetailService.getAllBudgetAmountByDepartment(department);
+		 return new BudgetResponse(budgetAmount);
+	}
 
 }
