@@ -384,6 +384,17 @@ public class AjaxCommonController {
 		System.out.println("]]]]]]]]]]]]]]]]]]]"+budgetAmount);
 		 return new BudgetResponse(budgetAmount);
 	}
+    
+    @GetMapping("/getBudgetAmountFromWorkOrder")
+    @ResponseBody
+	public BudgetResponse getBudgetAmountFromWorkOrder(@RequestParam("workOrder") String workOrder) {
+		
+		WorkOrder orderNumber = workOrderService.getByOrderNumber(workOrder);
+		BigDecimal budgetAmount = budgetDetailService.getAllBudgetAmountByDepartment(orderNumber.getDepartment());
+		System.out.println("]]]]]]]]]]]]]]]]]]]"+budgetAmount);
+		 return new BudgetResponse(budgetAmount);
+	}
+	
 	
 
 }
