@@ -158,9 +158,10 @@ import net.sf.jasperreports.engine.JRException;
 })
 public class BudgetReportAction extends BaseFormAction {
 	
+	
 	private static final String requestBody = "{\"MdmsCriteria\":{\"tenantId\":\"pg\",\"moduleDetails\":[{\"moduleName\":\"tenant\",\"masterDetails\":[{\"name\":\"tenants\"},{\"name\":\"citymodule\"}]}]},\"RequestInfo\":{\"apiId\":\"Rainmaker\",\"msgId\":\"1714627621738|en_IN\",\"plainAccessRequest\":{}}}";  // by Megha 27/03/2025
     private static final String DEPTWISEPATH = "/reports/templates/departmentWiseBudgetReport.jasper";
-    private static final String ULBWISEPATH = "/reports/templates/ulbWiseBudgetReport.jasper";
+    private static final String ULBWISEPATH = "/reports/templates/ulbwise.jasper";
     private static final String FUNCTIONWISEPATH = "/reports/templates/budgetReportFunctionwise.jasper";
     private static final String WORKINGCOPYFORFINALAPPROVER = "/reports/templates/budgetReportWorkingCopyForFinalApprover.jasper";
     private static final String WORKINGCOPYWITHALLMOUNTS = "/reports/templates/budgetReportWorkingCopy.jasper";
@@ -298,7 +299,9 @@ public class BudgetReportAction extends BaseFormAction {
         setRelatedEntitesOn();
         majorCodeLength = Integer.valueOf(getAppConfigValueFor(Constants.EGF, "coa_majorcode_length"));
         // by Megha 27/03/2025
-        Map<String, String> responseMap = grantAmountTransferService.getTenantApi(applicationConfigManager.getEgovMdmsSerUrlForTenantSearch(), requestBody);
+        String url = applicationConfigManager.getEgovMdmsSerHost()+applicationConfigManager.getEgovMdmsSerUrlForTenantSearch();
+      
+        Map<String, String> responseMap = grantAmountTransferService.getTenantApi(url, requestBody);
 
         List<Map.Entry<String, String>> ulbList = new ArrayList<>(responseMap.entrySet());
         addDropdownData("ulbList", ulbList);
