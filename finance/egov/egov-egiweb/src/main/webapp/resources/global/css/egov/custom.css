@@ -1666,8 +1666,10 @@ label.error {
 }
 .btn-primary {
   color: #ffffff;
-  background-color: #fe7a51;
-  border-color: #fe7a51;
+    background-color: forestgreen;
+    border-color: forestgreen;
+    padding: 10px 20px;
+    font-weight: bold;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -1700,8 +1702,8 @@ label.error {
 .btn-default.active.focus,
 .open > .dropdown-toggle.btn-default.focus {
   color: #ffffff;
-  background-color: #fe7a51;
-  border-color: #fe7a51;
+ background-color: #1a4e04;
+ border-color: #1a4e04;
   outline: none;
   opacity: 0.8;
 }
@@ -1815,7 +1817,7 @@ label.error {
 }
 .panel-primary .panel-heading {
   background-color: #ffffff;
-  border-color: #ffffff;
+  /*border-color: #ffffff;*/
   padding: 15px;
   position: relative;
 }
