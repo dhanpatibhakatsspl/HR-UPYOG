@@ -566,7 +566,7 @@ function loadBudgetAmount(purchaseOrder){
                 console.log("Response from server:", response);
            
             if (response == null || response.budgetAmount == null) {
-                alert('Please Upload Budget !!!');
+                $('#budgetAmount').text(0.0);
             } else {
                 $('#budgetAmount').text(response.budgetAmount);
             }
