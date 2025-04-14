@@ -155,8 +155,9 @@ public class GrantAmountTransferController {
 
 	private void prepareNewForm(Model model) {
 
-		System.out.println(applicationConfigManager.getEgovMdmsSerUrlForTenantSearch()+"////////");
-		Map<String, String> responseMap = grantAmountTransferService.getTenantApi(applicationConfigManager.getEgovMdmsSerUrlForTenantSearch(), requestBody);
+		String url = applicationConfigManager.getEgovMdmsSerHost()+applicationConfigManager.getEgovMdmsSerUrlForTenantSearch();
+		System.out.println(url+"//////////");
+		Map<String, String> responseMap = grantAmountTransferService.getTenantApi(url, requestBody);
 		model.addAttribute("ulbMap", responseMap);
 		List<Bankaccount> bankAccounts = bankAccountRepository.findByIsactiveTrue();
 		System.out.println("Bank accounts: " + bankAccounts);
