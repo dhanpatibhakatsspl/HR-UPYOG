@@ -217,6 +217,8 @@ label.error {
 .mandatory1 {
   font-weight: normal;
   color: red;
+  text-indent: 10px;
+    margin-top: 18px;
 }
 /*LESS - Functions*/
 .oldbuttonsection div.buttonbottom {
@@ -793,7 +795,7 @@ label.error {
   vertical-align: top;
   padding: 20px;
   width: 100%;
-  padding-bottom: 70px;
+ 
 }
 .page-container .main-content .file-ellipsis {
   white-space: nowrap;
@@ -1428,7 +1430,7 @@ label.error {
   margin-right: 5px;
   background-color: forestgreen;
   border-color: forestgreen;
-  padding: 10px 20px;
+  padding: 6px 12px;
   height: inherit;
 }
 .page-container .main-content div.formmainbox input.buttonsubmit.normal,
@@ -1452,9 +1454,9 @@ label.error {
   font-family: semibold;
   font-size: 16px;
   font-weight: bold;
-  color: rgb(0, 0, 0);
-  padding: 15px 15px;
-  background: #ffffff;
+  color: #fff;
+  padding: 8px 15px;
+  background: #34495E;
   border-color: #337ab7 !important;
   border-left: 5px solid;
   border-bottom: solid 1px;
@@ -1487,15 +1489,13 @@ label.error {
   height:inherit;
   border-radius: 3px;
   background-color: forestgreen;
-    border-color: forestgreen;
-    padding: 10px 20px;
+  border-color: forestgreen;
   margin-right: 5px;
 }
 .page-container .main-content input.buttonsubmit.normal,
 .page-container .main-content input.button {
      background-color: #fff;
     border-color: forestgreen;
-    padding: 10px 20px;
     font-weight: bold;
     color: forestgreen;
     border: 1px solid;
@@ -1529,7 +1529,9 @@ label.error {
 }
 .page-container .main-content .yui-skin-sam .yui-dt th {
   color: #ffffff;
-  background: #f2851f;
+  background: #34495E;
+    font-weight: bold;
+    padding: 5px 0px 5px 0px;
 }
 .page-container .main-content .yui-skin-sam .yui-dt td {
   border-right: 1px solid #E9E9E9;
@@ -1680,7 +1682,6 @@ label.error {
   color: #ffffff;
     background-color: forestgreen;
     border-color: forestgreen;
-    padding: 10px 20px;
     font-weight: bold;
 }
 .btn-primary:hover,
@@ -1828,16 +1829,16 @@ label.error {
   padding-bottom: 15px;
 }
 .panel-primary .panel-heading {
-  background-color: #ffffff;
+  background-color: #34495E;
   /*border-color: #ffffff;*/
-  padding: 15px;
+  padding: 8px 15px;
   position: relative;
 }
 .panel-primary .panel-heading .panel-title {
   font-weight: normal;
   font-family: regular;
   font-size: 19px;
-  color: #000000;
+  color: #fff;
   text-align: left;
 }
 .panel-primary .panel-heading .history-icon {
