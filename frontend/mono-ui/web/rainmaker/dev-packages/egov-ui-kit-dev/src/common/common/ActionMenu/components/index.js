@@ -25,9 +25,11 @@ const styles = {
     margin: 0,
     position: "relative",
     left: "12px",
+    top: "-3px",
   },
   arrowIconStyle: {
     right: "-10px",
+    top: "-3px",
   },
   defaultMenuItemStyle: {
     display: "flex",
