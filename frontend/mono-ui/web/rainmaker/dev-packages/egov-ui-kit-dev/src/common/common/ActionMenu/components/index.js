@@ -40,6 +40,7 @@ const styles = {
     paddingLeft: 0,
   },
   inputIconStyle: {
+    // margin: "0",
     margin: "0px 0px 0px 9px",
     bottom: "15px",
     top: "auto",

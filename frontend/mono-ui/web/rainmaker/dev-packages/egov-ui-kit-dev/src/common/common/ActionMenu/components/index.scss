@@ -8,7 +8,6 @@
 
 .whiteColor {
   color: white !important;
-
 }
 
 .pointerCursor {
@@ -31,11 +30,11 @@
 
 
 @media only screen and (min-width: 768px) {
-
   .sideMenuItem{border-bottom: #556f8b solid 1px;
     border-top: #0d1218 solid 1px;
     height: 43px;
   }
+
   .sideMenuItem:hover,
   .sideMenuItem.selected {
     background-color: #486480;
