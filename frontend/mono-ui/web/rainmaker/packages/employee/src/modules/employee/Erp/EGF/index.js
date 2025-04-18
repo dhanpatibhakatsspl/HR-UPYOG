@@ -30,7 +30,6 @@ class EGFFinance extends Component {
      // Preparing finance subdomain url using the above environment name and the domain url
      subdomainurl = !!(finEnv) ? "-" + finEnv + "." + domainurl : "." + domainurl;
      erp_url = loc.protocol + "//" + getTenantId().split(".")[1] + subdomainurl + menuUrl;
- 
     return (
       <div>
         <iframe name="erp_iframe" id="erp_iframe" height={winheight} width="100%" />
