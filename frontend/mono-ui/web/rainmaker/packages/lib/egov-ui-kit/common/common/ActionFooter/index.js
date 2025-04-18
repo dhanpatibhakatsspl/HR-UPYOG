@@ -1,0 +1,53 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _components = require("components");
+
+var _translationNode = require("../../../utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
+require("./index.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ActionFooter = function ActionFooter(_ref) {
+  var label1 = _ref.label1,
+      label2 = _ref.label2,
+      primaryAction = _ref.primaryAction,
+      secondaryAction = _ref.secondaryAction;
+
+  return _react2.default.createElement(
+    "div",
+    { className: "col-xs-12 wizard-footer", style: { textAlign: "right" } },
+    _react2.default.createElement(
+      "div",
+      { className: "col-xs-12", style: { float: "right", padding: 0 } },
+      label1 && _react2.default.createElement(_components.Button, {
+        label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: label1, color: "#fe7a51" }),
+        labelStyle: { letterSpacing: 0.7, padding: 0, color: "#fe7a51" },
+        buttonStyle: { border: "1px solid #fe7a51" },
+        style: { marginRight: 45, maxWidth: "30%" },
+        onClick: secondaryAction
+
+      }),
+      _react2.default.createElement(_components.Button, {
+        label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: label2 }),
+        style: { maxWidth: "30%" },
+        backgroundColor: "#fe7a51",
+        labelStyle: { letterSpacing: 0.7, color: "#fff" },
+        buttonStyle: { border: 0 },
+        onClick: primaryAction
+      })
+    )
+  );
+};
+
+exports.default = ActionFooter;
