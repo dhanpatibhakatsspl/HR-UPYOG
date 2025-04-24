@@ -69,5 +69,8 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
     
     @Query(value = "SELECT MAX(id) FROM Contractor")
     Long findMaxId();
+    
+    @Query(value = "SELECT nextval('SEQ_EGF_CONTRACTOR')", nativeQuery = true)
+    Long getNextContractorSequence();
 
 }
