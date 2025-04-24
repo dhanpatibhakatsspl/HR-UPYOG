@@ -125,6 +125,7 @@ public class WorkOrderController {
 		model.addAttribute("funds", fundService.findAllActiveAndIsnotleaf());
 		model.addAttribute("departments", microserviceUtils.getDepartments());
 		model.addAttribute("contractors", contractorService.getAllActiveEntities(null));
+		model.addAttribute("orderNumberGenerationAuto",workOrderService.generateWorkOrderNumber());
 	}
 
 	@PostMapping(value = "/newform")

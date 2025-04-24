@@ -139,10 +139,7 @@ public class PurchaseOrderController {
 		model.addAttribute("funds", fundService.findAllActiveAndIsnotleaf());
 		model.addAttribute("departments", microserviceUtils.getDepartments());
 		model.addAttribute("suppliers", supplierService.getAllActiveEntities(null));
-		
-		String po = purchaseOrderService.generatePurchaseOrderNumber();
-		model.addAttribute("orderNumberGenerationAuto",po);
-		
+		model.addAttribute("orderNumberGenerationAuto",purchaseOrderService.generatePurchaseOrderNumber());
 	}
 	
 	@GetMapping(value = "/ajax/getAccountCodeAndName")
