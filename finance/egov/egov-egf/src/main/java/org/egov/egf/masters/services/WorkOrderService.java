@@ -47,10 +47,12 @@
  */
 package org.egov.egf.masters.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -276,6 +278,31 @@ public class WorkOrderService implements EntityTypeService {
 	public List<? extends org.egov.commons.utils.EntityType> getEntitiesById(List<Long> idsList)
 			throws ValidationException {
 		return Collections.emptyList();
+	}
+	
+	public synchronized String generateWorkOrderNumber() {
+
+		String financialYear = getFfinancialYear();
+	    Long nextOrderSeq = Optional.ofNullable(workOrderRepository.getNextSeqNo()).orElse(0L) + 1;   
+		String orderNumber = "WO/001/" + financialYear + "/"+ String.format("%04d", nextOrderSeq);
+		return orderNumber;
+
+		
+	}
+
+	private static String getFfinancialYear() {
+		LocalDate today = LocalDate.now();
+		int year = today.getYear();
+		int month = today.getMonthValue();
+
+		String financialYear;
+		if (month >= 4) {
+			// Financial year starts from April
+			financialYear = String.format("%02d", year % 100) + "-" + String.format("%02d", (year + 1) % 100);
+		} else {
+			financialYear = String.format("%02d", (year - 1) % 100) + "-" + String.format("%02d", year % 100);
+		}
+		return financialYear;
 	}
 
 }

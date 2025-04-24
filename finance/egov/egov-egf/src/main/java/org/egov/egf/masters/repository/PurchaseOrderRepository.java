@@ -76,5 +76,8 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
 	
 	@Query("SELECT MAX(po.id) FROM PurchaseOrder po")
     Long findMaxId();
+	
+	@Query(value = "SELECT nextval('seq_egf_purchaseorder')", nativeQuery = true)
+    Long getNextSeqNo();
 
 }

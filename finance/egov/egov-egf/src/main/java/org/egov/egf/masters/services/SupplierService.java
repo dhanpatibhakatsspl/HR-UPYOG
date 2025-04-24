@@ -53,6 +53,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -209,20 +210,12 @@ public class SupplierService implements EntityTypeService {
 		return Collections.emptyList();
 	}
 	
+	
 	@Transactional
-	public String fetchLastId() {
-		
-	    Long lastId =  supplierRepository.findMaxId()+1;
-	    String supCode;
-	    if(lastId != null) {
-	    	if(lastId < 1000) 
-	    		supCode = "Sup/001/"+String.format("%04d", lastId);
-	    	else
-	    		supCode = "Sup/001/"+lastId;
-	    }
-	    else
-	    	supCode = "Sup/001/0001";
-	    return  supCode;
+	public String supplierCode() {
+	    Long nextSeq = Optional.ofNullable(supplierRepository.getNextSupplierSequence()).orElse(0L) + 1;
+	    String supCode = "Sup/001/" + String.format("%04d", nextSeq);
+	    return supCode;
 	}
 	
 	// Adding drop down for detail code By Harsh

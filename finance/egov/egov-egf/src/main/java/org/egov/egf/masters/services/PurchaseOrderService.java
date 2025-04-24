@@ -52,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -324,21 +325,16 @@ public class PurchaseOrderService implements EntityTypeService {
 
 	}
 
+
+	
 	public synchronized String generatePurchaseOrderNumber() {
 
 		String financialYear = getFfinancialYear();
+	    Long nextOrderSeq = Optional.ofNullable(purchaseOrderRepository.getNextSeqNo()).orElse(0L) + 1;   
+		String orderNumber = "PO/001/" + financialYear+ "/" + String.format("%04d", nextOrderSeq);
+		return orderNumber;
 
-		Long latestOrderNumber = getLastPurchaseOrderNumber();
-
-		if (latestOrderNumber != null) {
-
-			String orderNumber = "PO/001/" + financialYear + "/" + "0000" + (latestOrderNumber + 1);
-
-			return orderNumber;
-
-		} else {
-			return "PO/001/" + financialYear + "/" + "00001";
-		}
+		
 	}
 
 	private static String getFfinancialYear() {
@@ -356,9 +352,7 @@ public class PurchaseOrderService implements EntityTypeService {
 		return financialYear;
 	}
 
-	public Long getLastPurchaseOrderNumber() {
-		return purchaseOrderRepository.findMaxId();
-	}
+//	
 	
 	
 	
