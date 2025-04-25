@@ -146,17 +146,38 @@ function loadToAccNum(branch) {
 }
 
 function populatefromNarration(accnumObj) {
-
 	var accnum = accnumObj.options[accnumObj.selectedIndex].value;
 	var bankbranchObj = document.getElementById('fromBankId');
 	var bankbranchId = bankbranchObj.options[bankbranchObj.selectedIndex].value;
 	var index = bankbranchId.indexOf("-");
 	var branchId = bankbranchId.substring(index + 1, bankbranchId.length);
 	var csrfToken = document.getElementById('csrfTokenValue').value;
-	var url = '../voucher/common-loadAccNumNarration.action?accnum=' + accnum+'&_csrf='+csrfToken
+	var url = '../voucher/common-loadAccNumNarration.action?accnum=' + accnum+'&_csrf='+csrfToken  
 			+ '&branchId=' + branchId;
+			
+	/*======================= Heera Added =======================*/
+	var postTypeFrom = {
+		success: function(response) {
+			console.log("Response received: ", response.responseText);
+	
+			var narrationField = document.getElementById('fromAccnumnar'); // or 'fromAccnumnar' if this is for the 'to' side
+			if (narrationField) {
+				narrationField.value = response.responseText;
+			} else {
+				console.error("Element with id 'fromAccnumnar' not found.");
+			}
+		},
+		failure: function(response) {
+			console.error("AJAX request failed");
+			console.log("Status: " + response.status);
+			console.log("Response: " + response.responseText);
+		}
+	};
+	/*======================= Heera Added =======================*/
+
 	YAHOO.util.Connect.asyncRequest('POST', url, postTypeFrom, null);
 }
+
 function populatetoNarration(accnumObj) {
 
 	var accnum = accnumObj.options[accnumObj.selectedIndex].value;
@@ -167,6 +188,27 @@ function populatetoNarration(accnumObj) {
 	var csrfToken = document.getElementById('csrfTokenValue').value;
 	var url = '../voucher/common-loadAccNumNarration.action?accnum=' + accnum+'&_csrf='+csrfToken
 			+ '&branchId=' + branchId;
+	
+	/*======================= Heera Added =======================*/
+	var postTypeTo = {
+		success: function(response) {
+			console.log("Response received: ", response.responseText);
+	
+			var narrationField = document.getElementById('toAccnumnar'); // or 'toAccnumnar' if this is for the 'to' side
+			if (narrationField) {
+				narrationField.value = response.responseText;
+			} else {
+				console.error("Element with id 'toAccnumnar' not found.");
+			}
+		},
+		failure: function(response) {
+			console.error("AJAX request failed");
+			console.log("Status: " + response.status);
+			console.log("Response: " + response.responseText);
+		}
+	};
+	/*======================= Heera Added =======================*/
+		
 	YAHOO.util.Connect.asyncRequest('POST', url, postTypeTo, null);
 
 }
