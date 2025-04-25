@@ -58,29 +58,45 @@ public class MSCommController {
     @Autowired
     private InboxRenderServiceDelegate<StateAware> inboxRenderServiceDelegate;
 
-    @GetMapping(value = "/depratments")
+    @GetMapping(value = "/departments") // Edited Heera
     @ResponseBody
     public List<Department> getDetapartments() {
         return microserviceUtils.getDepartments();
     }
-
+    
+//	============================== Modified by Heera  start ========================
 	@GetMapping(value = "/designations")
 	@ResponseBody
 	public List<Designation> getDesignations(@RequestParam Map<String, String> params) {
-		final List<String> workflowDesignations = new ArrayList<>();
-		if (!SELECT.equals(params.get("departmentRule").trim())) {
-			final WorkFlowMatrix wfmatrix = workflowService.getWfMatrix(params.get("type"),
-					params.get("departmentRule").trim(), null, params.get("additionalRule"), params.get("currentState"),
-					params.get("pendingAction"));
-			if (wfmatrix.getCurrentDesignation() != null) {
-				workflowDesignations.addAll(Arrays.asList(wfmatrix.getCurrentDesignation().split(",")));
-			}
-			return microserviceUtils.getDesignations().stream()
-					.filter(desig -> workflowDesignations.contains(desig.getName())).collect(Collectors.toList());
-		}
-		return Collections.emptyList();
-	}
+		//old
+//		final List<String> workflowDesignations = new ArrayList<>();
+//		
+//		if (!SELECT.equals(params.get("departmentRule").trim())) {
+//			final WorkFlowMatrix wfmatrix = workflowService.getWfMatrix(params.get("stateType"),
+//					params.get("departmentRule").trim(), null, params.get("additionalRule"), params.get("currentState"),
+//					params.get("pendingAction"));
+//			
+//			
+//			if (wfmatrix.getCurrentDesignation() != null) {
+//				workflowDesignations.addAll(Arrays.asList(wfmatrix.getCurrentDesignation().split(",")));
+//			}
+//			return microserviceUtils.getDesignations().stream()
+//					.filter(desig -> workflowDesignations.contains(desig.getName())).collect(Collectors.toList());
+//		}
+//		return Collections.emptyList();
+		
+		// new
+		String deptCode = params.get("approvalDepartment");
 
+	    List<String> designationCodes = microserviceUtils.getDesignationCodesByDepartment(deptCode);
+	    return microserviceUtils.getDesignationsByCodes(designationCodes);
+		
+
+//		return microserviceUtils.getDesignations(); 
+	}
+//	============================== Modified by Heera  end ========================
+	
+	
 	@GetMapping(value = "/approvers/{deptId}/{desgId}")
 	@ResponseBody
 	public List<EmployeeInfo> getApprovers(@PathVariable(name = "deptId") @SafeHtml String deptId,

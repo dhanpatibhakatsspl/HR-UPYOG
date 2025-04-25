@@ -51,6 +51,12 @@
 <head>
 <%@ include file="/includes/taglibs.jsp"%>
 <%@ page language="java"%>
+
+<!-- ========================== Added By Heera ================================ -->
+<script src="https://yui-s.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="https://yui-s.yahooapis.com/2.9.0/build/connection/connection-min.js"></script>
+<!-- ========================== Added By Heera ================================ -->
+
 <script
         src="<cdn:url value='/resources/app/js/i18n/jquery.i18n.properties.js?rnd=${app_release_no}' context='/services/EGF'/>"></script>
 <script type="text/javascript"
