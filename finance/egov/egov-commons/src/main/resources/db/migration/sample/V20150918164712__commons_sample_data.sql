@@ -26,93 +26,15 @@ INSERT INTO eg_uom (id, uomcategoryid, uom, narration, conv_factor, baseuom, las
 -----------------START-------------------
 INSERT INTO eg_chairperson (id, name, fromdate, todate, active, createdby, createddate, lastmodifieddate, lastmodifiedby, version) VALUES (1, 'Mr. XXX Chiar Person', '2015-08-28', '2016-08-27', true, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, 0);
 ------------------END---------------------
+INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (1, '1', 'Allahabad UP Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
+
 
 -----------------START--------------------
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (1, '1', 'Allahabad UP Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (2, '2', 'Andhra Pradesh Grameena Vikas Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (3, '3', 'Andhra Pragathi Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (4, '4', 'Arunachal Pradesh Rural Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (5, '5', 'Aryavart Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (6, '6', 'Assam Gramin Vikash Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (7, '7', 'Baitarani Gramya Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (8, '8', 'Ballia –Etawah Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (9, '9', 'Bangiya Gramin Vikash Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (10, '10', 'Baroda Gujarat Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (11, '11', 'Baroda Rajasthan Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (12, '12', 'Baroda Uttar Pradesh Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (13, '13', 'Bihar Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (14, '14', 'Cauvery Kalpatharu Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (15, '15', 'Chaitanya Godavari Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (16, '16', 'Chhattisgarh Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (17, '17', 'Chikmagalur-Kodagu Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (18, '18', 'Deccan Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (19, '19', 'Dena Gujarat Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (20, '20', 'Durg-Rajnandgaon Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (21, '21', 'Ellaquai Dehati Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (22, '22', 'Gurgaon Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (23, '23', 'Hadoti Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (24, '24', 'Haryana Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (25, '25', 'Himachal Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (26, '26', 'Jaipur Thar Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (27, '27', 'Jhabua Dhar Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (28, '28', 'Jharkhand Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (29, '29', 'Kalinga Gramya Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (30, '30', 'Karnataka Vikas Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (31, '31', 'Kashi Gomti Samyut Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (32, '32', 'Kerala Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (33, '33', 'Krishna Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (34, '34', 'Kshetriya Kisan Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (35, '35', 'Langpi Dehangi Rural Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (36, '36', 'Madhumalti Building Gupte Marg', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (37, '37', 'Madhya Bharat Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (38, '38', 'Madhya Bihar Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (39, '39', 'Mahakaushal Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (40, '40', 'Maharashtra Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (41, '41', 'Malwa Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (42, '42', 'Manipur Rural Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (43, '43', 'Marwar Ganganagar Bikaner Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (44, '44', 'Meghalaya Rural Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (45, '45', 'Mewar Anchalik Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (46, '46', 'Mizoram Rural Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (47, '47', 'Nagaland Rural Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (48, '48', 'Uttrakhand Gramin Bank[1]', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (49, '49', 'Narmada Malwa Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (50, '50', 'Neelachal Gramya Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (51, '51', 'Pallavan Grama Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (52, '52', 'Pandyan Grama Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (53, '53', 'Parvatiya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (54, '54', 'Paschim Banga Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (55, '55', 'Pragathi Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (56, '56', 'Prathama Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (57, '57', 'Puduvai Bharathiar Grama Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (58, '58', 'Pune District Central Cooperative Bank Ltd.', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (59, '59', 'Punjab Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (60, '60', 'Purvanchal Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (61, '61', 'Rajasthan Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (62, '62', 'Rewa-Sidhi Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (63, '63', 'Rushikulya Gramya Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (64, '64', 'Samastipur Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (65, '65', 'Saptagiri Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (66, '66', 'Sarva UP Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (67, '67', 'Satpura Narmada Kshetriya', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (68, '68', 'Saurashtra Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (69, '69', 'Sharda Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (70, '70', 'Shreyas Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (71, '71', 'Surguja Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (72, '72', 'Sutlej Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (73, '73', 'Tripura Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (74, '74', 'Utkal Gramya Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (75, '75', 'Uttar Banga Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (76, '76', 'Uttar Bihar Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (77, '77', 'Vananchal Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (78, '78', 'Vidharbha Kshetriya Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (79, '79', 'Visveshvaraya Grameena Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
-INSERT INTO bank (id, code, name, narration, isactive, lastmodified, created, modifiedby, type) VALUES (80, '80', 'Wainganga Krishna Gramin Bank', NULL, 1, '2015-08-28 00:00:00', '2015-08-28 00:00:00', 1, NULL);
 
 DROP SEQUENCE SEQ_BANK;
 
 CREATE SEQUENCE seq_bank
-    START WITH 81
+    START WITH 2
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -1704,8 +1626,6 @@ INSERT INTO fund (id, code, name, llevel, parentid, isactive, lastmodified, crea
 INSERT INTO fund (id, code, name, llevel, parentid, isactive, lastmodified, created, modifiedby, isnotleaf, identifier, purpose_id, createdby, transactioncreditamount) VALUES (nextval('seq_fund'), '04', 'Earmarked Funds', 0, NULL, 1, '0001-04-13 00:00:00 BC', '0001-04-13 00:00:00 BC', 1, 0, '4', 12, 1, NULL);
 ---------------END-------------------------
 --------------------START----------------------------------
-insert into bankbranch(id,branchcode,branchname,branchaddress1,bankid,isactive,created,lastmodified,modifiedby)
- values(nextval('seq_bankbranch'),'001','Main branch','Srikakulam',(select id from bank where name='Allahabad UP Gramin Bank'),1,current_date,current_date,1);
 
 
 insert into chartofaccounts values(nextval('seq_chartofaccounts'),'4504204',
@@ -1713,9 +1633,6 @@ insert into chartofaccounts values(nextval('seq_chartofaccounts'),'4504204',
 true,(select id from chartofaccounts where glcode='45042'),current_date,1,current_date,null,null,'A',null,4,true,false,null,null,null,null,null,450,1,null,null);
 
 
-insert into bankaccount(id,branchid,accountnumber,accounttype,narration,isactive,glcodeid,fundid,type,createdby,lastmodifiedby,createddate,lastmodifieddate,version,currentbalance)
-values(nextval('seq_bankaccount'),(select id from bankbranch where branchcode='001'),'000000000001','OTHER SCHEDULED BANKS',null,1,
-(select id from chartofaccounts where glcode='4504204'),(select id from fund where code='01'),'RECEIPTS_PAYMENTS',1,1,current_date,current_date,0,0);
 --------------------------END--------------------------------
 ---------------START-------------------
 Insert into FUNDSOURCE (ID,CODE,NAME,TYPE,PARENTID,ISACTIVE,CREATED,LLEVEL,ISNOTLEAF,CREATEDBY,LASTMODIFIEDDATE,LASTMODIFIEDBY) values (1,'01','Own Sources',null,null,true,now(),0,0,null,now(),1);
