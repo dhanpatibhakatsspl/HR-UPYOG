@@ -57,6 +57,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Collections;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -106,12 +107,8 @@ public class AjaxWorkFlowAction extends BaseFormAction {
 		if (isNotEmpty(designationId) && !designationId.equalsIgnoreCase("-1") && isNotEmpty(approverDepartmentId)
 				&& !approverDepartmentId.equalsIgnoreCase("-1")) {
 			
-			List<String> departmentIds = Arrays.asList(approverDepartmentId.split(","));
+		List<String> departmentIds = Arrays.asList(approverDepartmentId.split(","));
 	        List<String> designationIds = Arrays.asList(designationId.split(","));
-	        List<Designation> designation = microserviceUtils.getDesignation(approverDepartmentId);
-	        for(Designation  d : designation) {
-	        	System.out.println("List of designation = " +d);
-	        }
 	        
 	        approverList = microserviceUtils.getAssignments(departmentIds, designationIds);
 		}
