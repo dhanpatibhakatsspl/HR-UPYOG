@@ -98,17 +98,22 @@
 		});
 	}
 
+	/* =================== Modified By Heera Start ====================== */
 	function loadDesignationFromMatrix() {
+		
+		var deptId = document.getElementById("approverDepartment").value;
+		//alert("Dept id "+deptId);
 		var e = dom.get('approverDepartment');
 		var dept = e.options[e.selectedIndex].text;
-		var currentState = dom.get('currentState').value;
+		var currentState = dom.get('currentState').value;	
 		var amountRule = dom.get('amountRule').value;
 		var additionalRule = dom.get('additionalRule').value;
 		var pendingAction = document.getElementById('pendingActions').value;
 		var stateType = 'Paymentheader';
-		loadDesignationByDeptAndType(stateType, dept, currentState, amountRule,
+		loadDesignationByDeptAndType(stateType, deptId, currentState, amountRule,
 				additionalRule, pendingAction);
 	}
+	/* =================== Modified By Heera End ====================== */
 
 	function populateApprover() {
 		getUsersByDesignationAndDept();
