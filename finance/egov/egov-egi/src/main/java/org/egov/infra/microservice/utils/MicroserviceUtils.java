@@ -834,17 +834,37 @@ public class MicroserviceUtils {
 				new EmployeeSearchCriteria().builder().ids(ids.stream().collect(Collectors.toList())).build());
 	}
 
-	public List<Assignment> getAssignments(String department, String designation) {
-		List<Assignment> assignmentList = new ArrayList<>();
-		List<EmployeeInfo> employeeInfos = getApprovers(department, designation);
-		for (EmployeeInfo ei : employeeInfos) {
-			for (Assignment a : ei.getAssignments()) {
-				a.setEmployeeName(ei.getUser().getName());
-			}
-			assignmentList.addAll(ei.getAssignments());
-		}
-		return assignmentList;
+	//	================================================== Modified by Heera Start ========================================================
+//	public List<Assignment> getAssignments(String department, String designation) {
+//		List<Assignment> assignmentList = new ArrayList<>();
+//		List<EmployeeInfo> employeeInfos = getApprovers(department, designation);
+//		for (EmployeeInfo ei : employeeInfos) {
+//			for (Assignment a : ei.getAssignments()) {
+//				a.setEmployeeName(ei.getUser().getName());
+//			}
+//			assignmentList.addAll(ei.getAssignments());
+//		}
+//		return assignmentList;
+//	}
+	public List<Assignment> getAssignments(List<String> departments, List<String> designations) {
+	    List<Assignment> assignmentList = new ArrayList<>();
+
+	    for (String dept : departments) {
+	        for (String desig : designations) {
+	            List<EmployeeInfo> employeeInfos = getApprovers(dept, desig);
+
+	            for (EmployeeInfo ei : employeeInfos) {
+	                for (Assignment a : ei.getAssignments()) {
+	                    a.setEmployeeName(ei.getUser().getName());
+	                }
+	                assignmentList.addAll(ei.getAssignments());
+	            }
+	        }
+	    }
+
+	    return assignmentList;
 	}
+//=============================== Modified by Heera End =======================================
 
 	public List<TaxHeadMaster> getTaxheadsByService(String service) {
 
