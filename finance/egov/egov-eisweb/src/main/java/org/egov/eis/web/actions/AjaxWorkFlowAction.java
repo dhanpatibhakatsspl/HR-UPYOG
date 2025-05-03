@@ -100,28 +100,63 @@ public class AjaxWorkFlowAction extends BaseFormAction {
 	private String designation;
 	private transient List<String> roleList;
 
+	//	==================== Modified by Heera Start =====================
 	@Action(value = "/workflow/ajaxWorkFlow-getPositionByPassingDesigId")
 	public String getPositionByPassingDesigId() {
 		if (isNotEmpty(designationId) && !designationId.equalsIgnoreCase("-1") && isNotEmpty(approverDepartmentId)
 				&& !approverDepartmentId.equalsIgnoreCase("-1")) {
-			approverList = microserviceUtils.getAssignments(approverDepartmentId, designationId);
+			
+			List<String> departmentIds = Arrays.asList(approverDepartmentId.split(","));
+	        List<String> designationIds = Arrays.asList(designationId.split(","));
+	        List<Designation> designation = microserviceUtils.getDesignation(approverDepartmentId);
+	        for(Designation  d : designation) {
+	        	System.out.println("List of designation = " +d);
+	        }
+	        
+	        approverList = microserviceUtils.getAssignments(departmentIds, designationIds);
 		}
 		return WF_APPROVERS;
 	}
+	
 
+	// Onchange department
+//	@Action(value = "/workflow/ajaxWorkFlow-getDesignationsByObjectType") 
+//	public String getDesignationsByObjectType() {
+//		
+//		System.out.println("================ Department Id : "+ departmentRule);
+//		 
+//		final List<String> workflowDesignations = new ArrayList<>();
+//		if (!SELECT.equals(departmentRule)) {
+//			final WorkFlowMatrix wfmatrix = getWfMatrix();
+//			if (wfmatrix.getCurrentDesignation() != null) {
+//				workflowDesignations.addAll(Arrays.asList(wfmatrix.getCurrentDesignation().split(",")));
+//			}
+//			designationList = microserviceUtils.getDesignations().stream()
+//					.filter(desig -> workflowDesignations.contains(desig.getName())).collect(Collectors.toList());
+//		}
+//		return WF_DESIGNATIONS;
+//	}
+	
 	@Action(value = "/workflow/ajaxWorkFlow-getDesignationsByObjectType")
 	public String getDesignationsByObjectType() {
-		final List<String> workflowDesignations = new ArrayList<>();
-		if (!SELECT.equals(departmentRule)) {
-			final WorkFlowMatrix wfmatrix = getWfMatrix();
-			if (wfmatrix.getCurrentDesignation() != null) {
-				workflowDesignations.addAll(Arrays.asList(wfmatrix.getCurrentDesignation().split(",")));
-			}
-			designationList = microserviceUtils.getDesignations().stream()
-					.filter(desig -> workflowDesignations.contains(desig.getName())).collect(Collectors.toList());
-		}
-		return WF_DESIGNATIONS;
+
+	    // Fetch designation codes from MDMS using the departmentRule
+	    List<String> designationCodes = microserviceUtils.getDesignationCodesByDepartment(departmentRule);
+
+	    if (designationCodes != null && !designationCodes.isEmpty()) {
+	        // Fetch actual designation objects and filter using codes
+	        designationList = microserviceUtils.getDesignations().stream()
+	            .filter(desig -> designationCodes.contains(desig.getCode()))
+	            .collect(Collectors.toList());
+	    } else {
+	        designationList = Collections.emptyList();
+	    }
+
+	    return WF_DESIGNATIONS;
 	}
+
+//	==================== Modified by Heera End =====================
+
 
 	@Action(value = "/workflow/ajaxWorkFlow-findDesignationsByObjectType")
 	public String findDesignationsByObjectType() {
