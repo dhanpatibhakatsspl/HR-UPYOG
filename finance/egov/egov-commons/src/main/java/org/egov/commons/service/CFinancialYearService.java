@@ -99,31 +99,31 @@ public class CFinancialYearService {
 		return cFinancialYearRepository.findOne(id);
 	}
 
-	//start code modified by raju
-		//old code 
-		/*
-		 * public List<CFinancialYear> search(final CFinanancialYearSearchRequest
-		 * cFinanancialYearSearchRequest) { if
-		 * (cFinanancialYearSearchRequest.getFinYearRange() != null) { return
-		 * cFinancialYearRepository.findByFinancialYearRange(
-		 * cFinanancialYearSearchRequest.getFinYearRange()); } else return findAll(); }
-		 */
-		
-		// new code
+	// ========================================   start code modified by santosh  ==========================================
+		// old code
+
 		public List<CFinancialYear> search(final CFinanancialYearSearchRequest cFinanancialYearSearchRequest) {
-			if (cFinanancialYearSearchRequest.getFinYearRange() != null && !cFinanancialYearSearchRequest.getFinYearRange().isEmpty())
-			{
+			if (cFinanancialYearSearchRequest.getFinYearRange() != null) {
 				return cFinancialYearRepository.findByFinancialYearRange(cFinanancialYearSearchRequest.getFinYearRange());
-				}
-			else if (cFinanancialYearSearchRequest.getStartingDate() != null && cFinanancialYearSearchRequest.getEndingDate() != null) {
-				return  cFinancialYearRepository.getFinancialYearByDateRange(cFinanancialYearSearchRequest.getStartingDate(), cFinanancialYearSearchRequest.getEndingDate());
-		       
-			}   
-			else
+			} else
 				return findAll();
 		}
 
-		// end code 
+		// new code
+		public List<CFinancialYear> searchbydate(final CFinanancialYearSearchRequest cFinanancialYearSearchRequest) {
+//			if (cFinanancialYearSearchRequest.getFinYearRange() != null && !cFinanancialYearSearchRequest.getFinYearRange().isEmpty())
+//			{
+//			    return cFinancialYearRepository.findByFinancialYearRange(cFinanancialYearSearchRequest.getFinYearRange());
+//			}
+//			else 
+			if (cFinanancialYearSearchRequest.getStartingDate() != null && cFinanancialYearSearchRequest.getEndingDate() != null) {
+				return cFinancialYearRepository.getFinancialYearByDateRange(cFinanancialYearSearchRequest.getStartingDate(),
+						cFinanancialYearSearchRequest.getEndingDate());
+			} else {
+				return findAll();
+			}
+		}
+		//================================================ end code modified by santosh =====================================================
 
 	public Date getNextFinancialYearStartingDate() {
 		final List<CFinancialYear> cFinYear = cFinancialYearRepository.getFinYearLastDate();

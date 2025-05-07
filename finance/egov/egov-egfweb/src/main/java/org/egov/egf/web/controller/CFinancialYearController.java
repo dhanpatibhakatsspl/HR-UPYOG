@@ -95,6 +95,7 @@ public class CFinancialYearController {
 	private static final String CFINANCIALYEAR_EDIT = "cfinancialyear-edit";
 	private static final String CFINANCIALYEAR_VIEW = "cfinancialyear-view";
 	private static final String CFINANCIALYEAR_SEARCH = "cfinancialyear-search";
+	private static final String CFINANCIALYEAR_SEARCH_DATE = "cfinancial-year-by-date-range";
 	private static final String CFINANCIALYEAR_CLOSE = "cfinancialyear-close";
 
 	@Autowired
@@ -162,7 +163,7 @@ public class CFinancialYearController {
 		model.addAttribute("mode", "edit");
 		return CFINANCIALYEAR_EDIT;
 	}
-
+//   ====================== update by santosh kumar mahto start ============================
 	@PostMapping(value = "/update")
 	public String update(@Valid @ModelAttribute final CFinancialYear cFinancialYear, final BindingResult errors,
 			final Model model, final RedirectAttributes redirectAttrs, HttpServletRequest request) {
@@ -173,7 +174,7 @@ public class CFinancialYearController {
 		String mode = request.getParameter("mode");
 		String message = "msg.cFinancialYear.success";
 
-		if ("close".equalsIgnoreCase(mode)) {
+		if ("close".equalsIgnoreCase(mode) || "daterange".equalsIgnoreCase(mode)) {
 			message = "msg.closedFinancialYear.success";
 			if (cFinancialYear.getIsClosed() && cFinancialYear.getTransferClosingBalance()) {
 				cFinancialYear.setIsActiveForPosting(false);
@@ -184,7 +185,7 @@ public class CFinancialYearController {
 		redirectAttrs.addFlashAttribute("mode", mode);
 		return "redirect:/cfinancialyear/result/" + cFinancialYear.getId();
 	}
-
+//  ====================== update by santosh kumar mahto end ============================
 	@GetMapping(value = "/view/{id}")
 	public String view(@PathVariable("id") final Long id, final Model model) {
 		final CFinancialYear cFinancialYear = cFinancialYearService.findOne(id);
@@ -193,12 +194,12 @@ public class CFinancialYearController {
 		return CFINANCIALYEAR_VIEW;
 	}
 
-	@GetMapping(value = "/close/{id}")
-	public String close(@PathVariable("id") final Long id, final Model model) {
+	@GetMapping(value = "/{mode}/{id}")
+	public String close(@PathVariable("id") final Long id,@PathVariable("mode") @SafeHtml final String mode, final Model model) {
 		final CFinancialYear cFinancialYear = cFinancialYearService.findOne(id);
 		prepareNewForm(model);
 		model.addAttribute(C_FINANCIAL_YEAR, cFinancialYear);
-		model.addAttribute("mode", "close");
+		model.addAttribute("mode", mode);
 		return CFINANCIALYEAR_CLOSE;
 	}
 
@@ -208,24 +209,53 @@ public class CFinancialYearController {
 		model.addAttribute(C_FINANCIAL_YEAR, cFinancialYear);
 		return CFINANCIALYEAR_RESULT;
 	}
-
+//  comment by santosh kumar mahto 
+//	@RequestMapping(value = "/search/{mode}", method = { RequestMethod.GET, RequestMethod.POST })
+//	public String search(@PathVariable("mode") @SafeHtml final String mode, final Model model) {
+//		final CFinanancialYearSearchRequest cFinanancialYearSearchRequest = new CFinanancialYearSearchRequest();
+//		model.addAttribute("financialYears", cFinancialYearService.findAll());
+//		prepareNewForm(model);
+//		model.addAttribute(C_FINANCIAL_YEAR_SEARCH_REQUEST, cFinanancialYearSearchRequest);
+//		return CFINANCIALYEAR_SEARCH;
+//
+//	}
+//
+//	@PostMapping(value = "/ajaxsearch/{mode}", produces = MediaType.TEXT_PLAIN_VALUE)
+//	public @ResponseBody String ajaxsearch(@PathVariable("mode") @SafeHtml final String mode, final Model model,
+//			@Valid @ModelAttribute final CFinanancialYearSearchRequest cFinanancialYearSearchRequest) {
+//		final List<CFinancialYear> searchResultList = cFinancialYearService.search(cFinanancialYearSearchRequest);
+//		return new StringBuilder("{ \"data\":").append(toSearchResultJson(searchResultList)).append("}").toString();
+//	}
+//  ====================== update by santosh kumar mahto start ============================
 	@RequestMapping(value = "/search/{mode}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String search(@PathVariable("mode") @SafeHtml final String mode, final Model model) {
-		final CFinanancialYearSearchRequest cFinanancialYearSearchRequest = new CFinanancialYearSearchRequest();
-		model.addAttribute("financialYears", cFinancialYearService.findAll());
-		prepareNewForm(model);
-		model.addAttribute(C_FINANCIAL_YEAR_SEARCH_REQUEST, cFinanancialYearSearchRequest);
-		return CFINANCIALYEAR_SEARCH;
-
+		if("close".equals(mode)) {
+			final CFinanancialYearSearchRequest cFinanancialYearSearchRequest = new CFinanancialYearSearchRequest();
+			model.addAttribute("financialYears", cFinancialYearService.findAll());
+			prepareNewForm(model);
+			model.addAttribute(C_FINANCIAL_YEAR_SEARCH_REQUEST, cFinanancialYearSearchRequest);
+			return CFINANCIALYEAR_SEARCH;
+		}else {
+			final CFinanancialYearSearchRequest cFinanancialYearSearchRequest = new CFinanancialYearSearchRequest();
+//			model.addAttribute("financialYears", cFinancialYearService.findAll());
+			prepareNewForm(model);
+			model.addAttribute(C_FINANCIAL_YEAR_SEARCH_REQUEST, cFinanancialYearSearchRequest);
+			return CFINANCIALYEAR_SEARCH_DATE;
+		}
 	}
 
 	@PostMapping(value = "/ajaxsearch/{mode}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String ajaxsearch(@PathVariable("mode") @SafeHtml final String mode, final Model model,
 			@Valid @ModelAttribute final CFinanancialYearSearchRequest cFinanancialYearSearchRequest) {
-		final List<CFinancialYear> searchResultList = cFinancialYearService.search(cFinanancialYearSearchRequest);
-		return new StringBuilder("{ \"data\":").append(toSearchResultJson(searchResultList)).append("}").toString();
+		if("close".equals(mode)) {
+			final List<CFinancialYear> searchResultList = cFinancialYearService.search(cFinanancialYearSearchRequest);
+			return new StringBuilder("{ \"data\":").append(toSearchResultJson(searchResultList)).append("}").toString();
+		}else {
+			final List<CFinancialYear> searchResultList = cFinancialYearService.searchbydate(cFinanancialYearSearchRequest);
+			return new StringBuilder("{ \"data\":").append(toSearchResultJson(searchResultList)).append("}").toString();
+		}
 	}
-
+//  ====================== update by santosh kumar mahto end ============================
 	public Object toSearchResultJson(final Object object) {
 		final GsonBuilder gsonBuilder = new GsonBuilder();
 		final Gson gson = gsonBuilder.registerTypeAdapter(CFinancialYear.class, new CFinancialYearJsonAdaptor())
