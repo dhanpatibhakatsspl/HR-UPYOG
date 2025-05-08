@@ -342,7 +342,16 @@
                        cascade="true"/>
         <put-attribute name="body"
                        value="/WEB-INF/views/cfinancialyear/cfinancialyear-search.jsp"/>
+     </definition>                  
+    <!--code added by santosh kumar mahto  -->
+    <definition name="cfinancial-year-by-date-range" extends="base_layout">
+        <put-attribute name="page-title" value="title.cfinancialyear.search"
+                       cascade="true"/>
+        <put-attribute name="body"
+                       value="/WEB-INF/views/cfinancialyear/cfinancial-year-by-date-range.jsp"/>
     </definition>
+    <!--code end by santosh kumar mahto -->
+ 
      <definition name="cfinancialyear-close" extends="base_layout">
         <put-attribute name="page-title" value="title.cfinancialyear-close"
                        cascade="true"/>
