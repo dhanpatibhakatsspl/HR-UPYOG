@@ -66,6 +66,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.ResultPath;
 import org.apache.struts2.convention.annotation.Results;
 import org.egov.infra.microservice.models.Assignment;
+import org.egov.infra.microservice.models.Department;
 import org.egov.infra.microservice.models.Designation;
 import org.egov.infra.web.struts.actions.BaseFormAction;
 import org.egov.infra.workflow.matrix.entity.WorkFlowMatrix;
@@ -101,20 +102,19 @@ public class AjaxWorkFlowAction extends BaseFormAction {
 	private String designation;
 	private transient List<String> roleList;
 
-	//	==================== Modified by Heera Start =====================
+	// ==================== Modified by Heera Start =====================
 	@Action(value = "/workflow/ajaxWorkFlow-getPositionByPassingDesigId")
 	public String getPositionByPassingDesigId() {
 		if (isNotEmpty(designationId) && !designationId.equalsIgnoreCase("-1") && isNotEmpty(approverDepartmentId)
 				&& !approverDepartmentId.equalsIgnoreCase("-1")) {
-			
-		List<String> departmentIds = Arrays.asList(approverDepartmentId.split(","));
-	        List<String> designationIds = Arrays.asList(designationId.split(","));
-	        
-	        approverList = microserviceUtils.getAssignments(departmentIds, designationIds);
+
+			List<String> departmentIds = Arrays.asList(approverDepartmentId.split(","));
+			List<String> designationIds = Arrays.asList(designationId.split(","));
+
+			approverList = microserviceUtils.getAssignments(departmentIds, designationIds);
 		}
 		return WF_APPROVERS;
 	}
-	
 
 	// Onchange department
 //	@Action(value = "/workflow/ajaxWorkFlow-getDesignationsByObjectType") 
@@ -133,27 +133,28 @@ public class AjaxWorkFlowAction extends BaseFormAction {
 //		}
 //		return WF_DESIGNATIONS;
 //	}
-	
+	// ==========Changes made to populate the dropdown of Approver======By Dhanpati
 	@Action(value = "/workflow/ajaxWorkFlow-getDesignationsByObjectType")
 	public String getDesignationsByObjectType() {
 
-	    // Fetch designation codes from MDMS using the departmentRule
-	    List<String> designationCodes = microserviceUtils.getDesignationCodesByDepartment(departmentRule);
+		// Fetch designation codes from MDMS using the departmentRule
+		List<Department> departments = microserviceUtils.getDepartments();
+		String deptCode = departments.stream().filter(t -> t.getName().contains(departmentRule))
+				.map(Department::getCode).findFirst().get();
+		List<String> designationCodes = microserviceUtils.getDesignationCodesByDepartment(deptCode);
 
-	    if (designationCodes != null && !designationCodes.isEmpty()) {
-	        // Fetch actual designation objects and filter using codes
-	        designationList = microserviceUtils.getDesignations().stream()
-	            .filter(desig -> designationCodes.contains(desig.getCode()))
-	            .collect(Collectors.toList());
-	    } else {
-	        designationList = Collections.emptyList();
-	    }
+		if (designationCodes != null && !designationCodes.isEmpty()) {
+			// Fetch actual designation objects and filter using codes
+			designationList = microserviceUtils.getDesignations().stream()
+					.filter(desig -> designationCodes.contains(desig.getCode())).collect(Collectors.toList());
+		} else {
+			designationList = Collections.emptyList();
+		}
 
-	    return WF_DESIGNATIONS;
+		return WF_DESIGNATIONS;
 	}
 
 //	==================== Modified by Heera End =====================
-
 
 	@Action(value = "/workflow/ajaxWorkFlow-findDesignationsByObjectType")
 	public String findDesignationsByObjectType() {

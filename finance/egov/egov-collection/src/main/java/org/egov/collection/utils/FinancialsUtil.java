@@ -66,6 +66,7 @@ import org.egov.infstr.services.PersistenceService;
 import org.egov.model.instrument.InstrumentHeader;
 import org.egov.model.instrument.InstrumentType;
 import org.egov.model.instrument.InstrumentVoucher;
+import org.egov.model.voucher.WorkflowBean;
 import org.egov.services.contra.ContraService;
 import org.egov.services.instrument.InstrumentService;
 import org.hibernate.SQLQuery;
@@ -74,253 +75,267 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Utility class for interfacing with financials. This class should be used for calling any financials APIs from erp collections.
+ * Utility class for interfacing with financials. This class should be used for
+ * calling any financials APIs from erp collections.
  */
 public class FinancialsUtil {
-    private InstrumentService instrumentService;
-    public PersistenceService<InstrumentHeader, Long> instrumentHeaderService;
-    @Autowired
-    @Qualifier("contraService")
-    private ContraService contraService;
-    @Autowired
-    private CreateVoucher createVoucher;
-    @Autowired
-    private FinancialsVoucherUtil financialsVoucherUtil;
-    @Autowired
-    private ChartOfAccountsHibernateDAO chartOfAccountsHibernateDAO;
-    private static final Logger LOGGER = Logger.getLogger(FinancialsUtil.class);
+	private InstrumentService instrumentService;
+	public PersistenceService<InstrumentHeader, Long> instrumentHeaderService;
+	@Autowired
+	@Qualifier("contraService")
+	private ContraService contraService;
+	@Autowired
+	private CreateVoucher createVoucher;
+	@Autowired
+	private FinancialsVoucherUtil financialsVoucherUtil;
+	@Autowired
+	private ChartOfAccountsHibernateDAO chartOfAccountsHibernateDAO;
+	private static final Logger LOGGER = Logger.getLogger(FinancialsUtil.class);
 
-    /**
-     * @param instrumentService the Instrument Service to set
-     */
-    public void setInstrumentService(final InstrumentService instrumentService) {
-        this.instrumentService = instrumentService;
-    }
+	/**
+	 * @param instrumentService the Instrument Service to set
+	 */
+	public void setInstrumentService(final InstrumentService instrumentService) {
+		this.instrumentService = instrumentService;
+	}
 
-    /**
-     * Fetches instrument type object for given instrument type as string
-     *
-     * @param type Instrument type as string e.g. cash/cheque
-     * @return Instrument type object for given instrument type as string
-     */
-    public InstrumentType getInstrumentTypeByType(final String type) {
-        return instrumentService.getInstrumentTypeByType(type);
-    }
+	/**
+	 * Fetches instrument type object for given instrument type as string
+	 *
+	 * @param type Instrument type as string e.g. cash/cheque
+	 * @return Instrument type object for given instrument type as string
+	 */
+	public InstrumentType getInstrumentTypeByType(final String type) {
+		return instrumentService.getInstrumentTypeByType(type);
+	}
 
-    @Transactional
-    public CVoucherHeader createRemittanceVoucher(final HashMap<String, Object> headerdetails,
-            final List<HashMap<String, Object>> accountCodeList, final List<HashMap<String, Object>> subledgerList) {
-        CVoucherHeader voucherHeaderCash = new CVoucherHeader();
-        try {
-            voucherHeaderCash = financialsVoucherUtil.createApprovedVoucher(headerdetails, accountCodeList,
-                    subledgerList);
-        } catch (final ApplicationRuntimeException e) {
-            LOGGER.error("Error in createBankRemittance createPreApprovalVoucher when cash amount>0");
-            throw new ApplicationRuntimeException(
-                    "Error in createBankRemittance createPreApprovalVoucher when cash amount>0", e);
-        }
-        return voucherHeaderCash;
-    }
+	@Transactional
+	public CVoucherHeader createRemittanceVoucher(final HashMap<String, Object> headerdetails,
+			final List<HashMap<String, Object>> accountCodeList, final List<HashMap<String, Object>> subledgerList) {
+		CVoucherHeader voucherHeaderCash = new CVoucherHeader();
+		try {
+			voucherHeaderCash = financialsVoucherUtil.createApprovedVoucher(headerdetails, accountCodeList,
+					subledgerList);
+		} catch (final ApplicationRuntimeException e) {
+			LOGGER.error("Error in createBankRemittance createPreApprovalVoucher when cash amount>0");
+			throw new ApplicationRuntimeException(
+					"Error in createBankRemittance createPreApprovalVoucher when cash amount>0", e);
+		}
+		return voucherHeaderCash;
+	}
 
-    /**
-     * @param headerdetails
-     * @param accountcodedetails
-     * @param subledgerdetails
-     * @param isVoucherApproved
-     * @return
-     */
+	public CVoucherHeader createPreRemittanceVoucher(final HashMap<String, Object> headerdetails,
+			final List<HashMap<String, Object>> accountCodeList, final List<HashMap<String, Object>> subledgerList) {
+		CVoucherHeader voucherHeaderCash = new CVoucherHeader();
+		try {
+			voucherHeaderCash = financialsVoucherUtil.createPreApprovalVoucher(headerdetails, accountCodeList,
+					subledgerList);
+		} catch (final ApplicationRuntimeException e) {
+			LOGGER.error("Error in createBankRemittance createPreApprovalVoucher when cash amount>0");
+			throw new ApplicationRuntimeException(
+					"Error in createBankRemittance createPreApprovalVoucher when cash amount>0", e);
+		}
+		return voucherHeaderCash;
+	}
 
-    public CVoucherHeader createVoucher(final Map<String, Object> headerdetails,
-            final List<HashMap<String, Object>> accountcodedetails,
-            final List<HashMap<String, Object>> subledgerdetails, final Boolean isVoucherApproved) {
-        CVoucherHeader voucherHeader;
+	/**
+	 * @param headerdetails
+	 * @param accountcodedetails
+	 * @param subledgerdetails
+	 * @param isVoucherApproved
+	 * @return
+	 */
 
-        LOGGER.debug("Logs For HandHeldDevice Permance Test : Voucher Creation Started....");
+	public CVoucherHeader createVoucher(final Map<String, Object> headerdetails,
+			final List<HashMap<String, Object>> accountcodedetails,
+			final List<HashMap<String, Object>> subledgerdetails, final Boolean isVoucherApproved) {
+		CVoucherHeader voucherHeader;
 
-        if (isVoucherApproved != null && isVoucherApproved)
-            voucherHeader = financialsVoucherUtil.createApprovedVoucher(headerdetails, accountcodedetails,
-                    subledgerdetails);
-        else
-            voucherHeader = financialsVoucherUtil.createPreApprovalVoucher(headerdetails, accountcodedetails,
-                    subledgerdetails);
-        LOGGER.info("Logs For HandHeldDevice Permance Test : Voucher Creation Ended...");
-        return voucherHeader;
-    }
+		LOGGER.debug("Logs For HandHeldDevice Permance Test : Voucher Creation Started....");
 
-    /**
-     * Get the reversal voucher for the voucher header
-     *
-     * @param paramList
-     * @return CVoucherHeader
-     * @throws ParseException 
-     */
-    public CVoucherHeader getReversalVoucher(final List<HashMap<String, Object>> paramList) throws ParseException {
-        CVoucherHeader voucherHeaders = null;
-        try {
-            voucherHeaders = createVoucher.reverseVoucher(paramList);
-        } catch (final ApplicationRuntimeException re) {
-            LOGGER.error("Runtime Exception while creating reversal voucher!", re);
-            throw re;
-        } /*
-           * catch (final Exception e) {
-           * LOGGER.error("Exception while creating reversal voucher!", e);
-           * throw new
-           * ApplicationRuntimeException("Exception while creating reversal voucher!"
-           * , e); }
-           */
-        return voucherHeaders;
-    }
+		if (isVoucherApproved != null && isVoucherApproved)
+			voucherHeader = financialsVoucherUtil.createApprovedVoucher(headerdetails, accountcodedetails,
+					subledgerdetails);
+		else
+			voucherHeader = financialsVoucherUtil.createPreApprovalVoucher(headerdetails, accountcodedetails,
+					subledgerdetails);
+		LOGGER.info("Logs For HandHeldDevice Permance Test : Voucher Creation Ended...");
+		return voucherHeader;
+	}
 
-    /**
-     * Update instrument type and return list of InstrumentVoucher
-     *
-     * @param paramList
-     * @return
-     */
+	/**
+	 * Get the reversal voucher for the voucher header
+	 *
+	 * @param paramList
+	 * @return CVoucherHeader
+	 * @throws ParseException
+	 */
+	public CVoucherHeader getReversalVoucher(final List<HashMap<String, Object>> paramList) throws ParseException {
+		CVoucherHeader voucherHeaders = null;
+		try {
+			voucherHeaders = createVoucher.reverseVoucher(paramList);
+		} catch (final ApplicationRuntimeException re) {
+			LOGGER.error("Runtime Exception while creating reversal voucher!", re);
+			throw re;
+		} /*
+			 * catch (final Exception e) {
+			 * LOGGER.error("Exception while creating reversal voucher!", e); throw new
+			 * ApplicationRuntimeException("Exception while creating reversal voucher!" ,
+			 * e); }
+			 */
+		return voucherHeaders;
+	}
 
-    public List<InstrumentVoucher> updateInstrumentVoucher(final List<Map<String, Object>> paramList) {
-        return instrumentService.updateInstrumentVoucherReference(paramList);
-    }
+	/**
+	 * Update instrument type and return list of InstrumentVoucher
+	 *
+	 * @param paramList
+	 * @return
+	 */
 
-    /**
-     * Create Instrument Header for list of HashMap of instrument header properties
-     *
-     * @param paramList
-     * @return List of InstrumentHeader
-     */
-    public List<InstrumentHeader> createInstrument(final List<Map<String, Object>> paramList) {
-        return instrumentService.addToInstrument(paramList);
-    }
+	public List<InstrumentVoucher> updateInstrumentVoucher(final List<Map<String, Object>> paramList) {
+		return instrumentService.updateInstrumentVoucherReference(paramList);
+	}
 
-    /**
-     * Update Cheque/DD/Card Instrument Status after creating Bank Remittance Voucher(if the Bank Remittance voucher type is
-     * Contra)
-     *
-     * @param Map containing Instrument and PayInSlip voucher information
-     */
+	/**
+	 * Create Instrument Header for list of HashMap of instrument header properties
+	 *
+	 * @param paramList
+	 * @return List of InstrumentHeader
+	 */
+	public List<InstrumentHeader> createInstrument(final List<Map<String, Object>> paramList) {
+		return instrumentService.addToInstrument(paramList);
+	}
 
-    @Transactional
-    public void updateCheque_DD_Card_Deposit(final Map<String, Object> instrumentMap) {
-        contraService.updateCheque_DD_Card_Deposit(instrumentMap);
-    }
+	/**
+	 * Update Cheque/DD/Card Instrument Status after creating Bank Remittance
+	 * Voucher(if the Bank Remittance voucher type is Contra)
+	 *
+	 * @param Map containing Instrument and PayInSlip voucher information
+	 */
 
-    @Transactional
-    public void updateCheque_DD_Card_Deposit(final Map instrumentMap, final CVoucherHeader cVoucherHeader,
-            final InstrumentHeader instrumentHeader, final Bankaccount bankaccount) {
-        contraService.updateCheque_DD_Card_Deposit(instrumentMap, cVoucherHeader, instrumentHeader, bankaccount);
-    }
+	@Transactional
+	public void updateCheque_DD_Card_Deposit(final Map<String, Object> instrumentMap) {
+		contraService.updateCheque_DD_Card_Deposit(instrumentMap);
+	}
 
-    /**
-     * Update Cheque/DD/Card Instrument Status after creating Bank Remittance Voucher(if the Bank Remittance voucher type is
-     * Receipt)
-     *
-     * @param Map containing Instrument and PayInSlip voucher information
-     */
+	@Transactional
+	public void updateCheque_DD_Card_Deposit(final Map instrumentMap, final CVoucherHeader cVoucherHeader,
+			final InstrumentHeader instrumentHeader, final Bankaccount bankaccount) {
+		contraService.updateCheque_DD_Card_Deposit(instrumentMap, cVoucherHeader, instrumentHeader, bankaccount);
+	}
 
-    @Transactional
-    public void updateCheque_DD_Card_Deposit_Receipt(final Map<String, Object> instrumentMap) {
-        contraService.updateCheque_DD_Card_Deposit_Receipt(instrumentMap);
-    }
+	/**
+	 * Update Cheque/DD/Card Instrument Status after creating Bank Remittance
+	 * Voucher(if the Bank Remittance voucher type is Receipt)
+	 *
+	 * @param Map containing Instrument and PayInSlip voucher information
+	 */
 
-    /**
-     * Update Cash Instrument Status after creating Pay in Slip Voucher
-     *
-     * @param Map containing Instrument and PayInSlip voucher information
-     */
-    @Deprecated
-    @Transactional
-    public void updateCashDeposit(final Map<String, Object> instrumentMap) {
-        contraService.updateCashDeposit(instrumentMap);
-    }
+	@Transactional
+	public void updateCheque_DD_Card_Deposit_Receipt(final Map<String, Object> instrumentMap) {
+		contraService.updateCheque_DD_Card_Deposit_Receipt(instrumentMap);
+	}
 
-    @Transactional
-    public void updateCashDeposit(final Map<String, Object> instrumentMap, final CVoucherHeader cVoucherHeader,
-            final InstrumentHeader instrumentHeader, final Bankaccount bankaccount) {
-        contraService.updateCashDeposit(instrumentMap, cVoucherHeader, instrumentHeader, bankaccount);
-    }
+	/**
+	 * Update Cash Instrument Status after creating Pay in Slip Voucher
+	 *
+	 * @param Map containing Instrument and PayInSlip voucher information
+	 */
+	@Deprecated
+	@Transactional
+	public void updateCashDeposit(final Map<String, Object> instrumentMap) {
+		contraService.updateCashDeposit(instrumentMap);
+	}
 
-    /**
-     * @param contraService the contraService to set
-     */
-    public void setContraService(final ContraService contraService) {
-        this.contraService = contraService;
-    }
+	@Transactional
+	public void updateCashDeposit(final Map<String, Object> instrumentMap, final CVoucherHeader cVoucherHeader,
+			final InstrumentHeader instrumentHeader, final Bankaccount bankaccount) {
+		contraService.updateCashDeposit(instrumentMap, cVoucherHeader, instrumentHeader, bankaccount);
+	}
 
-    /**
-     * Checks whether given account is a revenue account (cash/cheque in hand)
-     *
-     * @param coa the account object
-     * @return true if the account is a revenue account, else false
-     */
-    @SuppressWarnings("unchecked")
-    public static boolean isRevenueAccountHead(final CChartOfAccounts coa, final List<CChartOfAccounts> bankCOAList,
-            final PersistenceService persistenceService) {
-        final Long purposeId = coa.getPurposeId();
+	/**
+	 * @param contraService the contraService to set
+	 */
+	public void setContraService(final ContraService contraService) {
+		this.contraService = contraService;
+	}
 
-        // In case of bank payment, to check if the chartofaccounts exist in the
-        // list of chartofacccounts mapped to bankaccounts.
-        if (bankCOAList.contains(coa))
-            return true;
-        if (purposeId != null)
-            try {
-                final SQLQuery query = persistenceService.getSession().createSQLQuery(
-                        "SELECT NAME FROM EGF_ACCOUNTCODE_PURPOSE WHERE ID = :id");
-                query.setParameter("id", purposeId);
-                final List<String> purposeNames = query.list();
-                if (purposeNames != null && purposeNames.size() == 1) {
-                    final String purposeName = purposeNames.get(0);
-                    if (purposeName.equals(CollectionConstants.PURPOSE_NAME_CASH_IN_HAND)
-                            || purposeName.equals(CollectionConstants.PURPOSE_NAME_CHEQUE_IN_HAND)
-                            || purposeName.equals(CollectionConstants.PURPOSE_NAME_CASH_IN_TRANSIT)
-                            || purposeName.equals(CollectionConstants.PURPOSE_NAME_CREDIT_CARD)
-                            || purposeName.equals(CollectionConstants.PURPOSE_NAME_ATM_ACCOUNTCODE)
-                            || purposeName.equals(CollectionConstants.PURPOSE_NAME_INTERUNITACCOUNT)
-                            || purposeName.equals(CollectionConstants.PURPOSE_NAME_THIRD_PARTY_COLLECTION))
-                        return true;
-                }
-            } catch (final NullPointerException e) {
-                throw new ApplicationRuntimeException("Exception in fetching purpose name for id [" + purposeId + "]",
-                        e);
-            }
-        return false;
-    }
+	/**
+	 * Checks whether given account is a revenue account (cash/cheque in hand)
+	 *
+	 * @param coa the account object
+	 * @return true if the account is a revenue account, else false
+	 */
+	@SuppressWarnings("unchecked")
+	public static boolean isRevenueAccountHead(final CChartOfAccounts coa, final List<CChartOfAccounts> bankCOAList,
+			final PersistenceService persistenceService) {
+		final Long purposeId = coa.getPurposeId();
 
-    @Transactional
-    public void updateInstrumentHeader(final List<InstrumentHeader> instrumentHeaderList, final EgwStatus status,
-            final Bankaccount depositedBankAccount) {
-        for (final InstrumentHeader iHeader : instrumentHeaderList)
-            instrumentHeaderService.persist(updateInstrumentHeaderStatus(iHeader, status, depositedBankAccount));
+		// In case of bank payment, to check if the chartofaccounts exist in the
+		// list of chartofacccounts mapped to bankaccounts.
+		if (bankCOAList.contains(coa))
+			return true;
+		if (purposeId != null)
+			try {
+				final SQLQuery query = persistenceService.getSession()
+						.createSQLQuery("SELECT NAME FROM EGF_ACCOUNTCODE_PURPOSE WHERE ID = :id");
+				query.setParameter("id", purposeId);
+				final List<String> purposeNames = query.list();
+				if (purposeNames != null && purposeNames.size() == 1) {
+					final String purposeName = purposeNames.get(0);
+					if (purposeName.equals(CollectionConstants.PURPOSE_NAME_CASH_IN_HAND)
+							|| purposeName.equals(CollectionConstants.PURPOSE_NAME_CHEQUE_IN_HAND)
+							|| purposeName.equals(CollectionConstants.PURPOSE_NAME_CASH_IN_TRANSIT)
+							|| purposeName.equals(CollectionConstants.PURPOSE_NAME_CREDIT_CARD)
+							|| purposeName.equals(CollectionConstants.PURPOSE_NAME_ATM_ACCOUNTCODE)
+							|| purposeName.equals(CollectionConstants.PURPOSE_NAME_INTERUNITACCOUNT)
+							|| purposeName.equals(CollectionConstants.PURPOSE_NAME_THIRD_PARTY_COLLECTION))
+						return true;
+				}
+			} catch (final NullPointerException e) {
+				throw new ApplicationRuntimeException("Exception in fetching purpose name for id [" + purposeId + "]",
+						e);
+			}
+		return false;
+	}
 
-    }
+	@Transactional
+	public void updateInstrumentHeader(final List<InstrumentHeader> instrumentHeaderList, final EgwStatus status,
+			final Bankaccount depositedBankAccount) {
+		for (final InstrumentHeader iHeader : instrumentHeaderList)
+			instrumentHeaderService.persist(updateInstrumentHeaderStatus(iHeader, status, depositedBankAccount));
 
-    public InstrumentHeader updateInstrumentHeaderStatus(final InstrumentHeader instrumentHeaderObj,
-            final EgwStatus status, final Bankaccount depositedBankAccount) {
-        instrumentHeaderObj.setStatusId(status);
-        instrumentHeaderObj.setBankAccountId(depositedBankAccount);
-        return instrumentHeaderObj;
+	}
 
-    }
+	public InstrumentHeader updateInstrumentHeaderStatus(final InstrumentHeader instrumentHeaderObj,
+			final EgwStatus status, final Bankaccount depositedBankAccount) {
+		instrumentHeaderObj.setStatusId(status);
+		instrumentHeaderObj.setBankAccountId(depositedBankAccount);
+		return instrumentHeaderObj;
 
-    @Transactional
-    public void updateInstrumentHeader(final InstrumentHeader instrumentHeader) {
-        instrumentHeaderService.persist(instrumentHeader);
-    }
+	}
 
-    /**
-     * This API return list of ChartOfAccount mapped with bank accounts
-     *
-     * @return List of CChartOfAccounts
-     */
-    public List<CChartOfAccounts> getBankChartofAccountCodeList() {
-        return chartOfAccountsHibernateDAO.getBankChartofAccountCodeList();
-    }
+	@Transactional
+	public void updateInstrumentHeader(final InstrumentHeader instrumentHeader) {
+		instrumentHeaderService.persist(instrumentHeader);
+	}
 
-    public Map<String, Object> prepareForUpdateInstrumentDepositSQL() {
-        return contraService.prepareForUpdateInstrumentDepositSQL();
-    }
+	/**
+	 * This API return list of ChartOfAccount mapped with bank accounts
+	 *
+	 * @return List of CChartOfAccounts
+	 */
+	public List<CChartOfAccounts> getBankChartofAccountCodeList() {
+		return chartOfAccountsHibernateDAO.getBankChartofAccountCodeList();
+	}
 
-    public void setInstrumentHeaderService(final PersistenceService<InstrumentHeader, Long> instrumentHeaderService) {
-        this.instrumentHeaderService = instrumentHeaderService;
-    }
+	public Map<String, Object> prepareForUpdateInstrumentDepositSQL() {
+		return contraService.prepareForUpdateInstrumentDepositSQL();
+	}
+
+	public void setInstrumentHeaderService(final PersistenceService<InstrumentHeader, Long> instrumentHeaderService) {
+		this.instrumentHeaderService = instrumentHeaderService;
+	}
 
 }
