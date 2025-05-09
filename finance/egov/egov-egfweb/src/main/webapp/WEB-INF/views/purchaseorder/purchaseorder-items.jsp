@@ -52,7 +52,7 @@
 				<form:input path="purchaseItems[0].unitValueWithGst" id="purchaseItems[0].unitValueWithGst" class="form-control table-input unitValueWithGst" data-errormsg="Unit Value With Gst is mandatory!"  maxlength="12"  />
 			</td> 
 			<td>
-				<form:input path="purchaseItems[0].quantity" id="purchaseItems[0].quantity" class="form-control table-input quantity" data-errormsg="Quantity is mandatory!"    maxlength="12" />
+				<form:input path="purchaseItems[0].quantity" id="purchaseItems[0].quantity" class="form-control table-input quantity" onkeyup="getPurchaseOrderAmount();" data-errormsg="Quantity is mandatory!"    maxlength="12" /> <!-- Updated By Heera onkeyup-->
 			</td> 
 			<td>
 				<form:input path="purchaseItems[0].amount" id="purchaseItems[0].amount" class="form-control table-input amount" onblur="calcualteNetpaybleAmount1();" data-errormsg="Amount is mandatory!" onkeyup="decimalvalue(this);" data-pattern="decimalvalue" data-idx="0" data-optional="0"   maxlength="12"  readonly="readonly"/>
@@ -88,7 +88,7 @@
 				<form:input path="purchaseItems[${item.index}].unitValueWithGst" id="purchaseItems[${item.index}].unitValueWithGst" class="form-control table-input unitValueWithGst" data-errormsg="Unit Value With Gst is mandatory!"  maxlength="12"  value="${billDeatils.unitValueWithGst}"/>
 			</td> 
 			<td>
-				<form:input path="purchaseItems[${item.index}].quantity" id="purchaseItems[${item.index}].quantity" class="form-control table-input quantity" data-errormsg="Quantity is mandatory!"    maxlength="12"  value="${billDeatils.quantity}"/>
+				<form:input path="purchaseItems[${item.index}].quantity" id="purchaseItems[${item.index}].quantity" class="form-control table-input quantity" onkeyup="getPurchaseOrderAmount();" data-errormsg="Quantity is mandatory!"    maxlength="12"  value="${billDeatils.quantity}"/> <!-- Updated By Heera onkeyup-->
 			</td> 
 			<td>
 				<form:input path="purchaseItems[${item.index}].amount" id="purchaseItems[${item.index}].amount" onblur="calcualteNetpaybleAmount1();" class="form-control table-input amount" data-errormsg="Amount is mandatory!" onkeyup="decimalvalue(this);" data-pattern="decimalvalue" data-idx="0" data-optional="0"   maxlength="12"  readonly="readonly" value="${billDeatils.amount}"/>

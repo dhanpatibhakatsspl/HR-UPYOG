@@ -49,6 +49,27 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/taglibs.jsp"%>
+<!-- ======================= Added By Heeralal Gupta Start ==================== -->
+<style>
+	.position_alert {
+	position: fixed;
+	z-index: 9999;
+	top: 5px;
+	right: 20px;
+	background: #F2DEDE;
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+</style>
+
+<div class="position_alert">
+    <spring:message code="lbl.toal.budget.amount" text="Total Budget Amount" />
+    : &#8377; <span id="budgetAmount">
+        <c:out value="${totalBudgetAmount}" default="0.0" />
+    </span>
+</div>
+
+<!-- ======================= Added By Heeralal Gupta End ==================== -->
 <form:form role="form" action="create" modelAttribute="purchaseOrder" id="purchaseorderform" cssClass="form-horizontal form-groups-bordered" enctype="multipart/form-data">
 <div class="main-content">
 	<div class="row">

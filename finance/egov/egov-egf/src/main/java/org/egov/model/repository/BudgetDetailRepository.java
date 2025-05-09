@@ -78,4 +78,7 @@ public interface BudgetDetailRepository extends JpaRepository<BudgetDetail, java
     @Query("Select sum(budgetAvailable) from BudgetDetail where executingDepartment=:dept")
     BigDecimal getAllBudgetAmountByDepartment(@Param("dept")String dept);
 
+    @Query("SELECT SUM(b.approvedAmount) FROM BudgetDetail b WHERE b.executingDepartment = :dept") // Added By Heeralal Gupta
+    BigDecimal findApprovedAmountByDepartment(@Param("dept") String dept); // Added By Heeralal Gupta
+
 }
