@@ -62,6 +62,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -76,10 +77,24 @@ import org.egov.collection.entity.CollectionBankRemittanceReport;
 import org.egov.collection.entity.ReceiptHeader;
 import org.egov.collection.service.RemittanceServiceImpl;
 import org.egov.collection.utils.CollectionsUtil;
+import org.egov.commons.Accountdetailtype;
 import org.egov.commons.Bankaccount;
+import org.egov.commons.CChartOfAccounts;
 import org.egov.commons.CFinancialYear;
+import org.egov.commons.CFunction;
+import org.egov.commons.CVoucherHeader;
 import org.egov.commons.dao.BankaccountHibernateDAO;
 import org.egov.commons.dao.FinancialYearDAO;
+import org.egov.commons.service.ChartOfAccountDetailService;
+import org.egov.commons.utils.EntityType;
+import org.egov.egf.commons.CommonsUtil;
+import org.egov.egf.commons.EgovCommon;
+import org.egov.eis.web.actions.workflow.GenericWorkFlowAction;
+import org.egov.eis.web.contract.WorkflowContainer;
+import org.egov.eis.web.controller.workflow.GenericWorkFlowController;
+import org.egov.infra.admin.master.entity.AppConfigValues;
+import org.egov.infra.admin.master.service.AppConfigValueService;
+import org.egov.infra.exception.ApplicationException;
 import org.egov.infra.exception.ApplicationRuntimeException;
 import org.egov.infra.microservice.models.BankAccountServiceMapping;
 import org.egov.infra.microservice.models.BusinessDetails;
@@ -90,9 +105,18 @@ import org.egov.infra.validation.exception.ValidationError;
 import org.egov.infra.validation.exception.ValidationException;
 import org.egov.infra.web.struts.actions.BaseFormAction;
 import org.egov.infra.web.struts.annotation.ValidationErrorPage;
+import org.egov.infra.workflow.entity.StateAware;
+import org.egov.model.bills.EgBillPayeedetails;
+import org.egov.model.bills.EgBilldetails;
+import org.egov.model.bills.EgBillregister;
+import org.egov.model.voucher.WorkflowBean;
 import org.egov.utils.Constants;
+import org.egov.utils.FinancialConstants;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ExtendedModelMap;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Results({
         @Result(name = BankRemittanceAction.NEW, location = "bankRemittance-new.jsp"),
@@ -102,7 +126,7 @@ import org.springframework.beans.factory.annotation.Autowired;
                 "${remittanceDate}" }),
         @Result(name = BankRemittanceAction.INDEX, location = "bankRemittance-index.jsp") })
 @ParentPackage("egov")
-public class BankRemittanceAction extends BaseFormAction {
+public class BankRemittanceAction extends GenericWorkFlowAction {
     protected static final String PRINT_BANK_CHALLAN = "printBankChallan";
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(BankRemittanceAction.class);
@@ -160,8 +184,35 @@ public class BankRemittanceAction extends BaseFormAction {
     private List<ReceiptBean> finalList = new ArrayList<>();
     final SimpleDateFormat dateFomatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
+    /**
+     * Change start by umesh...
+     */
+    private static final String STATE_TYPE = "stateType";
+    protected WorkflowBean workflowBean = new WorkflowBean();
+    private ReceiptHeader receiptHeader = new ReceiptHeader();
+    private EgBillregister egBillregister = new EgBillregister();
+    private Map<String, Object> billDetails;
+    @Autowired
+    private ChartOfAccountDetailService chartOfAccountDetailService;
 
+    @Autowired
+    private EgovCommon egovCommon;
+    private static final String INVALID_APPROVER = "invalid.approver";
+    private String mode = "";
+    
+    @Autowired
+    private CommonsUtil commonsUtil;
+    @Autowired
+    private AppConfigValueService appConfigValuesService;
+    private String action = "";
+    private final static String FORWARD = "Forward";
+    private static final String ACCDETAILTYPEQUERY = " from Accountdetailtype where id=?";
+    
+    private CVoucherHeader voucherHeader = new CVoucherHeader();
 
+    /**
+     * change end by umesh
+     */
     /**
      * @param collectionsUtil the collectionsUtil to set
      */
@@ -190,6 +241,7 @@ public class BankRemittanceAction extends BaseFormAction {
     @Action(value = "/receipts/bankRemittance-newform")
     @SkipValidation
     public String newform() {
+    	
         populateRemittanceList();
         return NEW;
     }
@@ -206,6 +258,7 @@ public class BankRemittanceAction extends BaseFormAction {
     @Action(value = "/receipts/bankRemittance-listData")
     @SkipValidation
     public String listData() {
+    	//action = "save";   // added by umesh
     	validateSearchCriteria();
     	if (hasErrors()) {
     		populateRemittanceList();
@@ -274,17 +327,149 @@ public class BankRemittanceAction extends BaseFormAction {
     public String save() {
         return SUCCESS;
     }
+    
+    /**
+     * Created By : Umesh Kumar 
+     * Created Date : 07-04-2025
+     */
+    public List<String> getValidActions() {
+
+        List<String> validActions = Collections.emptyList();
+        if (!action.equalsIgnoreCase("save"))
+            if (null == getModel() || null == getModel().getId()
+                    || getModel().getCurrentState().getValue().endsWith("NEW")) {
+                validActions = Arrays.asList(FORWARD);
+            } else {
+                if (getModel().getCurrentState() != null) {
+                    validActions = this.customizedWorkFlowService.getNextValidActions(getModel().getStateType(),
+                            getWorkFlowDepartment(), getAmountRule(), getAdditionalRule(),
+                            getModel().getCurrentState().getValue(), getPendingActions(), getModel().getCreatedDate());
+                }
+            }
+        else {
+            ReceiptHeader model = new ReceiptHeader();
+            List<AppConfigValues> cutOffDateconfigValue = appConfigValuesService.getConfigValuesByModuleAndKey("EGF",
+                    "DataEntryCutOffDate");
+            if (cutOffDateconfigValue != null && !cutOffDateconfigValue.isEmpty()) {
+                if (null == model || null == model.getId() || model.getCurrentState().getValue().endsWith("NEW")) {
+                    validActions = Arrays.asList(FORWARD, FinancialConstants.CREATEANDAPPROVE);
+                } else {
+                    if (model.getCurrentState() != null) {
+                        validActions = this.customizedWorkFlowService.getNextValidActions(model.getStateType(),
+                                getWorkFlowDepartment(), getAmountRule(), getAdditionalRule(),
+                                model.getCurrentState().getValue(), getPendingActions(), model.getCreatedDate());
+                    }
+                }
+            } else {
+                if (null == model || null == model.getId() || model.getCurrentState().getValue().endsWith("NEW")) {
+                    validActions = Arrays.asList(FORWARD);
+                } else {
+                    if (model.getCurrentState() != null) {
+                        validActions = this.customizedWorkFlowService.getNextValidActions(model.getStateType(),
+                                getWorkFlowDepartment(), getAmountRule(), getAdditionalRule(),
+                                model.getCurrentState().getValue(), getPendingActions(), model.getCreatedDate());
+                    }
+                }
+            }
+        }
+        return validActions;
+    }
+    
+    protected void populateWorkflowBean() {
+        workflowBean.setApproverPositionId(approverPositionId);
+        workflowBean.setApproverComments(approverComments);
+        workflowBean.setWorkFlowAction(workFlowAction);
+        workflowBean.setCurrentState(currentState);
+    }
+    
+    public void getMasterDataForBill() throws ApplicationException {
+        billDetails = new HashMap<String, Object>();
+        CChartOfAccounts coa = null;
+        Map<String, Object> temp = null;
+        Map<String, Object> payeeMap = null;
+        final List<Map<String, Object>> tempList = new ArrayList<Map<String, Object>>();
+        final List<Map<String, Object>> payeeList = new ArrayList<Map<String, Object>>();
+
+        final List<EgBilldetails> egBillDetails = persistenceService
+                .findAllBy("from EgBilldetails where  egBillregister.id=? ", egBillregister.getId());
+
+        for (final EgBilldetails billdetails : egBillDetails) {
+            temp = new HashMap<String, Object>();
+            if (billdetails.getFunctionid() != null)
+                temp.put(Constants.FUNCTION, ((CFunction) getPersistenceService().find("from CFunction where id=?",
+                        Long.valueOf(billdetails.getFunctionid() + ""))).getName());
+            coa = (CChartOfAccounts) getPersistenceService().find("from CChartOfAccounts where id=?",
+                    Long.valueOf(billdetails.getGlcodeid() + ""));
+            temp.put(Constants.GLCODE, coa.getGlcode());
+            temp.put("accounthead", coa.getName());
+            temp.put(Constants.DEBITAMOUNT, billdetails.getDebitamount() == null ? 0 : billdetails.getDebitamount());
+            temp.put(Constants.CREDITAMOUNT, billdetails.getCreditamount() == null ? 0 : billdetails.getCreditamount());
+            temp.put("billdetailid", billdetails.getId());
+            tempList.add(temp);
+
+            for (final EgBillPayeedetails payeeDetails : billdetails.getEgBillPaydetailes()) {
+                payeeMap = new HashMap<>();
+                if (chartOfAccountDetailService.getByGlcodeIdAndDetailTypeId(
+                        payeeDetails.getEgBilldetailsId().getGlcodeid().longValue(),
+                        payeeDetails.getAccountDetailTypeId().intValue()) != null) {
+                    payeeMap = getAccountDetails(payeeDetails.getAccountDetailTypeId(),
+                            payeeDetails.getAccountDetailKeyId(), payeeMap);
+                    payeeMap.put(Constants.GLCODE, coa.getGlcode());
+                    payeeMap.put(Constants.DEBITAMOUNT,
+                            payeeDetails.getDebitAmount() == null ? 0 : payeeDetails.getDebitAmount());
+                    payeeMap.put(Constants.CREDITAMOUNT,
+                            payeeDetails.getCreditAmount() == null ? 0 : payeeDetails.getCreditAmount());
+                    payeeList.add(payeeMap);
+                }
+
+            }
+        }
+        billDetails.put("tempList", tempList);
+        billDetails.put("payeeList", payeeList);
+    }
+    
+    public Map<String, Object> getAccountDetails(final Integer detailtypeid, final Integer detailkeyid,
+            final Map<String, Object> tempMap) throws ApplicationException {
+        final Accountdetailtype detailtype = (Accountdetailtype) getPersistenceService().find(ACCDETAILTYPEQUERY,
+                detailtypeid);
+        tempMap.put("detailtype", detailtype.getDescription());
+        tempMap.put("detailtypeid", detailtype.getId());
+        tempMap.put("detailkeyid", detailkeyid);
+
+        egovCommon.setPersistenceService(persistenceService);
+        final EntityType entityType = egovCommon.getEntityType(detailtype, detailkeyid);
+        if (entityType == null) {
+            tempMap.put(Constants.DETAILKEY, detailkeyid + " " + Constants.MASTER_DATA_DELETED);
+            tempMap.put(Constants.DETAILCODE, Constants.MASTER_DATA_DELETED);
+        } else {
+            tempMap.put(Constants.DETAILKEY, entityType.getName());
+            tempMap.put(Constants.DETAILCODE, entityType.getCode());
+        }
+        return tempMap;
+    }
 
     @ValidationErrorPage(value = "error")
     @Action(value = "/receipts/bankRemittance-create")
-    public String create() {
+    public String create() throws ApplicationException {
+    	System.out.println("Bank Remittance Create------------> OK");
         prepareBankRemittanceList();
         final long startTimeMillis = System.currentTimeMillis();
         if (accountNumberId == null || accountNumberId.isEmpty() || accountNumberId.equalsIgnoreCase("-1"))
             throw new ValidationException(Arrays.asList(new ValidationError("Please select Account number",
                     "bankremittance.error.noaccountNumberselected")));
-        // voucherHeaderValues =
-        List<Receipt> receipts = remittanceService.createCashBankRemittance(finalList, accountNumberId, remittanceDate);
+        
+        populateWorkflowBean();
+        getMasterDataForBill();
+        if (FinancialConstants.BUTTONFORWARD.equalsIgnoreCase(workflowBean.getWorkFlowAction())) {
+            if (!commonsUtil.isValidApprover(voucherHeader, workflowBean.getApproverPositionId())) {
+//                voucher();
+                mode = "";
+                addActionError(getText(INVALID_APPROVER));
+                return "billview";
+            }
+        }
+        
+        List<Receipt> receipts = remittanceService.createCashBankRemittance(finalList, accountNumberId, remittanceDate,workflowBean);
         final long elapsedTimeMillis = System.currentTimeMillis() - startTimeMillis;
         LOGGER.info("$$$$$$ Time taken to persist the remittance list (ms) = " + elapsedTimeMillis);
         bankRemittanceList = remittanceService.prepareCashRemittanceReport(receipts);
@@ -385,7 +570,7 @@ public class BankRemittanceAction extends BaseFormAction {
     }
 
     @Override
-    public Object getModel() {
+    public StateAware getModel() {   // Change return type Object to StateAware
         return receiptHeaderIntsance;
     }
 
