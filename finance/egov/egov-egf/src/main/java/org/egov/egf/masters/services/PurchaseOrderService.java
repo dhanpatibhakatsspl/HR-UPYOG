@@ -47,6 +47,7 @@
  */
 package org.egov.egf.masters.services;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -118,8 +119,14 @@ public class PurchaseOrderService implements EntityTypeService {
 	@Autowired
 	private PurchaseItemRepository purchaseItemRepository;
 
+	// Added By Heeralal Gupta start
+	private final BudgetDetailRepository budgetDetailRepository;
+
 	@Autowired
-	private BudgetDetailRepository budgetDetailRepository; // Added By Heeralal Gupta
+	public PurchaseOrderService(BudgetDetailRepository budgetDetailRepository) {
+	    this.budgetDetailRepository = budgetDetailRepository;
+	}
+	// Added By Heeralal End
 
 	public Session getCurrentSession() {
 		return entityManager.unwrap(Session.class);
