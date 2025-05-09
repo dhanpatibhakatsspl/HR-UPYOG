@@ -65,6 +65,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 
+import org.egov.model.repository.BudgetDetailRepository;
 import org.egov.commons.Accountdetailkey;
 import org.egov.commons.service.AccountDetailKeyService;
 import org.egov.commons.service.AccountdetailtypeService;
