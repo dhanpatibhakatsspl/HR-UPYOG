@@ -134,6 +134,40 @@ function loadSubScheme(schemeId){
 	}
 }
 
+/*================= Added by Heeralal Gupta Start ===================*/
+var totalBudgetAmount = 0;
+$('#department').change(function() {
+    var departmentId = $(this).val();
+  /* alert("Department Id : " + departmentId);*/
+
+    $.ajax({
+        method: "GET",
+        url: "/services/EGF/purchaseorder/ajaxbudgetAmt/" + departmentId,
+        success: function(response) {
+           $('#budgetAmount').text(response);
+           totalBudgetAmount = parseFloat(response);
+        },
+        error: function(xhr, status, error) {
+            alert("Error fetching budget amount: " + error);
+        }
+    });
+});
+
+/*Getting total amount of purchase order*/
+function getPurchaseOrderAmount(){
+	var totalSupplierAmount = document.getElementById('totalAmount').innerText;
+	
+	if(totalSupplierAmount <= totalBudgetAmount && totalBudgetAmount != -1){
+		document.getElementById('buttonSubmit').disabled = false;
+	}else{
+		document.getElementById('buttonSubmit').disabled = false;
+		bootbox.alert("Purchase order amount: " +totalSupplierAmount+ " is greater than budget amount: "+totalBudgetAmount);
+	}
+	
+}
+
+/*================= Added by Heeralal Gupta End ===================*/
+
 
 $('#fund').change(function () {
 	/*$schemeId = "";

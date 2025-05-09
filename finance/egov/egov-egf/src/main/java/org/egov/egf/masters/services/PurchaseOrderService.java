@@ -118,6 +118,9 @@ public class PurchaseOrderService implements EntityTypeService {
 	@Autowired
 	private PurchaseItemRepository purchaseItemRepository;
 
+	@Autowired
+	private BudgetDetailRepository budgetDetailRepository; // Added By Heeralal Gupta
+
 	public Session getCurrentSession() {
 		return entityManager.unwrap(Session.class);
 	}
@@ -354,9 +357,14 @@ public class PurchaseOrderService implements EntityTypeService {
 
 //	
 	
-	
-	
 	// =================================== End Implementaion of Raju  ============================
 	
+	// ======================= Added By Heeralal Gupta Start ==============================
+	public BigDecimal getBudgetAmountByDeptId(String dept) {
+	    BigDecimal amount = budgetDetailRepository.findApprovedAmountByDepartment(dept);
+	    return amount != null ? amount : BigDecimal.ZERO;
+	}
+
+	// ======================= Added By Heeralal Gupta End ================================
 
 }

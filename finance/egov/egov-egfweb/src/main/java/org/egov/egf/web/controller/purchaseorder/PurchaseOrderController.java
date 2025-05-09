@@ -178,6 +178,18 @@ public class PurchaseOrderController {
 		return "redirect:/purchaseorder/result/" + purchaseOrder.getId() + "/create";
 	}
 
+	//=================== Added By Heeralal Gupta Start ==========================
+	
+	@GetMapping(value = "/ajaxbudgetAmt/{departmentId}")
+	@ResponseBody
+	public double getBudgetAmount(@PathVariable("departmentId") String departmentId) {
+		BigDecimal amt = purchaseOrderService.getBudgetAmountByDeptId(departmentId);
+		return Double.parseDouble(purchaseOrderService.getBudgetAmountByDeptId(departmentId).toString());
+	    
+	}
+
+	//=================== Added By Heeralal Gupta End ============================
+
 	@GetMapping(value = "/edit/{id}")
 	public String edit(@PathVariable("id") final Long id, final Model model) {
 		final PurchaseOrder purchaseOrder = purchaseOrderService.getById(id);
