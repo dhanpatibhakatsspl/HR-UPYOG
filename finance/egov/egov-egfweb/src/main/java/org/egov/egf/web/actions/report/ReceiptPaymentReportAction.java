@@ -89,6 +89,7 @@ import java.util.Map.Entry;
 
 
 @Results(value = {
+		@Result(name = "new", location = "receiptPaymentReport-new.jsp"),
         @Result(name = "PDF", type = "stream", location = Constants.INPUT_STREAM, params = { Constants.INPUT_NAME,
                 Constants.INPUT_STREAM, Constants.CONTENT_TYPE, "application/pdf", Constants.CONTENT_DISPOSITION,
         "no-cache;filename=receiptPaymentReport.pdf" }),
