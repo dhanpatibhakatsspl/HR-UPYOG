@@ -134,6 +134,46 @@ function loadSubScheme(schemeId){
 	}
 }
 
+/*================= Added by Heeralal Gupta Start ===================*/
+var totalBudgetAmount = 0;
+
+$('#department').change(function() {
+    var departmentId = $(this).val();
+
+    $.ajax({
+        method: "GET",
+        url: "/services/EGF/workorder/ajaxbudgetAmt/" + departmentId,
+        success: function(response) {
+            $('#budgetAmount').text(response);
+            totalBudgetAmount = parseFloat(response);
+
+            // Now get work order amount and validate
+            var totalWOAmount = parseFloat(document.getElementById('orderValue').value) || 0;
+
+            if (totalWOAmount <= totalBudgetAmount && totalBudgetAmount !== -1) {
+                document.getElementById('buttonSubmit').disabled = false;
+            } else {
+                document.getElementById('buttonSubmit').disabled = true;
+                bootbox.alert("Work order amount: " + totalWOAmount + " is greater than budget amount: " + totalBudgetAmount);
+            }
+        },
+        error: function(xhr, status, error) {
+            alert("Error fetching budget amount: " + error);
+        }
+    });
+});
+
+compareBudget = () =>{
+	var totalWOAmount = parseFloat(document.getElementById('orderValue').value) || 0;
+	if(totalBudgetAmount >= totalWOAmount || totalBudgetAmount === 0){
+		document.getElementById('buttonSubmit').disabled = false;
+	}else{
+		document.getElementById('buttonSubmit').disabled = false;
+		bootbox.alert("Work order amount: " +totalWOAmount+ " is greater than budget amount: "+totalBudgetAmount);
+	}
+}
+
+/*================= Added by Heeralal Gupta End ===================*/
 
 $('#fund').change(function () {
 	/*$schemeId = "";
