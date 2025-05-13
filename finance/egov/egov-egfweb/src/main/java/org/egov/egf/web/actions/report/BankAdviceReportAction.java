@@ -404,7 +404,26 @@ public class BankAdviceReportAction extends BaseFormAction {
 
         return "reportview";
     }
+//    Start - Adding RTGS Advice Method - Santosh Kumar mahto
+    @ValidationErrorPage(NEW)
+    @Action(value = "/report/RTGSAdviceReport-RTGSexportExcel")
+    public String RTGSexportExcel() {
+        final Map<String, Object> reportParams = new HashMap<String, Object>();
+        reportParams.put("bankName", getBankName(bank.getId()));
+        reportParams.put("branchName", getBankBranchName(bankbranch.getId()));
+        reportParams.put("accountNumber", getBankAccountNumber(bankaccount.getId()));
+        final List<BankAdviceReportInfo> subLedgerList = getBankAdviceReportList();
+        final ReportRequest reportInput = new ReportRequest("bankAdviceExcelReport", subLedgerList, reportParams);
+        reportInput.setReportFormat(ReportFormat.XLS);
+        contentType = ReportViewerUtil.getContentType(ReportFormat.XLS);
+        fileName = "RTGSAdviceReport." + ReportFormat.XLS.toString().toLowerCase();
+        final ReportOutput reportOutput = reportService.createReport(reportInput);
+        if (reportOutput != null && reportOutput.getReportOutputData() != null)
+            inputStream = new ByteArrayInputStream(reportOutput.getReportOutputData());
 
+        return "reportview";
+    }
+//    End - Ending RTgs Advice Method - Santosh Kumar mahto
     @ValidationErrorPage(NEW)
     @Action(value = "/report/bankAdviceReport-exportHtml")
     public String exportHtml() {
