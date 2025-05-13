@@ -49,11 +49,13 @@ package org.egov.egf.web.controller.workorder;
 
 import java.io.IOException;
 import java.util.List;
+import java.math.BigDecimal;
 
 import javax.validation.Valid;
 
 import org.egov.commons.service.FundService;
 import org.egov.egf.masters.services.ContractorService;
+import org.egov.egf.masters.services.PurchaseOrderService;
 import org.egov.egf.masters.services.WorkOrderService;
 import org.egov.egf.web.adaptor.WorkOrderJsonAdaptor;
 import org.egov.infra.microservice.models.Department;
@@ -115,6 +117,9 @@ public class WorkOrderController {
 
 	@Autowired
 	private EgBillRegisterService egBillRegisterService;
+
+	@Autowired
+	private PurchaseOrderService purchaseOrderService; // Added By Heeralal Gupta
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -220,5 +225,17 @@ public class WorkOrderController {
 		Department dept = microserviceUtils.getDepartmentByCode(workOrder.getDepartment());
 		workOrder.setDepartmentName(dept.getName());
 	}
+
+	//=================== Added By Heeralal Gupta Start ==========================
+	
+	@GetMapping(value = "/ajaxbudgetAmt/{departmentId}")
+	@ResponseBody
+	public double getBudgetAmount(@PathVariable("departmentId") String departmentId) {
+		BigDecimal amt = purchaseOrderService.getBudgetAmountByDeptId(departmentId);
+		//System.out.println(amt);
+		return Double.parseDouble(purchaseOrderService.getBudgetAmountByDeptId(departmentId).toString());	    
+	}
+
+	//=================== Added By Heeralal Gupta End ============================
 
 }

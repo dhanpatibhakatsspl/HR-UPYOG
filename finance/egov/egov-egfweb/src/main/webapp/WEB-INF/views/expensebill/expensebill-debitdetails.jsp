@@ -84,12 +84,47 @@
 				<td>
 					<input type="text" id="tempDebitDetails[0].debitAccountHead" name="tempDebitDetails[0].debitAccountHead" class="form-control debitdetailname" disabled>  
 				</td>
-				<td>
-					<form:input path="" name="tempDebitDetails[0].debitamount" id="tempDebitDetails[0].debitamount"  data-errormsg="Debit Amount is mandatory!" onkeyup="decimalvalue(this);" onblur="calcualteNetpaybleAmount();" data-pattern="decimalvalue" data-idx="0" data-optional="0" class="form-control table-input text-right debitAmount"   maxlength="12" />
-				</td> 
+				<td> 
+				  <form:input path="" name="tempDebitDetails[0].debitamount" id="tempDebitDetails[0].debitamount"
+				    data-errormsg="Debit Amount is mandatory!" onkeyup="decimalvalue(this);"
+				    onblur="calcualteNetpaybleAmount(); validateDebitAmount(this);" data-pattern="decimalvalue"
+				    data-idx="0" data-optional="0"
+				    class="form-control table-input text-right debitAmount" maxlength="12" />
+				  <span class="text-danger debit-error small"></span>
+				</td>
+					  
+				 
 				<td class="text-center"><span style="cursor:pointer;" onclick="addDebitDetailsRow();" tabindex="0" id="tempDebitDetails[0].addButton" data-toggle="tooltip" title="" data-original-title="press SPACE to Add!" aria-hidden="true"><i class="fa fa-plus"></i></span>
 				 <span class="add-padding debit-delete-row" onclick="deleteDebitDetailsRow(this);"><i class="fa fa-trash"  aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Delete!"></i></span> </td>
 			</tr>
 		</tbody>
 	</table>
 </div>
+<script>
+  function validateDebitAmount(input) {
+    const budgetAmount = parseFloat(document.getElementById("budgetAmount").textContent.replace(/[^0-9.]/g, '')) || 0;
+    const enteredAmount = parseFloat(input.value) || 0;
+
+    const errorSpan = input.closest('td').querySelector('.debit-error');
+
+    if (enteredAmount > budgetAmount) {
+      // Show error message and clear input
+      errorSpan.textContent = "Debit amount cannot be greater than the total budget amount (₹" + budgetAmount.toFixed(2) + ").";
+      input.value = "";
+      input.classList.add("is-invalid");
+      input.focus();
+
+      // Clear Net Payable and Total Debit Amounts
+      document.getElementById("expenseNetPayableAmount").textContent = "0.00";
+      document.getElementById("expenseBillTotalDebitAmount").textContent = "0.00";
+    } else {
+      // Clear error message if valid
+      errorSpan.textContent = "";
+      input.classList.remove("is-invalid");
+    }
+  }
+</script>
+
+
+
+

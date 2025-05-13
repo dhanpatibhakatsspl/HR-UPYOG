@@ -61,12 +61,13 @@ import org.egov.collection.entity.ReceiptHeader;
 import org.egov.infra.microservice.models.Receipt;
 import org.egov.infra.utils.DateUtils;
 import org.egov.model.instrument.InstrumentHeader;
+import org.egov.model.voucher.WorkflowBean;
 
 public abstract class RemittanceService implements Serializable {
     private static final long serialVersionUID = 1849734164810403255L;
 
     public abstract List<Receipt> createCashBankRemittance(List<ReceiptBean> receiptList, final String accountNumberId,
-            final Date remittanceDate);
+            final Date remittanceDate,WorkflowBean workflowBean );
 
     public abstract List<ReceiptBean> findCashRemittanceDetailsForServiceAndFund(final String boundaryIdList,
             final String serviceCodes, final String fundCodes, Date startDate, Date endDate, String instrumentStatus);
@@ -136,5 +137,5 @@ public abstract class RemittanceService implements Serializable {
             final String serviceCodes, final String fundCodes, Date startDate, Date endDate);
 
     public abstract List<Receipt> createChequeBankRemittance(List<ReceiptBean> receiptList, String accountNumberId,
-            final Date remittanceDate, final String[] instrumentIdArray);
+            final Date remittanceDate, final String[] instrumentIdArray, WorkflowBean workflowBean);
 }

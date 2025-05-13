@@ -47,6 +47,7 @@
  */
 package org.egov.egf.masters.services;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,6 +65,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 
+import org.egov.model.repository.BudgetDetailRepository;
 import org.egov.commons.Accountdetailkey;
 import org.egov.commons.service.AccountDetailKeyService;
 import org.egov.commons.service.AccountdetailtypeService;
@@ -117,6 +119,15 @@ public class PurchaseOrderService implements EntityTypeService {
 
 	@Autowired
 	private PurchaseItemRepository purchaseItemRepository;
+
+	// Added By Heeralal Gupta start
+	private final BudgetDetailRepository budgetDetailRepository;
+
+	@Autowired
+	public PurchaseOrderService(BudgetDetailRepository budgetDetailRepository) {
+	    this.budgetDetailRepository = budgetDetailRepository;
+	}
+	// Added By Heeralal End
 
 	public Session getCurrentSession() {
 		return entityManager.unwrap(Session.class);
@@ -354,9 +365,14 @@ public class PurchaseOrderService implements EntityTypeService {
 
 //	
 	
-	
-	
 	// =================================== End Implementaion of Raju  ============================
 	
+	// ======================= Added By Heeralal Gupta Start ==============================
+	public BigDecimal getBudgetAmountByDeptId(String dept) {
+	    BigDecimal amount = budgetDetailRepository.findApprovedAmountByDepartment(dept);
+	    return amount != null ? amount : BigDecimal.ZERO;
+	}
+
+	// ======================= Added By Heeralal Gupta End ================================
 
 }

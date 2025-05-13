@@ -1,3 +1,5 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%--
   ~    eGov  SmartCity eGovernance suite aims to improve the internal efficiency,transparency,
   ~    accountability and the service delivery of the government  organizations.
@@ -46,58 +48,32 @@
   ~
   --%>
 
-
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ include file="/includes/taglibs.jsp"%>
-<!-- ======================= Added By Heeralal Gupta Start ==================== -->
-<style>
-	.position_alert {
-	position: fixed;
-	z-index: 9999;
-	top: 5px;
-	right: 20px;
-	background: #F2DEDE;
-	padding: 5px 10px;
-	border-radius: 5px;
-}
-</style>
-
-<div class="position_alert">
-    <spring:message code="lbl.toal.budget.amount" text="Total Budget Amount" />
-    : &#8377; <span id="budgetAmount">
-        <c:out value="${totalBudgetAmount}" default="0.0" />
-    </span>
-</div>
-
-<!-- ======================= Added By Heeralal Gupta End ==================== -->
-<form:form role="form" action="create" modelAttribute="workOrder" id="workorderform" cssClass="form-horizontal form-groups-bordered" enctype="multipart/form-data">
-<div class="main-content">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel panel-primary" data-collapsed="0">
-				<div class="panel-heading control-label">
-					 <div class="panel-title"><spring:message code="title.workorder.create" text="Work Order Master"/></div>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>eGov - Unauthorized</title>
+	</head>
+	<body>
+	<div class="formmainbox">
+		<div class="insidecontent">
+			<div class="errorroundbox2">
+				<div class="errortop2">
+					<div></div>
 				</div>
-			    <%@ include file="workorder-form.jsp"%>
-			    <div class="form-group">
-			      <div class="text-center">
-			        <button type='submit' class='btn btn-primary' id="buttonSubmit"> <spring:message code='lbl.create' text="Create"/> </button>
-			        <input type="button" class="btn btn-default" value="<spring:message code='lbl.clear' text='Clear'/>" id="button" name="clear" onclick="this.form.reset();">&nbsp;
-			        <a href='javascript:void(0)' class='btn btn-default' onclick="javascript:window.parent.postMessage('close','*');"><spring:message code='lbl.close' text="Close"/></a>
-			      </div>
-			    </div>
-		    </div>
+				<div class="errorcontent2">
+					<table border="0" cellspacing="0" cellpadding="0" style="position:relative;top:50px;left:50px;">
+						 <tr>
+							<td width="10%">
+							    <img width="100px" alt="Error" src="/egi/resources/erp2/images/error.png">
+							</td>
+                            <td>
+							    <span class="bold">You are not authorized to view this page.</span>
+							</td>
+						</tr>
+					</table>
+				</div>				
+			</div>
 		</div>
 	</div>
-</div>
-</form:form>
-<script>
-	$('#buttonSubmit').click(function(e) {
-		if ($('form').valid()) {
-		} else {
-			e.preventDefault();
-		}
-	});
-</script>
-<script src="<cdn:url value='/resources/global/js/egov/patternvalidation.js?rnd=${app_release_no}' context='/services/egi'/>"></script>
-<script type="text/javascript" src="<cdn:url value='/resources/app/js/workOrderHelper.js?rnd=${app_release_no}' context='/services/EGF'/>"></script>
+</body>
+</html>
