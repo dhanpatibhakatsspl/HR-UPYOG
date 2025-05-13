@@ -74,6 +74,10 @@
 							name="chq.assignment.paymentvoucherno" /></th>
 					<th class="bluebgheadtdnew"><s:text
 							name="chq.assignment.rtgs.amount" /></th>
+							<!-- Added column by Santosh Kumar Mahto  -->
+					<th class="bluebgheadtdnew"><s:text
+							name="chq.assignment.rtgs.rtgsadvice" /></th>
+							<!-- end column by Santosh Kumar Mahto  -->
 					<th class="bluebgheadtdnew"><s:text
 							name="chq.assignment.rtgs.date" /></th>
 					<th class="bluebgheadtdnew"><s:text
@@ -128,6 +132,19 @@
 								value="%{voucherHeaderId.voucherNumber}" /></td>
 						<td style="text-align: right" class="blueborderfortdnew"><s:property
 								value="%{paymentAmount}" /></td>
+								<!-- Added column by Santosh Kumar Mahto  -->
+						<td style="text-align: center" class="blueborderfortdnew">
+										<a href="#"
+								onclick="generateAdviceReport('xls','<s:property value='%{instrumentHeaderId.id}'/>',
+							'<s:property value="%{instrumentHeaderId.bankAccountId.id}" />',
+							'<s:property value="%{instrumentHeaderId.bankAccountId.bankbranch.id}" />',
+							'<s:property value="%{instrumentHeaderId.bankAccountId.bankbranch.bank.id}" />'); ">RTGS Advice - Generate
+								xls  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+							  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+							  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+							</svg></a> 
+							</td>
+							<!-- Ended column by Santosh Kumar Mahto  -->
 						<td style="text-align: center" class="blueborderfortdnew"><s:date
 								name="%{instrumentHeaderId.transactionDate}" format="dd/MM/yyyy" /></td>
 						<td style="text-align: center" class="blueborderfortdnew"><s:property
@@ -148,7 +165,7 @@
 		</div>
 		</div>
 	</s:form>
-	<script>   
+<script>   
 function generateReport(type,instrumentnumber,bankaccount,bankbranch,bank){
 	if(type=='pdf'){
 		 var url="${pageContext.request.contextPath}/report/bankAdviceReport-exportPDF.action?bank.id="+
@@ -165,6 +182,14 @@ function generateReport(type,instrumentnumber,bankaccount,bankbranch,bank){
 	}
 	 window.open(url,'','height=650,width=980,scrollbars=yes,left=0,top=0,status=yes');
 }
+// <!-- Added column by Santosh Kumar Mahto  -->
+function generateAdviceReport(type,instrumentnumber,bankaccount,bankbranch,bank){
+
+   var url="${pageContext.request.contextPath}/report/RTGSAdviceReport-RTGSexportExcel.action?bank.id="+
+			bank+"&bankbranch.id="+bankbranch+"&bankaccount.id="+bankaccount+"&instrumentnumber.id="+instrumentnumber;
+			window.open(url,'','height=650,width=980,scrollbars=yes,left=0,top=0,status=yes');
+}
+// <!-- ended column by Santosh Kumar Mahto  -->
 // <a href="#" onclick="openVoucher('<s:property value='%{#attr.currentRowObject.id}'/>','<s:property value="%{#attr.currentRowObject.vouchernumber}" />','<s:date name="%{#attr.currentRowObject.voucherdate}" format="dd/MM/yyyy"/>');"><s:property value="%{#attr.currentRowObject.vouchernumber}" /> </display:column>
 </script>
 </body>
