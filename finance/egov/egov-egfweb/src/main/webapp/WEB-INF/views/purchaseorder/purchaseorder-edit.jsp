@@ -61,6 +61,7 @@
 				<c:if test="${purchaseOrder.editAllFields}">
 					<%@ include file="purchaseorder-form.jsp"%>
 				</c:if>
+				<%@ include file="purchaseorder-items-update.jsp"%>
 				<c:if test="${!purchaseOrder.editAllFields}">
 					<%@ include file="purchaseorder-edit-form.jsp"%>
 				</c:if>
