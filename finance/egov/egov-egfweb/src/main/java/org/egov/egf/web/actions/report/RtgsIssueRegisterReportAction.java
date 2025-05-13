@@ -132,10 +132,10 @@ public class RtgsIssueRegisterReportAction extends ReportAction {
 	private FinancialYearDAO financialYearDAO;
 
 	@Autowired
-        private MicroserviceUtils microserviceUtils;
-	
+	private MicroserviceUtils microserviceUtils;
+
 	@Autowired
-        private CityService cityService;
+	private CityService cityService;
 
 	@Override
 	public Object getModel() {
@@ -170,7 +170,7 @@ public class RtgsIssueRegisterReportAction extends ReportAction {
 	}
 
 	private String getUlbName() {
-		return ReportUtil.getCityName() +" "+(cityService.getCityGrade()==null ? "" :cityService.getCityGrade());
+		return ReportUtil.getCityName() + " " + (cityService.getCityGrade() == null ? "" : cityService.getCityGrade());
 	}
 
 	@SkipValidation
@@ -222,17 +222,15 @@ public class RtgsIssueRegisterReportAction extends ReportAction {
 		String newToDate = "";
 		String reportRundate = "";
 		fundAndBankHeading = "RTGS Register for " + persistenceService
-				.find("select name from Fund where id = ?", Integer.parseInt(parameters.get("fundId")[0])).toString();
+				.find("select name from Fund where id = ?", Long.parseLong(parameters.get("fundId")[0])).toString();
 
-		if (null != parameters.get("rtgsAssignedFromDate")[0]
-				&& !parameters.get("rtgsAssignedFromDate")[0].isEmpty())
+		if (null != parameters.get("rtgsAssignedFromDate")[0] && !parameters.get("rtgsAssignedFromDate")[0].isEmpty())
 			dateRange = "from " + parameters.get("rtgsAssignedFromDate")[0];
 		else {
 			newFromDate = dateFormat.format(fromDate);
 			dateRange = "from " + newFromDate;
 		}
-		if (null != parameters.get("rtgsAssignedToDate")[0]
-				&& !parameters.get("rtgsAssignedToDate")[0].isEmpty())
+		if (null != parameters.get("rtgsAssignedToDate")[0] && !parameters.get("rtgsAssignedToDate")[0].isEmpty())
 			dateRange = dateRange + " to " + parameters.get("rtgsAssignedToDate")[0];
 		else {
 			newToDate = dateFormat.format(toDate);
@@ -281,8 +279,7 @@ public class RtgsIssueRegisterReportAction extends ReportAction {
 				.addScalar("paymentAmount").addScalar("department").addScalar("status").addScalar("bank")
 				.addScalar("bankBranch").addScalar("dtId", BigDecimalType.INSTANCE)
 				.addScalar("dkId", BigDecimalType.INSTANCE).addScalar("accountNumber");
-		if (null == parameters.get("rtgsAssignedFromDate")[0]
-				|| parameters.get("rtgsAssignedFromDate")[0].isEmpty())
+		if (null == parameters.get("rtgsAssignedFromDate")[0] || parameters.get("rtgsAssignedFromDate")[0].isEmpty())
 			query.setDate("finStartDate", new java.sql.Date(fromDate.getTime()));
 		if (LOGGER.isInfoEnabled())
 			LOGGER.info("Search Query ------------>" + query);
@@ -295,118 +292,119 @@ public class RtgsIssueRegisterReportAction extends ReportAction {
 		return "search";
 	}
 
-    private void populateDepartmentsName() {
-        Set<String> deptCodes = null;
-        if(rtgsDisplayList != null && !rtgsDisplayList.isEmpty()){
-            deptCodes = rtgsDisplayList.stream().map(bankAdvice -> {
-                return bankAdvice.getDepartment();
-            }).collect(Collectors.toSet());
-            List<Department> departments = microserviceUtils.getDepartments(String.join(",", deptCodes));
-            Map<String, Department> deptCodeMaps = new HashMap<>();
-            departments.stream().forEach(dept -> {
-                deptCodeMaps.put(dept.getCode(), dept);
-            });
-            rtgsDisplayList.stream().forEach(bankAdive -> {
-                String departCode = bankAdive.getDepartment();
-                Department department = deptCodeMaps.get(departCode);
-                bankAdive.setDepartment(department != null ? department.getName() : departCode);
-            });
-        }
-    }
+	private void populateDepartmentsName() {
+		Set<String> deptCodes = null;
+		if (rtgsDisplayList != null && !rtgsDisplayList.isEmpty()) {
+			deptCodes = rtgsDisplayList.stream().map(bankAdvice -> {
+				return bankAdvice.getDepartment();
+			}).collect(Collectors.toSet());
+			List<Department> departments = microserviceUtils.getDepartments(String.join(",", deptCodes));
+			Map<String, Department> deptCodeMaps = new HashMap<>();
+			departments.stream().forEach(dept -> {
+				deptCodeMaps.put(dept.getCode(), dept);
+			});
+			rtgsDisplayList.stream().forEach(bankAdive -> {
+				String departCode = bankAdive.getDepartment();
+				Department department = deptCodeMaps.get(departCode);
+				bankAdive.setDepartment(department != null ? department.getName() : departCode);
+			});
+		}
+	}
 
-    private Map<String, Map<String, Object>> getQueryString() {
-        final StringBuffer queryString = new StringBuffer();
-        final Map<String, Map<String, Object>> queryMap = new HashMap<>();
-        final Map<String, Object> queryParams = new HashMap<>();
-        String deptQry = "";
-        final Map<String, Object> deptQueryParams = new HashMap<>();
-        String fundQry = "";
-        final Map<String, Object> fundQueryParams = new HashMap<>();
-        String phQry = "";
-        final Map<String, Object> phQueryParams = new HashMap<>();
-        final StringBuffer bankQry = new StringBuffer("");
-        final Map<String, Object> bankQueryParams = new HashMap<>();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        final DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        final StringBuffer instrumentHeaderQry = new StringBuffer("");
-        final Map<String, Object> instrumentHeaderQueryParams = new HashMap<>();
-        try {
+	private Map<String, Map<String, Object>> getQueryString() {
+		final StringBuffer queryString = new StringBuffer();
+		final Map<String, Map<String, Object>> queryMap = new HashMap<>();
+		final Map<String, Object> queryParams = new HashMap<>();
+		String deptQry = "";
+		final Map<String, Object> deptQueryParams = new HashMap<>();
+		String fundQry = "";
+		final Map<String, Object> fundQueryParams = new HashMap<>();
+		String phQry = "";
+		final Map<String, Object> phQueryParams = new HashMap<>();
+		final StringBuffer bankQry = new StringBuffer("");
+		final Map<String, Object> bankQueryParams = new HashMap<>();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		final DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+		final StringBuffer instrumentHeaderQry = new StringBuffer("");
+		final Map<String, Object> instrumentHeaderQueryParams = new HashMap<>();
+		try {
 			if (null != parameters.get("departmentid") && null != parameters.get("departmentid")[0]
 					&& !parameters.get("departmentid")[0].equalsIgnoreCase("-1")) {
-                deptQry = " AND vmis.departmentcode =:deptCode";
-                deptQueryParams.put("deptCode", Long.valueOf(parameters.get("departmentcode")[0]));
-            } 
-            if (null != parameters.get("rtgsAssignedFromDate")[0]
-                    && !parameters.get("rtgsAssignedFromDate")[0].equalsIgnoreCase("")) {
-                instrumentHeaderQry.append(" and ih.transactiondate >=:rtgsFromDate");
-                instrumentHeaderQueryParams.put("rtgsFromDate", formatter.parse(parameters.get("rtgsAssignedFromDate")[0]));
-            } else {
-                instrumentHeaderQry.append(" and ih.transactiondate >=:finStartDate");
-                instrumentHeaderQueryParams.put("finStartDate", new java.sql.Date(fromDate.getTime()));
-            }
-            if (null != parameters.get("rtgsAssignedToDate")[0] && !parameters.get("rtgsAssignedToDate")[0].equalsIgnoreCase("")) {
-                instrumentHeaderQry.append(" and ih.transactiondate  <=:rtgsToDate");
-                instrumentHeaderQueryParams.put("rtgsToDate", formatter.parse(parameters.get("rtgsAssignedToDate")[0]));
-            }
-            if (null != parameters.get("bank")[0] && !parameters.get("bank")[0].equals("-1")
-                    && !parameters.get("bank")[0].equalsIgnoreCase("")) {
-                bankQry.append(" AND b.id = :bankId");
-                bankQueryParams.put("bankId", Long.valueOf(parameters.get("bank")[0]));
-            }
-            if (null != parameters.get("bankbranch.id")[0] && !parameters.get("bankbranch.id")[0].equals("-1")
-                    && !parameters.get("bankbranch.id")[0].equalsIgnoreCase("")) {
-                bankQry.append(" AND branch.id=:bankBranchId");
-                bankQueryParams.put("bankBranchId", Long.valueOf(parameters.get("bankbranch.id")[0]));
-            }
-            if (null != parameters.get("bankaccount.id")[0] && !parameters.get("bankaccount.id")[0].equals("-1")
-                    && !parameters.get("bankaccount.id")[0].equalsIgnoreCase("")) {
-                phQry = " AND ph.bankaccountnumberid=:bankAccId";
-                phQueryParams.put("bankAccId", Long.valueOf(parameters.get("bankaccount.id")[0]));
-                instrumentHeaderQry.append(" and ih.bankaccountid =:bankAccId");
-                instrumentHeaderQueryParams.put("bankAccId", Long.valueOf(parameters.get("bankaccount.id")[0]));
-            }
-            if (null != parameters.get("instrumentnumber")[0] && !parameters.get("instrumentnumber")[0].equalsIgnoreCase("")) {
-                instrumentHeaderQry.append(" and ih.transactionnumber = :instrumentNumber");
-                instrumentHeaderQueryParams.put("instrumentNumber", parameters.get("instrumentnumber")[0]);
-            }
-            if (null != parameters.get("fundId")[0] && !parameters.get("fundId")[0].equalsIgnoreCase("")) {
-                fundQry = " AND vh.fundId=:fundId";
-                fundQueryParams.put("fundId", Long.valueOf(parameters.get("fundId")[0]));
-            }
+				deptQry = " AND vmis.departmentcode =:deptCode";
+				deptQueryParams.put("deptCode", Long.valueOf(parameters.get("departmentcode")[0]));
+			}
+			if (null != parameters.get("rtgsAssignedFromDate")[0]
+					&& !parameters.get("rtgsAssignedFromDate")[0].equalsIgnoreCase("")) {
+				instrumentHeaderQry.append(" and ih.transactiondate >=:rtgsFromDate");
+				instrumentHeaderQueryParams.put("rtgsFromDate",
+						formatter.parse(parameters.get("rtgsAssignedFromDate")[0]));
+			} else {
+				instrumentHeaderQry.append(" and ih.transactiondate >=:finStartDate");
+				instrumentHeaderQueryParams.put("finStartDate", new java.sql.Date(fromDate.getTime()));
+			}
+			if (null != parameters.get("rtgsAssignedToDate")[0]
+					&& !parameters.get("rtgsAssignedToDate")[0].equalsIgnoreCase("")) {
+				instrumentHeaderQry.append(" and ih.transactiondate  <=:rtgsToDate");
+				instrumentHeaderQueryParams.put("rtgsToDate", formatter.parse(parameters.get("rtgsAssignedToDate")[0]));
+			}
+			if (null != parameters.get("bank")[0] && !parameters.get("bank")[0].equals("-1")
+					&& !parameters.get("bank")[0].equalsIgnoreCase("")) {
+				bankQry.append(" AND b.id = :bankId");
+				bankQueryParams.put("bankId", Long.valueOf(parameters.get("bank")[0]));
+			}
+			if (null != parameters.get("bankbranch.id")[0] && !parameters.get("bankbranch.id")[0].equals("-1")
+					&& !parameters.get("bankbranch.id")[0].equalsIgnoreCase("")) {
+				bankQry.append(" AND branch.id=:bankBranchId");
+				bankQueryParams.put("bankBranchId", Long.valueOf(parameters.get("bankbranch.id")[0]));
+			}
+			if (null != parameters.get("bankaccount.id")[0] && !parameters.get("bankaccount.id")[0].equals("-1")
+					&& !parameters.get("bankaccount.id")[0].equalsIgnoreCase("")) {
+				phQry = " AND ph.bankaccountnumberid=:bankAccId";
+				phQueryParams.put("bankAccId", Long.valueOf(parameters.get("bankaccount.id")[0]));
+				instrumentHeaderQry.append(" and ih.bankaccountid =:bankAccId");
+				instrumentHeaderQueryParams.put("bankAccId", Long.valueOf(parameters.get("bankaccount.id")[0]));
+			}
+			if (null != parameters.get("instrumentnumber")[0]
+					&& !parameters.get("instrumentnumber")[0].equalsIgnoreCase("")) {
+				instrumentHeaderQry.append(" and ih.transactionnumber = :instrumentNumber");
+				instrumentHeaderQueryParams.put("instrumentNumber", parameters.get("instrumentnumber")[0]);
+			}
+			if (null != parameters.get("fundId")[0] && !parameters.get("fundId")[0].equalsIgnoreCase("")) {
+				fundQry = " AND vh.fundId=:fundId";
+				fundQueryParams.put("fundId", Long.valueOf(parameters.get("fundId")[0]));
+			}
 
-            queryString.append(" SELECT ih.id as ihId , ih.transactionnumber as rtgsNumber,  ih.transactiondate as rtgsDate, vh.id as vhId, ")
-                    .append(" vh.vouchernumber as paymentNumber, to_char(vh.voucherdate,'dd/mm/yyyy') as paymentDate, gld.detailtypeid as dtId, ")
-                    .append(" gld.detailkeyid as dkId,   gld.amount as paymentAmount, dept.name as department, stat.description as status,b.name as bank, ")
-                    .append(" branch.branchname as bankBranch, ba.accountnumber as accountNumber")
-                    .append(" FROM Paymentheader ph, voucherheader vh,vouchermis vmis, ")
-                    .append(" bankaccount ba,bankbranch branch,bank b,generalledger gl,generalledgerdetail gld, egf_instrumentvoucher iv,  ")
-                    .append(" egf_instrumentheader ih,  eg_department dept ,egw_status stat WHERE ph.voucherheaderid =vh.id AND vmis.voucherheaderid = vh.id ")
-                    .append(bankQry.toString())
-                    .append(" AND ih.bankaccountid = ba.id and branch.id = ba.branchid and branch.bankid = b.id and vh.status = 0 ")
-                    .append(fundQry)
-                    .append(phQry)
-                    .append(" and stat.id= ih.id_status AND dept.code = vmis.departmentcode ")
-                    .append(deptQry)
-                    .append(" and lower(ph.type)=lower('rtgs') ")
-                    .append(instrumentHeaderQry.toString())
-                    .append(" AND IV.VOUCHERHEADERID  IS NOT NULL AND iv.voucherheaderid   =vh.id AND ih.instrumentnumber IS NULL ")
-                    .append(" AND ih.id = iv.instrumentheaderid ")
-                    .append(" AND vh.type   = 'Payment' and gl.voucherheaderid = vh.id and gld.generalledgerid = gl.id GROUP BY ih.id , ih.transactionnumber,")
-                    .append(" ih.transactiondate, vh.id,  vh.vouchernumber,vh.voucherDate, vmis.departmentcode,dept.name, b.name,branch.branchname,")
-                    .append(" ba.accountnumber,stat.description,gld.detailtypeid,gld.detailkeyid,gld.amount ORDER BY b.name,branch.branchname,")
-                    .append(" ba.accountnumber,ih.transactiondate,ih.transactionnumber,dept.name");
-            queryParams.putAll(bankQueryParams);
-            queryParams.putAll(fundQueryParams);
-            queryParams.putAll(phQueryParams);
-            queryParams.putAll(deptQueryParams);
-            queryParams.putAll(instrumentHeaderQueryParams);
-            queryMap.put(queryString.toString(), queryParams);
-        } catch (ParseException e) {
+			queryString.append(
+					" SELECT ih.id as ihId , ih.transactionnumber as rtgsNumber,  ih.transactiondate as rtgsDate, vh.id as vhId, ")
+					.append(" vh.vouchernumber as paymentNumber, to_char(vh.voucherdate,'dd/mm/yyyy') as paymentDate, gld.detailtypeid as dtId, ")
+					.append(" gld.detailkeyid as dkId,   gld.amount as paymentAmount, dept.name as department, stat.description as status,b.name as bank, ")
+					.append(" branch.branchname as bankBranch, ba.accountnumber as accountNumber")
+					.append(" FROM Paymentheader ph, voucherheader vh,vouchermis vmis, ")
+					.append(" bankaccount ba,bankbranch branch,bank b,generalledger gl,generalledgerdetail gld, egf_instrumentvoucher iv,  ")
+					.append(" egf_instrumentheader ih,  eg_department dept ,egw_status stat WHERE ph.voucherheaderid =vh.id AND vmis.voucherheaderid = vh.id ")
+					.append(bankQry.toString())
+					.append(" AND ih.bankaccountid = ba.id and branch.id = ba.branchid and branch.bankid = b.id and vh.status = 0 ")
+					.append(fundQry).append(phQry)
+					.append(" and stat.id= ih.id_status AND dept.code = vmis.departmentcode ").append(deptQry)
+					.append(" and lower(ph.type)=lower('rtgs') ").append(instrumentHeaderQry.toString())
+					.append(" AND IV.VOUCHERHEADERID  IS NOT NULL AND iv.voucherheaderid   =vh.id AND ih.instrumentnumber IS NULL ")
+					.append(" AND ih.id = iv.instrumentheaderid ")
+					.append(" AND vh.type   = 'Payment' and gl.voucherheaderid = vh.id and gld.generalledgerid = gl.id GROUP BY ih.id , ih.transactionnumber,")
+					.append(" ih.transactiondate, vh.id,  vh.vouchernumber,vh.voucherDate, vmis.departmentcode,dept.name, b.name,branch.branchname,")
+					.append(" ba.accountnumber,stat.description,gld.detailtypeid,gld.detailkeyid,gld.amount ORDER BY b.name,branch.branchname,")
+					.append(" ba.accountnumber,ih.transactiondate,ih.transactionnumber,dept.name");
+			queryParams.putAll(bankQueryParams);
+			queryParams.putAll(fundQueryParams);
+			queryParams.putAll(phQueryParams);
+			queryParams.putAll(deptQueryParams);
+			queryParams.putAll(instrumentHeaderQueryParams);
+			queryMap.put(queryString.toString(), queryParams);
+		} catch (ParseException e) {
 
-        }
-        return queryMap;
-    }
-    
+		}
+		return queryMap;
+	}
+
 	private void populateSubLedgerDetails() {
 
 		final Map<Integer, List<EntityType>> subLedgerList = new HashMap<Integer, List<EntityType>>();
