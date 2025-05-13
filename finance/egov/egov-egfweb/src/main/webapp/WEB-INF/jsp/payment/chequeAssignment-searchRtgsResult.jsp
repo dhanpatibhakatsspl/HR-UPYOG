@@ -100,15 +100,17 @@
 				<s:set var="counter" value="0" />
 				<s:iterator value="accountNoAndRtgsEntryMap" status="stat">
 					<tr>
-						<td class="greybox"><s:property
+					    <td class="blueborderfortdnew"></td>
+						<td class="blueborderfortdnew"></td>
+						<td class="blueborderfortdnew"></td>
+						<td class="blueborderfortdnew" style="text-align: center"><strong>Bank Name - </strong><s:property
 								value="key.bankbranch.bank.name" /> - <s:property
 								value="key.bankbranch.branchname" /></td>
-						<td class="greybox"><s:property value="key.accountnumber" />
+						<td class="blueborderfortdnew" style="text-align: center"><strong>Account No. - </strong><s:property value="key.accountnumber" />
 							<s:set var="count" value="key.id" /></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						
+						<td class="blueborderfortdnew"></td>
+						<td class="blueborderfortdnew"></td>
 					</tr>
 					<tr>
 
@@ -165,13 +167,7 @@
 					</tr>
 				</s:iterator>
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<s:if test="%{ paymentMode=='rtgs'}">
+				<s:if test="%{ paymentMode=='rtgs'}">
 						<!-- <td class="greybox">
 							<s:text name="chq.assignment.rtgs.refno"/><span class="mandatory1">*</span>
 							<s:textfield id="rtgsRefNoMap['%{#count}']" name="rtgsRefNoMap['%{#count}']" value=""/>       
@@ -186,6 +182,12 @@
 								placeholder="DD/MM/YYYY" cssClass="form-control datepicker"
 								data-inputmask="'mask': 'd/m/y'" /></td>
 					</s:if>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
 				</s:iterator>
 			</table>
