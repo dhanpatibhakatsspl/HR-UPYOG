@@ -27,6 +27,7 @@
 		
 		<c:choose>
 		<c:when test="${purchaseOrder.purchaseItems.size() == 0}">
+		<tr id="debitdetailsrow">
 			<form:hidden path="purchaseItems[0].glcodeid" id="purchaseItems[0].glcodeid" class="form-control table-input hidden-input debitdetailid"/> 
 					<td>
 					<input type="text" id="purchaseItems[0].itemCode" name="purchaseItems[0].itemCode" class="form-control table-input debitDetailGlcode itemCode"  data-errormsg="Account Code is mandatory!" data-idx="0" data-optional="0"   placeholder="Type first 3 letters of Account code" />
