@@ -684,6 +684,33 @@
         <put-attribute name="body" value="/WEB-INF/views/contractor/contractor-search.jsp"/>
     </definition>
     
+    <!-- Code Added by santosh kumar mahto - start  -->
+    <definition name="vendor-new" extends="base_layout">
+        <put-attribute name="page-title" value="title.vendor.create" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/vendor/vendor-new.jsp"/>
+    </definition>
+    
+    <definition name="vendor-result" extends="base_layout">
+        <put-attribute name="page-title" value="title.vendor.result" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/vendor/vendor-result.jsp"/>
+    </definition>
+    
+    <definition name="vendor-edit" extends="base_layout">
+        <put-attribute name="page-title" value="title.vendor.edit" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/vendor/vendor-edit.jsp"/>
+    </definition>
+    
+    <definition name="vendor-view" extends="base_layout">
+        <put-attribute name="page-title" value="title.vendor.view" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/vendor/vendor-view.jsp"/>
+    </definition>
+    
+    <definition name="vendor-search" extends="base_layout">
+        <put-attribute name="page-title" value="title.vendor.search" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/vendor/vendor-search.jsp"/>
+    </definition>
+    <!-- Code ending by santosh kuamr mahto  -->
+    
     <definition name="supplier-new" extends="base_layout">
         <put-attribute name="page-title" value="title.supplier.create" cascade="true"/>
         <put-attribute name="body" value="/WEB-INF/views/supplier/supplier-new.jsp"/>

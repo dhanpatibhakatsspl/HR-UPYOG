@@ -71,11 +71,13 @@ import org.egov.commons.service.AccountdetailtypeService;
 import org.egov.commons.service.EntityTypeService;
 import org.egov.egf.masters.repository.ContractorRepository;
 import org.egov.egf.masters.repository.SupplierRepository;
+import org.egov.egf.masters.repository.VendorRepository;
 import org.egov.infra.config.core.ApplicationThreadLocals;
 import org.egov.infra.validation.exception.ValidationException;
 import org.egov.model.masters.Contractor;
 import org.egov.model.masters.Supplier;
 import org.egov.model.masters.SupplierSearchRequest;
+import org.egov.model.masters.Vendor;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,6 +96,9 @@ public class SupplierService implements EntityTypeService {
 	
 	@Autowired
 	private ContractorRepository contractorRepository;
+	
+	@Autowired
+	private VendorRepository vendorRepository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -236,6 +241,14 @@ public class SupplierService implements EntityTypeService {
 	        for (Contractor contractor : contractors) {
 	            Map<String, String> item = new HashMap<>();
 	            item.put("name", contractor.getName());
+	            dropdownList.add(item);
+	        }
+	        
+	     // Fetch Vendor - santosh kumar mahto
+	        List<Vendor> vendors = vendorRepository.findAll();
+	        for (Vendor vendor : vendors) {
+	            Map<String, String> item = new HashMap<>();
+	            item.put("name", vendor.getName());
 	            dropdownList.add(item);
 	        }
 
