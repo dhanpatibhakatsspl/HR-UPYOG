@@ -1,17 +1,52 @@
 <style>
+
 .purchase-table {
-	border-collapse: collapse;
-	width: 100%;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
 }
+
 .purchase-table th, .purchase-table td {
-	border: 1px solid #ddd;
-	padding: 8px;
-	text-align: left;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
 }
 
 .purchase-table th {
-	background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
+
+.purchase-table tr:last-child td {
+    border-bottom: 1px solid #ddd;
+}
+/* ============== Start Heerlal Gupta ============= */
+.quantity-input {
+    border: 1px solid #228B22 !important;
+    padding: 4px 6px !important;
+    border-radius: 4px !important;
+    background-color: #fff !important;
+    outline: none !important;
+    margin: 5px auto !important;    
+    display: block !important;
+    width: 90% !important;          
+    line-height: 20px !important;
+    min-height: 24px !important;
+    box-sizing: border-box !important;
+}
+
+.quantity-input:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+.quantity-input:empty:before {
+    content: attr(data-placeholder);
+    color: #aaa;
+    pointer-events: none;
+}
+/* ============== End Heerlal Gupta ============= */
+
 </style>
 
 <div class="panel-heading">
@@ -76,7 +111,7 @@ function getPurchaseItemsByOrderId() {
                 tableHTML += '<td id="unitRate_' + i + '" contenteditable="true" class="editable unitRate">' + data.unitRate + '</td>';
                 tableHTML += '<td id="billed-quantity_' + i + '" contenteditable="true" class="editable quantity">' + data.quantity + '</td>';
                 tableHTML += '<td id="unitValueWithGst_' + i + '" contenteditable="true" class="editable unitValueWithGst">' + data.unitValueWithGst + '</td>';
-                tableHTML += '<td id="quantity_' + i + '" contenteditable="true" class="editable quantity"></td>';
+                tableHTML += '<td id="quantity_' + i + '" contenteditable="true" class="editable quantity quantity-input" data-placeholder="Qty."></td>'; /* Modified by Heeralal */
                 tableHTML += '<td id="amount_' + i + '" class="amount"></td>';
                 tableHTML += '</tr>';
             }
@@ -135,13 +170,13 @@ function getPurchaseItemsByOrderId() {
                     data: { orderNumber: orderNumber, quantity: quantity },
                     success: function (response) {
                         if (response === 'available') {
-                            alert('Quantity is available.');
+                            bootbox.alert('Quantity is available.'); /* Modified by Heeralal Gupta */
                         } else {
-                            alert('Quantity is unavailable or exceeds available quantity.');
+                            bootbox.alert('Quantity is unavailable or exceeds available quantity.'); /* Modified by Heeralal Gupta */
                         }
                     },
                     error: function () {
-                        alert('Error checking quantity.');
+                        bootbox.alert('Error checking quantity.'); /* Modified by Heeralal Gupta */
                     }
                 });
             });

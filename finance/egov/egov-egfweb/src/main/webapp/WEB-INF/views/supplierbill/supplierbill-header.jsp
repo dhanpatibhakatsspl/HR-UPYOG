@@ -204,7 +204,7 @@
 			<spring:message code="lbl.party.bill.amount" text="Party Bill Amount"/><span class="mandatory"></span>
 		</label>
 		<div class="col-sm-3 add-margin">
-			<form:input  path="billamount" id="billamount" class="form-control patternvalidation" data-pattern="decimalvalue" required="required"/>
+			<form:input  path="billamount" id="billamount" class="form-control patternvalidation" data-pattern="decimalvalue" required="required" readonly="true" /> <!-- Modified by Heera -->
 			<form:errors path="billamount" cssClass="add-margin error-msg" />		
 		</div>
 		
