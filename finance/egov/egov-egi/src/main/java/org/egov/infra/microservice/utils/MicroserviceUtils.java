@@ -408,7 +408,8 @@ public class MicroserviceUtils {
 		return getDepartments(null);
 	}
 	
-//	============================== Added Heera  start ========================
+
+	
 	
 	// Finding list of designation code by department code
 	public List<String> getDesignationCodesByDepartment(String departmentCode) {
@@ -437,18 +438,44 @@ public class MicroserviceUtils {
 	}
 	 
 	// Finding list of designation by list of codes
+//	public List<Designation> getDesignationsByCodes(List<String> codes) {
+//	    List<ModuleDetail> moduleDetailsList = new ArrayList<>();
+//
+//	    for (String code : codes) {
+//	        // Prepare for one code at a time
+//	        prepareModuleDetails(moduleDetailsList, "common-masters", "Designation", "code", code, String.class);
+//	    }
+//
+//	    try {
+//	        Map postForObject = mapper.convertValue(getMdmsData(moduleDetailsList, true, null, null), Map.class);
+//	        if (postForObject != null) {
+//	            return mapper.convertValue(JsonPath.read(postForObject, "$.MdmsRes.common-masters.Designation"),
+//	                    new TypeReference<List<Designation>>() {});
+//	        }
+//	    } catch (Exception e) {
+//	        LOGGER.error("Error fetching designations by code", e);
+//	    }
+//	    
+//	    Designation d = new Designation();
+//	    d.setName("No Approver Available");
+//	    List<Designation> des = new ArrayList<>();
+//	    des.add(d);
+//	    return des;
+//	}
+
+	
 	public List<Designation> getDesignationsByCodes(List<String> codes) {
 	    List<ModuleDetail> moduleDetailsList = new ArrayList<>();
 
 	    for (String code : codes) {
 	        // Prepare for one code at a time
-	        prepareModuleDetails(moduleDetailsList, "common-masters", "Designation", "code", code, String.class);
+	        prepareModuleDetails(moduleDetailsList, "common-masters", "DesignationWithAmount", "code", code, String.class);
 	    }
 
 	    try {
 	        Map postForObject = mapper.convertValue(getMdmsData(moduleDetailsList, true, null, null), Map.class);
 	        if (postForObject != null) {
-	            return mapper.convertValue(JsonPath.read(postForObject, "$.MdmsRes.common-masters.Designation"),
+	            return mapper.convertValue(JsonPath.read(postForObject, "$.MdmsRes.common-masters.DesignationWithAmount"),
 	                    new TypeReference<List<Designation>>() {});
 	        }
 	    } catch (Exception e) {
@@ -463,7 +490,6 @@ public class MicroserviceUtils {
 	}
 
 	
-//	============================== Added Heera end ========================
 			
 
 	public List<Department> getDepartments(String codes) {
