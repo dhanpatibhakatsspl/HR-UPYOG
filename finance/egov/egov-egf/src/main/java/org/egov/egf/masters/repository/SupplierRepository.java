@@ -69,4 +69,7 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long> {
     
     @Query(value = "SELECT MAX(id) FROM Supplier")
     Long findMaxId();
+    
+    @Query(value = "SELECT nextval('SEQ_EGF_SUPPLIER')", nativeQuery = true)
+    Long getNextSupplierSequence();
 }

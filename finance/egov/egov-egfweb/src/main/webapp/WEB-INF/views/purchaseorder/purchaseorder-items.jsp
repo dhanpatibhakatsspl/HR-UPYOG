@@ -27,6 +27,7 @@
 		
 		<c:choose>
 		<c:when test="${purchaseOrder.purchaseItems.size() == 0}">
+		<tr id="debitdetailsrow">
 			<form:hidden path="purchaseItems[0].glcodeid" id="purchaseItems[0].glcodeid" class="form-control table-input hidden-input debitdetailid"/> 
 					<td>
 					<input type="text" id="purchaseItems[0].itemCode" name="purchaseItems[0].itemCode" class="form-control table-input debitDetailGlcode itemCode"  data-errormsg="Account Code is mandatory!" data-idx="0" data-optional="0"   placeholder="Type first 3 letters of Account code" />
@@ -52,7 +53,7 @@
 				<form:input path="purchaseItems[0].unitValueWithGst" id="purchaseItems[0].unitValueWithGst" class="form-control table-input unitValueWithGst" data-errormsg="Unit Value With Gst is mandatory!"  maxlength="12"  />
 			</td> 
 			<td>
-				<form:input path="purchaseItems[0].quantity" id="purchaseItems[0].quantity" class="form-control table-input quantity" data-errormsg="Quantity is mandatory!"    maxlength="12" />
+				<form:input path="purchaseItems[0].quantity" id="purchaseItems[0].quantity" class="form-control table-input quantity" onkeyup="getPurchaseOrderAmount();" data-errormsg="Quantity is mandatory!"    maxlength="12" /> <!-- Updated By Heera onkeyup-->
 			</td> 
 			<td>
 				<form:input path="purchaseItems[0].amount" id="purchaseItems[0].amount" class="form-control table-input amount" onblur="calcualteNetpaybleAmount1();" data-errormsg="Amount is mandatory!" onkeyup="decimalvalue(this);" data-pattern="decimalvalue" data-idx="0" data-optional="0"   maxlength="12"  readonly="readonly"/>
@@ -88,7 +89,7 @@
 				<form:input path="purchaseItems[${item.index}].unitValueWithGst" id="purchaseItems[${item.index}].unitValueWithGst" class="form-control table-input unitValueWithGst" data-errormsg="Unit Value With Gst is mandatory!"  maxlength="12"  value="${billDeatils.unitValueWithGst}"/>
 			</td> 
 			<td>
-				<form:input path="purchaseItems[${item.index}].quantity" id="purchaseItems[${item.index}].quantity" class="form-control table-input quantity" data-errormsg="Quantity is mandatory!"    maxlength="12"  value="${billDeatils.quantity}"/>
+				<form:input path="purchaseItems[${item.index}].quantity" id="purchaseItems[${item.index}].quantity" class="form-control table-input quantity" onkeyup="getPurchaseOrderAmount();" data-errormsg="Quantity is mandatory!"    maxlength="12"  value="${billDeatils.quantity}"/> <!-- Updated By Heera onkeyup-->
 			</td> 
 			<td>
 				<form:input path="purchaseItems[${item.index}].amount" id="purchaseItems[${item.index}].amount" onblur="calcualteNetpaybleAmount1();" class="form-control table-input amount" data-errormsg="Amount is mandatory!" onkeyup="decimalvalue(this);" data-pattern="decimalvalue" data-idx="0" data-optional="0"   maxlength="12"  readonly="readonly" value="${billDeatils.amount}"/>
@@ -117,14 +118,19 @@
 	</table>
 
 </div>
-<script src="<cdn:url value='/resources/app/js/i18n/jquery.i18n.properties.js?rnd=${app_release_no}' context='/services/EGF'/>"></script>
-<script src="<cdn:url value='/resources/app/js/common/helper.js?rnd=${app_release_no}' context='/services/EGF'/>"></script>
+   <script src="<cdn:url value='/resources/app/js/i18n/jquery.i18n.properties.js?rnd=${app_release_no}' context='/services/EGF'/>"></script>
+<script
+        src="<cdn:url value='/resources/app/js/common/helper.js?rnd=${app_release_no}' context='/services/EGF'/>"></script>
 
-<script src="<cdn:url value='/resources/app/js/common/voucherBillHelper.js?rnd=${app_release_no}' context='/services/EGF'/>"></script>
-<script src="<cdn:url value='/resources/global/js/egov/patternvalidation.js?rnd=${app_release_no}' context='/services/egi'/>"></script>
-<script src="<cdn:url value='/resources/global/js/egov/inbox.js?rnd=${app_release_no}' context='/services/egi'/>"></script>
+<script
+        src="<cdn:url value='/resources/app/js/common/voucherBillHelper.js?rnd=${app_release_no}' context='/services/EGF'/>"></script>
+<script
+        src="<cdn:url value='/resources/global/js/egov/patternvalidation.js?rnd=${app_release_no}' context='/services/egi'/>"></script>
+<script
+        src="<cdn:url value='/resources/global/js/egov/inbox.js?rnd=${app_release_no}' context='/services/egi'/>"></script>
         
-<script>
+<script>  
+
 
 $(document).on('input', '.unitRate, .gstRate, .quantity', function () {
         // Get the values of unit rate and quantity from the current row

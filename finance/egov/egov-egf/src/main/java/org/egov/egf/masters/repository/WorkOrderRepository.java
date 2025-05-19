@@ -70,5 +70,8 @@ public interface WorkOrderRepository extends JpaRepository<WorkOrder, Long> {
     public List<WorkOrder> findByContractor_Id(Long id);
 
     public WorkOrder findByOrderNumber(String orderNumber);
+    
+    @Query(value = "SELECT nextval('seq_egf_workorder')", nativeQuery = true)
+    Long getNextSeqNo();
 
 }

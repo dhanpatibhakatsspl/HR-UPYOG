@@ -260,10 +260,15 @@ public class CChartOfAccounts extends AbstractAuditable {
 				&& ((CChartOfAccounts) o).getId().equals(getId());
 	}
 
-    @Override
-    public int hashCode() {
-        return Integer.valueOf(glcode != null ? glcode : "0");
-    }
+//    @Override
+//    public int hashCode() {
+//        return Integer.valueOf(glcode != null ? glcode : "0");
+//    }
+	
+	@Override
+	public int hashCode() {
+	    return Long.valueOf(glcode).hashCode(); // safer for large numeric strings by Harsh
+	}
 
     public Boolean getBudgetCheckReq() {
         return budgetCheckReq;

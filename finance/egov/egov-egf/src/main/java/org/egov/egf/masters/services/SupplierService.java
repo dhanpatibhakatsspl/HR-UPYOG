@@ -53,6 +53,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -70,11 +71,13 @@ import org.egov.commons.service.AccountdetailtypeService;
 import org.egov.commons.service.EntityTypeService;
 import org.egov.egf.masters.repository.ContractorRepository;
 import org.egov.egf.masters.repository.SupplierRepository;
+import org.egov.egf.masters.repository.VendorRepository;
 import org.egov.infra.config.core.ApplicationThreadLocals;
 import org.egov.infra.validation.exception.ValidationException;
 import org.egov.model.masters.Contractor;
 import org.egov.model.masters.Supplier;
 import org.egov.model.masters.SupplierSearchRequest;
+import org.egov.model.masters.Vendor;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,6 +96,9 @@ public class SupplierService implements EntityTypeService {
 	
 	@Autowired
 	private ContractorRepository contractorRepository;
+	
+	@Autowired
+	private VendorRepository vendorRepository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -209,20 +215,12 @@ public class SupplierService implements EntityTypeService {
 		return Collections.emptyList();
 	}
 	
+	
 	@Transactional
-	public String fetchLastId() {
-		
-	    Long lastId =  supplierRepository.findMaxId()+1;
-	    String supCode;
-	    if(lastId != null) {
-	    	if(lastId < 1000) 
-	    		supCode = "Sup/001/"+String.format("%04d", lastId);
-	    	else
-	    		supCode = "Sup/001/"+lastId;
-	    }
-	    else
-	    	supCode = "Sup/001/0001";
-	    return  supCode;
+	public String supplierCode() {
+	    Long nextSeq = Optional.ofNullable(supplierRepository.getNextSupplierSequence()).orElse(0L) + 1;
+	    String supCode = "Sup/001/" + String.format("%04d", nextSeq);
+	    return supCode;
 	}
 	
 	// Adding drop down for detail code By Harsh
@@ -243,6 +241,14 @@ public class SupplierService implements EntityTypeService {
 	        for (Contractor contractor : contractors) {
 	            Map<String, String> item = new HashMap<>();
 	            item.put("name", contractor.getName());
+	            dropdownList.add(item);
+	        }
+	        
+	     // Fetch Vendor - santosh kumar mahto
+	        List<Vendor> vendors = vendorRepository.findAll();
+	        for (Vendor vendor : vendors) {
+	            Map<String, String> item = new HashMap<>();
+	            item.put("name", vendor.getName());
 	            dropdownList.add(item);
 	        }
 

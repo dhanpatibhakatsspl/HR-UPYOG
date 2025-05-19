@@ -76,8 +76,9 @@
 								<form:errors path="finYearRange" cssClass="error-msg" />
 							</div>											
 						</div>
+						<!-- ======================= Commented by Santosh Kumar Mahto Start ===============-->
 						<!-- code added by raju  start date range-->
-						<div class="form-group">
+						<%-- <div class="form-group">
 						    <label class="col-sm-5 control-label text-right">
 						        <spring:message code="lbl.start.date" />
 						    </label>
@@ -85,9 +86,9 @@
                                 <form:input path="startingDate" id="startDate" class="form-control datepicker" data-date-end-date="0d" data-inputmask="'mask': 'd/m/y'"  />
                                 <form:errors path="startingDate" cssClass="error-msg" />
                             </div>
-						</div>
+						</div> --%>
 						
-						<div class="form-group">
+						<%-- <div class="form-group">
 						    <label class="col-sm-5 control-label text-right">
 						        <spring:message code="lbl.end.date" />
 						    </label>
@@ -95,8 +96,9 @@
                                 <form:input path="endingDate" id="endDate" class="form-control datepicker" data-date-end-date="0d" data-inputmask="'mask': 'd/m/y'" onchange="validateEndDate()" />
                                 <form:errors path="endingDate" cssClass="error-msg" />
                             </div>
-						</div>
+						</div> --%>
 						<!-- date Range ended -->
+						<!-- ======================= Commented by Santosh Kumar Mahto end ===============-->
 						
 						<input type="hidden" id="mode" name="mode" value="${mode}" />
 						<div class="form-group">

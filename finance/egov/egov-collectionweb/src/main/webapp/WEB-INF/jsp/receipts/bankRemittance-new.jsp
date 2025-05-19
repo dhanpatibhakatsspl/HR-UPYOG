@@ -205,6 +205,7 @@
 		
 	}
 	
+	
 	function validate() {
 		resetSelectedRowsId();
 		dom.get("bankselectionerror").style.display = "none";
@@ -366,6 +367,7 @@
 			   selectedRowsId = new Array();
 				for(var index=0;index<list.length;index++){
 					var obj = document.getElementById('selected_'+index);;
+					
 					console.log(obj,"obj")
 					if(obj.checked == true){
 						console.log(currentRow,"currentRow");
@@ -565,11 +567,21 @@
 				<div align="left" class="mandatorycoll">
 					<s:text name="common.mandatoryfields" />
 				</div>
+				<!-- 
 				<div class="buttonbottom">
 					<input name="button32" type="submit" class="buttonsubmit" id="button32" value="Remit to Bank" onclick="return validate();" />
 					&nbsp;
 					<input name="buttonClose" type="button" class="button" id="button" value="Close" onclick="window.close()" />
 				</div>
+				 -->
+				
+					
+						<s:hidden id="cutOffDate" name="cutOffDate" />
+						<%@ include file='../workflow/commonWorkflowMatrix.jsp'%>
+						<%@ include file='../workflow/commonWorkflowMatrix-button.jsp'%>
+					
+				
+				
 				</s:if>
 				<s:if test="%{isListData}">
 					<s:if test="%{resultList.isEmpty()}">

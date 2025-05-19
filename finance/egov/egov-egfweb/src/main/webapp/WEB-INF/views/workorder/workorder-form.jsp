@@ -51,8 +51,14 @@
 	<label class="col-sm-2 control-label text-right" for="orderNumber"> <spring:message code="workorder.number" text="Order No."/><span class="mandatory"></span> 
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:input path="orderNumber" id="orderNumber" maxlength="50" cssClass="form-control patternvalidation" data-pattern="alphaNumericwithspecialcharForContraWOAndSupplierName" required="required"/>
-		<form:errors path="orderNumber" cssClass="add-margin error-msg" />
+		<c:if test="${!orderNumberGenerationAuto}">
+       <form:input path="orderNumber" id="orderNumber" maxlength="50" cssClass="form-control patternvalidation" data-pattern="alphaNumericwithspecialcharForContraWOAndSupplierName" value="${orderNumberGenerationAuto}" required="required" readonly="true"/>
+       <form:errors path="orderNumber" cssClass="add-margin error-msg" />
+    </c:if>
+    <c:if test="${orderNumberGenerationAuto}">
+       <form:input path="orderNumber" id="orderNumber" maxlength="50" cssClass="form-control patternvalidation" data-pattern="alphaNumericwithspecialcharForContraWOAndSupplierName" required="required"/>
+       <form:errors path="orderNumber" cssClass="add-margin error-msg" />
+    </c:if>		
 	</div>
 	<label class="col-sm-2 control-label text-right" for="orderDate"> <spring:message code="workorder.date" text="Order Date"/><span class="mandatory"></span>
 	</label>
@@ -112,7 +118,7 @@
 	<label class="col-sm-2 control-label text-right" for="orderValue"> <spring:message code="workorder.ordervalue" text="Total/Order Value"/><span class="mandatory"></span> 
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:input path="orderValue" id="orderValue" cssClass="form-control patternvalidation" data-pattern="decimalvalue" required="required" />
+		<form:input path="orderValue" id="orderValue" cssClass="form-control patternvalidation" onblur="compareBudget();" data-pattern="decimalvalue" required="required" /> <!-- Modified by Heerlal Gupta onblur -->
 		<form:errors path="orderValue" cssClass="add-margin error-msg" />
 	</div>
 	<label class="col-sm-2 control-label text-right" for="advancePayable"> <spring:message code="workorder.advancepayable" text="Advance Payable"/>

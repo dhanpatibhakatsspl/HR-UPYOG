@@ -78,13 +78,51 @@ function getCookie(name){
 function getLocale(paramName){
 	return getCookie(paramName) ? getCookie(paramName) : navigator.language;
 }
+/* ======================================== code modified by santosh kumar mahto start ==========================================*/
 jQuery('#btnsearch').click(function(e) {
-
-	callAjaxSearch();
+	var mode = $('#mode').val();
+	if(mode === "close"){
+		callAjaxSearch();
+	}else{
+		validatedata();	
+	}
+	
 });
 
+function validatedata() {
+    let startDateStr = jQuery('#startDate').val().trim();
+    let endDateStr = jQuery('#endDate').val().trim();
+    let isValid = true;
 
+    // Check if Start Date is filled
+    if (!startDateStr) {
+        bootbox.alert("Please enter Start Date.");
+        jQuery('#startDate').focus();
+        isValid = false;
+    }
+    // Check if End Date is filled
+    else if (!endDateStr) {
+        bootbox.alert("Please enter End Date.");
+        jQuery('#endDate').focus();
+        isValid = false;
+    }
+    // Check if Start Date is before End Date
+    else {
+        let startDate = parseDate(startDateStr);
+        let endDate = parseDate(endDateStr);
+        if (startDate > endDate) {
+            bootbox.alert("Start Date cannot be greater than End Date.");
+            jQuery('#endDate').focus();
+            isValid = false;
+        }
+    }
 
+    // ✅ If all validation passed, submit form
+    if (isValid) {
+        callAjaxSearch();
+    }
+}
+/* ======================================== code modified by santosh kumar mahto end==========================================*/
 function getFormData($form){
 	var unindexed_array = $form.serializeArray();
 	var indexed_array = {};

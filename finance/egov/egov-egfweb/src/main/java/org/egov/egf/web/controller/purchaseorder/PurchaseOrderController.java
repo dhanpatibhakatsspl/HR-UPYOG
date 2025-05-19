@@ -47,6 +47,7 @@
  */
 package org.egov.egf.web.controller.purchaseorder;
 
+import java.math.BigDecimal;
 import java.io.IOException;
 import java.util.List;
 
@@ -139,10 +140,7 @@ public class PurchaseOrderController {
 		model.addAttribute("funds", fundService.findAllActiveAndIsnotleaf());
 		model.addAttribute("departments", microserviceUtils.getDepartments());
 		model.addAttribute("suppliers", supplierService.getAllActiveEntities(null));
-		
-		String po = purchaseOrderService.generatePurchaseOrderNumber();
-		model.addAttribute("orderNumberGenerationAuto",po);
-		
+		model.addAttribute("orderNumberGenerationAuto",purchaseOrderService.generatePurchaseOrderNumber());
 	}
 	
 	@GetMapping(value = "/ajax/getAccountCodeAndName")
@@ -180,6 +178,18 @@ public class PurchaseOrderController {
 		redirectAttrs.addFlashAttribute("message", messageSource.getMessage("msg.purchaseOrder.success", null, null));
 		return "redirect:/purchaseorder/result/" + purchaseOrder.getId() + "/create";
 	}
+
+	//=================== Added By Heeralal Gupta Start ==========================
+	
+	@GetMapping(value = "/ajaxbudgetAmt/{departmentId}")
+	@ResponseBody
+	public double getBudgetAmount(@PathVariable("departmentId") String departmentId) {
+		BigDecimal amt = purchaseOrderService.getBudgetAmountByDeptId(departmentId);
+		return Double.parseDouble(purchaseOrderService.getBudgetAmountByDeptId(departmentId).toString());
+	    
+	}
+
+	//=================== Added By Heeralal Gupta End ============================
 
 	@GetMapping(value = "/edit/{id}")
 	public String edit(@PathVariable("id") final Long id, final Model model) {

@@ -47,11 +47,13 @@
  */
 package org.egov.egf.masters.services;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -63,6 +65,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 
+import org.egov.model.repository.BudgetDetailRepository;
 import org.egov.commons.Accountdetailkey;
 import org.egov.commons.service.AccountDetailKeyService;
 import org.egov.commons.service.AccountdetailtypeService;
@@ -116,6 +119,15 @@ public class PurchaseOrderService implements EntityTypeService {
 
 	@Autowired
 	private PurchaseItemRepository purchaseItemRepository;
+
+	// Added By Heeralal Gupta start
+	private final BudgetDetailRepository budgetDetailRepository;
+
+	@Autowired
+	public PurchaseOrderService(BudgetDetailRepository budgetDetailRepository) {
+	    this.budgetDetailRepository = budgetDetailRepository;
+	}
+	// Added By Heeralal End
 
 	public Session getCurrentSession() {
 		return entityManager.unwrap(Session.class);
@@ -324,21 +336,16 @@ public class PurchaseOrderService implements EntityTypeService {
 
 	}
 
+
+	
 	public synchronized String generatePurchaseOrderNumber() {
 
 		String financialYear = getFfinancialYear();
+	    Long nextOrderSeq = Optional.ofNullable(purchaseOrderRepository.getNextSeqNo()).orElse(0L) + 1;   
+		String orderNumber = "PO/001/" + financialYear+ "/" + String.format("%04d", nextOrderSeq);
+		return orderNumber;
 
-		Long latestOrderNumber = getLastPurchaseOrderNumber();
-
-		if (latestOrderNumber != null) {
-
-			String orderNumber = "PO/001/" + financialYear + "/" + "0000" + (latestOrderNumber + 1);
-
-			return orderNumber;
-
-		} else {
-			return "PO/001/" + financialYear + "/" + "00001";
-		}
+		
 	}
 
 	private static String getFfinancialYear() {
@@ -356,13 +363,16 @@ public class PurchaseOrderService implements EntityTypeService {
 		return financialYear;
 	}
 
-	public Long getLastPurchaseOrderNumber() {
-		return purchaseOrderRepository.findMaxId();
-	}
-	
-	
+//	
 	
 	// =================================== End Implementaion of Raju  ============================
 	
+	// ======================= Added By Heeralal Gupta Start ==============================
+	public BigDecimal getBudgetAmountByDeptId(String dept) {
+	    BigDecimal amount = budgetDetailRepository.findApprovedAmountByDepartment(dept);
+	    return amount != null ? amount : BigDecimal.ZERO;
+	}
+
+	// ======================= Added By Heeralal Gupta End ================================
 
 }
