@@ -98,7 +98,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 @ParentPackage("egov")
-@Results({ @Result(name = VoucherSearchAction.SEARCH, location = "receiptvoucherSearch-search.jsp"),
+@Results({ @Result(name = ReceiptVoucherAction.SEARCH, location = "receiptvoucherSearch-search.jsp"),
 		@Result(name = com.opensymphony.xwork2.Action.SUCCESS, type = "redirect", location = "receiptVoucher.action") })
 public class ReceiptVoucherAction extends BaseFormAction {
 	private static final Logger LOGGER = Logger.getLogger(VoucherSearchAction.class);
@@ -268,7 +268,7 @@ public class ReceiptVoucherAction extends BaseFormAction {
 	}
 
 	@ValidationErrorPage(value = SEARCH)
-	@Action(value = "/voucher/receiptSearch")
+	@Action(value = "/voucher/voucherSearch-search")
 	public String search() throws ApplicationException, ParseException {
 		boolean ismodifyJv = false;
 		voucherList = new ArrayList<Map<String, Object>>();
@@ -424,27 +424,19 @@ public class ReceiptVoucherAction extends BaseFormAction {
 
 	@Override
 	public void validate() {
-		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("Inside Validate Method");
-		if (voucherHeader.getVoucherNumber() == null || "".equals(voucherHeader.getVoucherNumber())) {
-			if (fromDate == null)
-				addFieldError("From Date", getText("Please Enter From Date"));
-			if (toDate == null)
-				addFieldError("To Date", getText("Please Enter To Date"));
-			checkMandatoryField("fundId", "fund", voucherHeader.getFundId(), "voucher.fund.mandatory");
-			checkMandatoryField("vouchermis.departmentcode", "department",
-					voucherHeader.getVouchermis().getDepartmentcode(), "voucher.department.mandatory");
-			checkMandatoryField("vouchermis.schemeid", "scheme", voucherHeader.getVouchermis().getSchemeid(),
-					"voucher.scheme.mandatory");
-			checkMandatoryField("vouchermis.subschemeid", "subscheme", voucherHeader.getVouchermis().getSubschemeid(),
-					"voucher.subscheme.mandatory");
-			checkMandatoryField("vouchermis.functionary", "functionary", voucherHeader.getVouchermis().getFunctionary(),
-					"voucher.functionary.mandatory");
-			checkMandatoryField("fundsourceId", "fundsource", voucherHeader.getVouchermis().getFundsource(),
-					"voucher.fundsource.mandatory");
-			checkMandatoryField("vouchermis.divisionId", "field", voucherHeader.getVouchermis().getDivisionid(),
-					"voucher.field.mandatory");
-		}
+	    if (LOGGER.isDebugEnabled())
+	        LOGGER.debug("Inside Validate Method");
+	    if (fromDate == null)
+	        addFieldError("From Date", getText("Please Enter From Date"));
+	    if (toDate == null)
+	        addFieldError("To Date", getText("Please Enter To Date"));
+	    checkMandatoryField("fundId", "fund", voucherHeader.getFundId(), "voucher.fund.mandatory");
+	    checkMandatoryField("vouchermis.departmentcode", "department", voucherHeader.getVouchermis().getDepartmentcode(), "voucher.department.mandatory");
+	    checkMandatoryField("vouchermis.schemeid", "scheme", voucherHeader.getVouchermis().getSchemeid(), "voucher.scheme.mandatory");
+	    checkMandatoryField("vouchermis.subschemeid", "subscheme", voucherHeader.getVouchermis().getSubschemeid(), "voucher.subscheme.mandatory");
+	    checkMandatoryField("vouchermis.functionary", "functionary", voucherHeader.getVouchermis().getFunctionary(), "voucher.functionary.mandatory");
+	    checkMandatoryField("fundsourceId", "fundsource", voucherHeader.getVouchermis().getFundsource(), "voucher.fundsource.mandatory");
+	    checkMandatoryField("vouchermis.divisionId", "field", voucherHeader.getVouchermis().getDivisionid(), "voucher.field.mandatory");
 	}
 
 	protected void checkMandatoryField(final String objectName, final String fieldName, final Object value,
