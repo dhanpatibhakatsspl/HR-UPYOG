@@ -58,26 +58,19 @@
 <title><s:text name="lbl.voucher.search" /></title>
 <base target="_self" />
 <script type="text/javascript">
-	function disableTypeForEditMode()
-	{
-		var showMode='<s:property value="showMode" />';
-		if(showMode=='edit' )
-			{ 
-			document.getElementById("type").disabled=true;
-			}
-		if(document.getElementById('type').value!=-1)
-		{
-		loadVoucherNames(document.getElementById('type').value);
-		}
-		if(document.getElementById('voucherNumber')!=null && document.getElementById('voucherNumber').value!="")
-		{
-			changeField();
-		}
+	function disableTypeForEditMode() {
+	    var showMode = '<s:property value="showMode" />';
+	    if (showMode == 'edit') {
+	        document.getElementById("type").disabled = true;
+	    }
+	    if (document.getElementById('type').value != -1) {
+	        loadVoucherNames(document.getElementById('type').value);
+	    }
 	}
 	</script>
 </head>
 <body onload="disableTypeForEditMode()">
-	<s:form action="receiptSearch" theme="simple">
+	<s:form action="voucherSearch" theme="simple">
 		<jsp:include page="../budget/budgetHeader.jsp">
 			<jsp:param name="heading" value="Receipt Search" />
 		</jsp:include>
@@ -108,7 +101,7 @@
 				<tr>
 					<td style="width: 5%"></td>
 					<td class="bluebox"><s:text name="receipt.type" /><span
-						class="mandatory1" id="disableFromDateCheck">*</span></td>
+						class="mandatory1">*</span></td>
 					<td class="bluebox"><s:select name="type" id="type"
 							list="dropdownData.typeList" headerKey="-1"
 							headerValue="%{getText('lbl.choose.options')}"
@@ -121,7 +114,7 @@
 				<tr>
 					<td style="width: 5%"></td>
 					<td class="greybox"><s:text name="receipt.fromdate" /><span
-						class="mandatory1" id="disableFromDateCheck">*</span></td>
+						class="mandatory1">*</span></td>
 					<s:date name="fromDate" format="dd/MM/yyyy" var="tempFromDate" />
 					<td class="greybox"><s:textfield id="fromDate" name="fromDate"
 							value="%{tempFromDate}" data-date-end-date="0d"
@@ -130,7 +123,7 @@
 							data-inputmask="'mask': 'd/m/y'" autocomplete="off" /></td>
 					<s:date name="toDate" format="dd/MM/yyyy" var="tempToDate" />
 					<td class="greybox"><s:text name="receipt.todate" /><span
-						class="mandatory1" id="disableToDateCheck">*</span></td>
+						class="mandatory1">*</span></td>
 					<td class="greybox"><s:textfield id="toDate" name="toDate"
 							value="%{tempToDate}" data-date-end-date="0d"
 							onkeyup="DateFormat(this,this.value,event,false,'3')"
@@ -151,7 +144,7 @@
 			<br />
 			<div class="subheadsmallnew"></div>
 			<div align="left" class="mandatory1">
-				<s:text name="msg.either.voucher.number.or.mendatory.field.required" />
+				<s:text name="msg.mendatory.field.required" />
 			</div>
 		</div>
 
@@ -333,70 +326,47 @@
 			 //form.submit();
 			 //document.body.removeChild(form);
 		}
-		function validateAndSubmit(){
-			if(document.getElementById('voucherNumber')!=null && document.getElementById('voucherNumber').value!="")
-				{
-				document.voucherSearch.action='${pageContext.request.contextPath}/voucher/voucherSearch-search.action';
-				jQuery(voucherSearch).append(jQuery('<input>', {
-		            type : 'hidden',
-		            name : '${_csrf.parameterName}',
-		            value : '${_csrf.token}'
-		        }));
-	    		document.voucherSearch.submit();
-	    		return true;
-				}
-			else{
-			if(!validate()){
-				return false;
-			}
-			else
-				{
-				document.voucherSearch.action='${pageContext.request.contextPath}/voucher/voucherSearch-search.action';
-				jQuery(voucherSearch).append(jQuery('<input>', {
-		            type : 'hidden',
-		            name : '${_csrf.parameterName}',
-		            value : '${_csrf.token}'
-		        }));
-	    		document.voucherSearch.submit();
-				return true;
-				}
-			}
+		
+		function validateAndSubmit() {
+		    if (!validate()) {
+		        return false;
+		    }
+		    document.voucherSearch.action = '${pageContext.request.contextPath}/voucher/voucherSearch-search.action';
+		    jQuery(voucherSearch).append(jQuery('<input>', {
+		        type: 'hidden',
+		        name: '${_csrf.parameterName}',
+		        value: '${_csrf.token}'
+		    }));
+		    document.voucherSearch.submit();
+		    return true;
 		}
 		
-		function validate()
-		{
-			var type=document.getElementById('type').value;
-			var fromDate=document.getElementById('fromDate').value;
-			var toDate=document.getElementById('toDate').value;
-			var fundId=document.getElementById('fundId').value;
-			var voucherNumber=document.getElementById('voucherNumber').value;
-			console.log('fromDate : ',fromDate);
-			if(!DateValidation(fromDate,toDate))
-				return false;
-			if(type == "-1" && voucherNumber==""){
-				bootbox.alert("<s:text name='msg.please.select.type'/>");
-				return false;
-				}
-			if(fromDate == "" && voucherNumber!=""){
-				bootbox.alert("<s:text name='msg.please.select.from.date'/>");
-				return false;
-				}
-			
-			if(toDate == "" && voucherNumber==""){
-				bootbox.alert("<s:text name='msg.please.select.to.date'/>");
-				return false;
-				}
-
-			if(fundId == "-1" && voucherNumber==""){
-				bootbox.alert("<s:text name='msg.please.select.fund'/>");
-				return false;
-				}
-			
-			if(!DateValidation(fromDate,toDate))
-				return false;
-			
-		document.getElementById('type').disabled=false;
-		return true;
+		function validate() {
+		    var type = document.getElementById('type').value;
+		    var fromDate = document.getElementById('fromDate').value;
+		    var toDate = document.getElementById('toDate').value;
+		    var fundId = document.getElementById('fundId').value;
+		
+		    if (type == "-1") {
+		        bootbox.alert("<s:text name='msg.please.select.type'/>");
+		        return false;
+		    }
+		    if (fromDate == "") {
+		        bootbox.alert("<s:text name='msg.please.select.from.date'/>");
+		        return false;
+		    }
+		    if (toDate == "") {
+		        bootbox.alert("<s:text name='msg.please.select.to.date'/>");
+		        return false;
+		    }
+		    if (fundId == "-1") {
+		        bootbox.alert("<s:text name='msg.please.select.fund'/>");
+		        return false;
+		    }
+		    if (!DateValidation(fromDate, toDate))
+		        return false;
+		    document.getElementById('type').disabled = false;
+		    return true;
 		}
 		
 			
@@ -408,23 +378,6 @@
 			document.getElementById('type').disabled=true;
 			}
 			document.title="<s:text name='msg.no.bill.payment.search'/>";
-		}
-		
-		function changeField()
-		{
-			if(document.getElementById('voucherNumber')!=null && document.getElementById('voucherNumber').value!="")
-				{
-			document.getElementById("disableFromDateCheck").innerHTML="";
-			document.getElementById("disableToDateCheck").innerHTML="";
-			document.getElementById("disableFundCheck").innerHTML="";
-				}
-			else
-				{
-				document.getElementById("disableFromDateCheck").innerHTML="*";
-				document.getElementById("disableToDateCheck").innerHTML="*";
-				document.getElementById("disableFundCheck").innerHTML="*";
-				}
-			
 		}
 		</script>
 </body>
