@@ -1457,7 +1457,7 @@ label.error {
   color: #fff;
   padding: 8px 15px;
   background: #34495E;
-  border-color: #337ab7 !important;
+  border-color: #34495E !important;
   border-left: 5px solid;
   border-bottom: solid 1px;
   text-align: left;
@@ -1523,7 +1523,7 @@ label.error {
   font-weight: bold;
   color: #fff;
   padding: 9px;
-  background-color: #8a8b88 !important;
+  background-color: #34495E !important;
   background-image: none;
   text-align: left;
 }
