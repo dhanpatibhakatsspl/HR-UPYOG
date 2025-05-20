@@ -99,24 +99,24 @@ public class CollectionNotificationConsumer{
             link.append(applicationProperties.getUiHost() + "/citizen").append("/otpLogin?mobileNo=").append(bill.getMobileNumber()).append("&redirectTo=")
                     .append(applicationProperties.getUiRedirectUrl()).append("&params=").append(paymentDetail.getTenantId() + "," + paymentDetail.getReceiptNumber());
 
-            String receiptLink = getShortenedUrl(link.toString());
+           // String receiptLink = getShortenedUrl(link.toString());
 
-            content = content.replaceAll("{rcpt_link}", receiptLink);
+           // content = content.replaceAll("{rcpt_link}", receiptLink);
 
-            String moduleName = fetchContentFromLocalization(requestInfo, paymentDetail.getTenantId(),
-                    BUSINESSSERVICE_LOCALIZATION_MODULE, formatCodes(paymentDetail.getBusinessService()));
+ //          String moduleName = fetchContentFromLocalization(requestInfo, paymentDetail.getTenantId(),
+   //                 BUSINESSSERVICE_LOCALIZATION_MODULE, formatCodes(paymentDetail.getBusinessService()));
+//
+//            if(StringUtils.isEmpty(moduleName))
+           String  moduleName = "collection-services";
 
-            if(StringUtils.isEmpty(moduleName))
-                moduleName = "Adhoc Tax";
+           // content = content.replaceAll("{owner_name}", bill.getPayerName());
 
-            content = content.replaceAll("{owner_name}", bill.getPayerName());
-
-            if(content.contains("{amount_paid}"))
-                content = content.replaceAll("{amount_paid}", paymentDetail.getTotalAmountPaid().toString());
-
-            content = content.replaceAll("{rcpt_no}", paymentDetail.getReceiptNumber());
-            content = content.replaceAll("{mod_name}", moduleName);
-            content = content.replaceAll("{unique_id}", bill.getConsumerCode());
+//            if(content.contains("{amount_paid}"))
+//                content = content.replaceAll("{amount_paid}", paymentDetail.getTotalAmountPaid().toString());
+//
+//            content = content.replaceAll("{rcpt_no}", paymentDetail.getReceiptNumber());
+ //          content = content.replaceAll("{mod_name}", moduleName);
+ //           content = content.replaceAll("{unique_id}", bill.getConsumerCode());
             message = content;
         }
         return message;
@@ -128,13 +128,13 @@ public class CollectionNotificationConsumer{
         List<String> messages = new ArrayList<>();
         Object result = null;
         String locale = "";
-        if(requestInfo.getMsgId().contains("|"))
-            locale = requestInfo.getMsgId().split("[\\|]")[1];
-        if(StringUtils.isEmpty(locale))
-            locale = applicationProperties.getFallBackLocale();
+//        if(requestInfo.getMsgId().contains("|"))
+//            locale = requestInfo.getMsgId().split("[\\|]")[1];
+//        if(StringUtils.isEmpty(locale))
+//            locale = applicationProperties.getFallBackLocale();
         StringBuilder uri = new StringBuilder();
         uri.append(applicationProperties.getLocalizationHost()).append(applicationProperties.getLocalizationEndpoint());
-        uri.append("?tenantId=").append(tenantId.split("\\.")[0]).append("&locale=").append(locale).append("&module=").append(module);
+        uri.append("?tenantId=").append(tenantId.split("\\.")[0]).append("&locale=").append("en_IN").append("&module=").append(module);
 
         Map<String, Object> request = new HashMap<>();
         request.put("RequestInfo", requestInfo);
@@ -184,3 +184,4 @@ public class CollectionNotificationConsumer{
         else return res;
     }
 }
+
