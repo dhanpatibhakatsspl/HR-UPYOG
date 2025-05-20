@@ -327,7 +327,7 @@
 		function validateAndSubmit(){
 			if(document.getElementById('voucherNumber')!=null && document.getElementById('voucherNumber').value!="")
 				{
-				document.voucherSearch.action='${pageContext.request.contextPath}/voucher/voucherSearch-search.action';
+				document.billPaymentReport.action='${pageContext.request.contextPath}/payment/billPayment-search.action';
 				jQuery(voucherSearch).append(jQuery('<input>', {
 		            type : 'hidden',
 		            name : '${_csrf.parameterName}',
@@ -342,7 +342,7 @@
 			}
 			else
 				{
-				document.voucherSearch.action='${pageContext.request.contextPath}/voucher/voucherSearch-search.action';
+				document.billPaymentReport.action='${pageContext.request.contextPath}/payment/billPayment-search.action';
 				jQuery(voucherSearch).append(jQuery('<input>', {
 		            type : 'hidden',
 		            name : '${_csrf.parameterName}',
