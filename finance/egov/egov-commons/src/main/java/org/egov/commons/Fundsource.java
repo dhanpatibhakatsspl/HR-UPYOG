@@ -68,7 +68,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "fundsource")
-@Unique(id = "id", tableName = "fundsource", fields = { "code", "name" }, columnName = { "code", "name" }, enableDfltMsg = true)
 @SequenceGenerator(name = Fundsource.SEQ_FUNDSOURCE, sequenceName = Fundsource.SEQ_FUNDSOURCE, allocationSize = 1)
 public class Fundsource extends AbstractAuditable {
 
@@ -80,13 +79,12 @@ public class Fundsource extends AbstractAuditable {
     @GeneratedValue(generator = SEQ_FUNDSOURCE, strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Length(min = 1, max = 25)
-    @NotNull
+    
+    
     @SafeHtml
     private String code;
 
-    @Length(min = 1, max = 25)
-    @NotNull
+   
     @SafeHtml
     private String name;
 

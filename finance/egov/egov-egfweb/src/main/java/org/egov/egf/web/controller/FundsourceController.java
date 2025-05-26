@@ -55,6 +55,7 @@ import javax.validation.Valid;
 import org.egov.commons.Fundsource;
 import org.egov.commons.service.FundsourceService;
 import org.egov.egf.web.adaptor.FundsourceJsonAdaptor;
+import org.egov.model.masters.Supplier;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -91,7 +92,7 @@ public class FundsourceController {
 		model.addAttribute("fundsources", fundsourceService.findAll());
 	}
 
-	@GetMapping(value = "/new")
+	@PostMapping(value = "/new")
 	public String newForm(final Model model) {
 		prepareNewForm(model);
 		model.addAttribute(FUNDSOURCE, new Fundsource());
@@ -147,7 +148,7 @@ public class FundsourceController {
 		return FUNDSOURCE_RESULT;
 	}
 
-	@GetMapping(value = "/search/{mode}")
+	@PostMapping(value = "/search/{mode}")
 	public String search(@PathVariable("mode") @SafeHtml final String mode, final Model model) {
 		final Fundsource fundsource = new Fundsource();
 		prepareNewForm(model);
