@@ -221,41 +221,5 @@ public class SupplierService implements EntityTypeService {
 	    Long nextSeq = Optional.ofNullable(supplierRepository.getNextSupplierSequence()).orElse(0L) + 1;
 	    String supCode = "Sup/001/" + String.format("%04d", nextSeq);
 	    return supCode;
-	}
-	
-	// Adding drop down for detail code By Harsh
-	
-	 public List<Map<String, String>> getAllSuppliersAndContractors() {
-	        List<Map<String, String>> dropdownList = new ArrayList<>();
-
-	        // Fetch Suppliers
-	        List<Supplier> suppliers = supplierRepository.findAll();
-	        for (Supplier supplier : suppliers) {
-	            Map<String, String> item = new HashMap<>();
-	            item.put("name", supplier.getName());
-	            dropdownList.add(item);
-	        }
-
-	        // Fetch Contractors
-	        List<Contractor> contractors = contractorRepository.findAll();
-	        for (Contractor contractor : contractors) {
-	            Map<String, String> item = new HashMap<>();
-	            item.put("name", contractor.getName());
-	            dropdownList.add(item);
-	        }
-	        
-	     // Fetch Vendor - santosh kumar mahto
-	        List<Vendor> vendors = vendorRepository.findAll();
-	        for (Vendor vendor : vendors) {
-	            Map<String, String> item = new HashMap<>();
-	            item.put("name", vendor.getName());
-	            dropdownList.add(item);
-	        }
-
-	        return dropdownList;
-	    }
-	
-	
-	
-	
+	}	
 }

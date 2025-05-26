@@ -138,20 +138,20 @@
 
 
 
-						<!-- <td class="greybox"><input type="text" id="model.name"
+						 <td class="greybox"><input type="text" id="model.name"
 						name="model.name" onKeyDown="textCounter('model.name',100)"
 						onKeyUp="textCounter('model.name',100)"
-						onblur="textCounter('model.name',100)" /></td> -->
+						onblur="textCounter('model.name',100)" /></td>
 
 
 					
 
-					<td class="greybox"><select id="model.name" name="model.name">
+					<%-- <td class="greybox"><select id="model.name" name="model.name">
 							<option value="">-- Select Supplier/Contractor --</option>
 							<s:iterator value="dropdownList" var="item">
 								<option value="${item.name}">${item.name}</option>
 							</s:iterator>
-					</select></td>
+					</select></td> --%>
 
 
 					<td width="10%" class="greybox"><strong><s:text

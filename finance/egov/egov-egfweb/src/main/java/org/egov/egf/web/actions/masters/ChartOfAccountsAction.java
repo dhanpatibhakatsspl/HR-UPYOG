@@ -674,8 +674,8 @@ public class ChartOfAccountsAction extends BaseFormAction {
     public String addNew(){
         populateCodeLength();
         model = new CChartOfAccounts();
-        List<Map<String, String>> dropdownList = supplierService.getAllSuppliersAndContractors();
-        ActionContext.getContext().getValueStack().set("dropdownList", dropdownList);
+//        List<Map<String, String>> dropdownList = supplierService.getAllSuppliersAndContractors();
+//        ActionContext.getContext().getValueStack().set("dropdownList", dropdownList);
        
         return "detailed";
     }
