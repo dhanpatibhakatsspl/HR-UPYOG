@@ -227,9 +227,11 @@ public class CFinancialYearController {
 //		return new StringBuilder("{ \"data\":").append(toSearchResultJson(searchResultList)).append("}").toString();
 //	}
 //  ====================== update by santosh kumar mahto start ============================
+	
+	
 	@RequestMapping(value = "/search/{mode}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String search(@PathVariable("mode") @SafeHtml final String mode, final Model model) {
-		if("close".equals(mode)) {
+		if("close".equals(mode) || "view".equals(mode) || "edit".equals(mode)) {
 			final CFinanancialYearSearchRequest cFinanancialYearSearchRequest = new CFinanancialYearSearchRequest();
 			model.addAttribute("financialYears", cFinancialYearService.findAll());
 			prepareNewForm(model);
