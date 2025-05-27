@@ -81,7 +81,7 @@ function getLocale(paramName){
 /* ======================================== code modified by santosh kumar mahto start ==========================================*/
 jQuery('#btnsearch').click(function(e) {
 	var mode = $('#mode').val();
-	if(mode === "close"){
+	if(mode === "close" || mode === "view" || mode === "edit"){
 		callAjaxSearch();
 	}else{
 		validatedata();	
