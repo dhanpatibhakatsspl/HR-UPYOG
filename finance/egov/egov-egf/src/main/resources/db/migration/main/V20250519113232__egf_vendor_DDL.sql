@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS citya.egf_vendor
+CREATE TABLE IF NOT EXISTS egf_vendor
 (
     id BIGSERIAL NOT NULL,
     code character varying(50) COLLATE pg_catalog."default" NOT NULL,
@@ -28,12 +28,12 @@ CREATE TABLE IF NOT EXISTS citya.egf_vendor
     CONSTRAINT pk_vendor PRIMARY KEY (id),
     CONSTRAINT unq_vendor UNIQUE (code),
     CONSTRAINT fk_vendor_bank FOREIGN KEY (bank)
-        REFERENCES citya.bank (id) MATCH SIMPLE
+        REFERENCES bank (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS citya.egf_vendor
+ALTER TABLE IF EXISTS egf_vendor
     OWNER to postgres;
