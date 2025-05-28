@@ -150,7 +150,8 @@ import com.google.zxing.NotFoundException;
         @Result(name = "billview", location = "preApprovedVoucher-billview.jsp"),
         @Result(name = "voucherview", location = "preApprovedVoucher-voucherview.jsp"),
         @Result(name = "message", location = "preApprovedVoucher-message.jsp"),
-        @Result(name = PreApprovedVoucherAction.UNAUTHORIZED, location = "../workflow/unauthorized.jsp")})
+        @Result(name = PreApprovedVoucherAction.UNAUTHORIZED, location = "../workflow/unauthorized.jsp"),
+        @Result(name = "new", location = "journalVoucher-new.jsp")})
 @ParentPackage("egov")
 public class PreApprovedVoucherAction extends GenericWorkFlowAction {
     private static final String INVALID_APPROVER = "invalid.approver";
@@ -211,7 +212,7 @@ public class PreApprovedVoucherAction extends GenericWorkFlowAction {
     private static final String VHID = "vhid";
     private static final String CGN = "cgn";
     private static final String VOUCHERQUERY = " from CVoucherHeader where id=?";
-    private static final String VOUCHERQUERYBYCGN = " from CVoucherHeader where cgn=?";
+    private static final String VOUCHERQUERYBYCGN = " from CVoucherHeader where cgvn=?";
     private static final String ACCDETAILTYPEQUERY = " from Accountdetailtype where id=?";
     private static final String ACTIONNAME = "actionName";
     private String values = "", from = "";
@@ -544,20 +545,22 @@ public class PreApprovedVoucherAction extends GenericWorkFlowAction {
             from = FinancialConstants.STANDARD_VOUCHER_TYPE_JOURNAL;
         }
 
-       //heading = ReportUtil.getCityName();
-       heading = microserviceUtils.getHeaderNameForTenant().toUpperCase();
+        // heading = ReportUtil.getCityName();
+        
+        // heading = microserviceUtils.getHeaderNameForTenant().toUpperCase();      // Modified by Heeralal
         getMasterDataForBillVoucher();
         getHeaderMandateFields();
         
 
-     //   Map<String, Object> cityInfo = cityService.cityDataAsMap();
-    //   cityInfo.get(CITY_CODE_KEY);
-    //   cityInfo.get(CITY_NAME_KEY);
+       // Map<String, Object> cityInfo = cityService.cityDataAsMap();
+       // cityInfo.get(CITY_CODE_KEY);
+       // cityInfo.get(CITY_NAME_KEY);
        // applicationIndex.setCityGrade(defaultString((String) cityInfo.get(CITY_CORP_GRADE_KEY)));
-      //  applicationIndex.setDistrictName(defaultString((String) cityInfo.get(CITY_DIST_NAME_KEY)));
+       // applicationIndex.setDistrictName(defaultString((String) cityInfo.get(CITY_DIST_NAME_KEY)));
        // applicationIndex.setRegionName(defaultString((String) cityInfo.get(CITY_REGION_NAME_KEY)));
         return "view";
     }
+    
 
     /*
      * @SkipValidation public List<String> getValidActions() { if
