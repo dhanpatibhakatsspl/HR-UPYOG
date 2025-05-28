@@ -179,10 +179,14 @@ public class CFinancialYearService {
 			errors.reject("msg.startdate.enddate.greater",
 					new String[] { DateUtils.getDefaultFormattedDate(financialYear.getStartingDate()) }, null);
 		}
-		if (financialYear.getStartingDate().equals(nextStartingDate)) {
-			errors.reject("msg.enter.valid.startdate",
-					new String[] { DateUtils.getDefaultFormattedDate(financialYear.getStartingDate()) }, null);
-		}
+		//		commented by santosh kumar mahto - Due to current financial year not create (both date same) 
+		/*
+		 * if (financialYear.getStartingDate().equals(nextStartingDate)) {
+		 * errors.reject("msg.enter.valid.startdate", new String[] {
+		 * DateUtils.getDefaultFormattedDate(financialYear.getStartingDate()) }, null);
+		 * }
+		 */
+                // comment ended 
 		for (CFiscalPeriod fiscalperiod : financialYear.getcFiscalPeriod()) {
 			if (fiscalperiod.getName() == null || StringUtils.isEmpty(fiscalperiod.getName()))
 				errors.reject("msg.enter.fiscal.period.name",
