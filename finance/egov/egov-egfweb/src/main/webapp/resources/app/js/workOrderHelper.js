@@ -153,7 +153,7 @@ $('#department').change(function() {
             if (totalWOAmount <= totalBudgetAmount && totalBudgetAmount !== -1) {
                 document.getElementById('buttonSubmit').disabled = false;
             } else {
-                document.getElementById('buttonSubmit').disabled = true;
+                document.getElementById('buttonSubmit').disabled = false;
                 bootbox.alert("Work order amount: " + totalWOAmount + " is greater than budget amount: " + totalBudgetAmount);
             }
         },
