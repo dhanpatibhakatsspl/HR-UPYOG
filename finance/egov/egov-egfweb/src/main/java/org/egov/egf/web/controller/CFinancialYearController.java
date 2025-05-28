@@ -249,7 +249,7 @@ public class CFinancialYearController {
 	@PostMapping(value = "/ajaxsearch/{mode}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String ajaxsearch(@PathVariable("mode") @SafeHtml final String mode, final Model model,
 			@Valid @ModelAttribute final CFinanancialYearSearchRequest cFinanancialYearSearchRequest) {
-		if("close".equals(mode)) {
+		if("close".equals(mode) || "view".equals(mode) || "edit".equals(mode)) {
 			final List<CFinancialYear> searchResultList = cFinancialYearService.search(cFinanancialYearSearchRequest);
 			return new StringBuilder("{ \"data\":").append(toSearchResultJson(searchResultList)).append("}").toString();
 		}else {
