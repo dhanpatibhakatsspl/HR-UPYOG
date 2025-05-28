@@ -581,9 +581,10 @@ public class BudgetAppropriationRegisterReportAction extends BaseFormAction {
         {
             query.setParameter("fundId", Long.valueOf(fund.getId()), LongType.INSTANCE);
         }
-        if (budgetGroup.getMinCode().getId() != null )
+            // .getMinCode() remove by megha
+        if (budgetGroup.getId() != null )
         {
-            query.setParameter("glCodeId", budgetGroup.getMinCode().getId(), LongType.INSTANCE);
+            query.setParameter("glCodeId", budgetGroup.getId(), LongType.INSTANCE);
         }
         if (asOnDate != null )
         {
