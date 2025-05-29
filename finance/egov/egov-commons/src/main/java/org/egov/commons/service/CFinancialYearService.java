@@ -186,7 +186,7 @@ public class CFinancialYearService {
 		 * DateUtils.getDefaultFormattedDate(financialYear.getStartingDate()) }, null);
 		 * }
 		 */
-                // comment ended 
+        // comment ended 
 		for (CFiscalPeriod fiscalperiod : financialYear.getcFiscalPeriod()) {
 			if (fiscalperiod.getName() == null || StringUtils.isEmpty(fiscalperiod.getName()))
 				errors.reject("msg.enter.fiscal.period.name",
@@ -201,10 +201,11 @@ public class CFinancialYearService {
 				if (fiscalperiod.getStartingDate().after(fiscalperiod.getEndingDate()))
 					errors.reject("msg.startdate.enddate.greater",
 							new String[] { DateUtils.getDefaultFormattedDate(fiscalperiod.getStartingDate()) }, null);
-				if (fiscalperiod.getStartingDate().equals(nextStartingDate)) {
-					errors.reject("msg.enter.valid.startdate",
-							new String[] { DateUtils.getDefaultFormattedDate(fiscalperiod.getStartingDate()) }, null);
-				}
+				/*
+				 * if (fiscalperiod.getStartingDate().equals(nextStartingDate)) {
+				 * errors.reject("msg.enter.valid.startdate", new String[] {
+				 * DateUtils.getDefaultFormattedDate(fiscalperiod.getStartingDate()) }, null); }
+				 */
 			}
 		}
 	}
