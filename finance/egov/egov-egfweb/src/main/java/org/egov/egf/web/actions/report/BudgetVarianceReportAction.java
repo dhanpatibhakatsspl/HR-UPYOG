@@ -247,7 +247,7 @@ public class BudgetVarianceReportAction extends BaseFormAction {
         final Map<String, Map<String, Object>> queryMap = new HashMap<>();
         if (shouldShowHeaderField(Constants.FUND) && queryParamMap.containsKey("fundId")) {
             miscQuery.append(String.format(" and %s.fundId=bd.fund ", detail));
-            miscQuery.append(" and bd.fund=:fundId");
+            miscQuery.append(" and bd.fund=CAST(:fundId AS BIGINT)");
             params.put("fundId", queryParamMap.get("fundId"));
         }
         if (shouldShowHeaderField(Constants.SCHEME) && queryParamMap.containsKey("schemeId")) {
