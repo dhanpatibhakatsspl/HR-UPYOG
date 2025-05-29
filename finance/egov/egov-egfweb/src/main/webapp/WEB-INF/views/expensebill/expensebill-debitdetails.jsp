@@ -90,8 +90,8 @@
 				    onblur="calcualteNetpaybleAmount(); validateDebitAmount(this);" data-pattern="decimalvalue"
 				    data-idx="0" data-optional="0"
 				    class="form-control table-input text-right debitAmount" maxlength="12" />
-				  <span class="text-danger debit-error small"></span>
-				</td>
+<!-- 				  <span class="text-danger debit-error small"></span>
+ -->				</td>
 					  
 				 
 				<td class="text-center"><span style="cursor:pointer;" onclick="addDebitDetailsRow();" tabindex="0" id="tempDebitDetails[0].addButton" data-toggle="tooltip" title="" data-original-title="press SPACE to Add!" aria-hidden="true"><i class="fa fa-plus"></i></span>
@@ -101,28 +101,7 @@
 	</table>
 </div>
 <script>
-  function validateDebitAmount(input) {
-    const budgetAmount = parseFloat(document.getElementById("budgetAmount").textContent.replace(/[^0-9.]/g, '')) || 0;
-    const enteredAmount = parseFloat(input.value) || 0;
-
-    const errorSpan = input.closest('td').querySelector('.debit-error');
-
-    if (enteredAmount > budgetAmount) {
-      // Show error message and clear input
-      errorSpan.textContent = "Debit amount cannot be greater than the total budget amount (₹" + budgetAmount.toFixed(2) + ").";
-      input.value = "";
-      input.classList.add("is-invalid");
-      input.focus();
-
-      // Clear Net Payable and Total Debit Amounts
-      document.getElementById("expenseNetPayableAmount").textContent = "0.00";
-      document.getElementById("expenseBillTotalDebitAmount").textContent = "0.00";
-    } else {
-      // Clear error message if valid
-      errorSpan.textContent = "";
-      input.classList.remove("is-invalid");
-    }
-  }
+  
 </script>
 
 
