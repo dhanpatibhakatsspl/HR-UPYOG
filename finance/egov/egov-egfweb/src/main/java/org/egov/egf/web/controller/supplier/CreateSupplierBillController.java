@@ -211,7 +211,7 @@ public class CreateSupplierBillController extends BaseBillController {
 	public String showNewForm(@ModelAttribute("egBillregister") final EgBillregister egBillregister, final Model model,
 			HttpServletRequest request) {
 		setDropDownValues(model);
-	     model.addAttribute("billNumberGenerationAuto", supplierBillService.generateSupBillNumber());
+	  //   model.addAttribute("billNumberGenerationAuto", supplierBillService.generateSupBillNumber());
 
 		//final PurchaseOrder purchaseOrder = purchaseOrderService.getById(id);
 	//	List<PurchaseItems> purchaseItems1 = purchaseItemRepository.findByPurchaseOrder(name);
@@ -235,7 +235,7 @@ public class CreateSupplierBillController extends BaseBillController {
 			final Model model, final BindingResult resultBinder, final HttpServletRequest request,
 			@RequestParam @SafeHtml final String workFlowAction) throws IOException, ParseException {
 		
-		model.addAttribute("billNumberGenerationAuto", supplierBillService.generateSupBillNumber());
+		//model.addAttribute("billNumberGenerationAuto", supplierBillService.generateSupBillNumber());
 		//System.out.println(egBillregister.getPurchaseItems().size());
 			
 		
@@ -332,7 +332,7 @@ public class CreateSupplierBillController extends BaseBillController {
 		prepareValidActionListByCutOffDate(model);
 		model.addAttribute(SUPPLIER_ID,
 				purchaseOrderService.getByOrderNumber(egBillregister.getWorkordernumber()).getSupplier().getId());
-						model.addAttribute("billNumberGenerationAuto", supplierBillService.generateSupBillNumber());
+//						model.addAttribute("billNumberGenerationAuto", supplierBillService.generateSupBillNumber());
 
 		return SUPPLIERBILL_FORM;
 	}

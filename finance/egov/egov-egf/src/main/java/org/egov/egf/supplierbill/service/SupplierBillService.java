@@ -697,59 +697,59 @@ public class SupplierBillService {
 		return !desgnList.isEmpty() ? desgnList.get(0) : null;
 	}
 
-	public synchronized String generateSupBillNumber() {
+//	public synchronized String generateSupBillNumber() {
 		// Get the current year
-		int year = LocalDate.now().getYear() % 100; // Get the last two digits of the year
+//		int year = LocalDate.now().getYear() % 100; // Get the last two digits of the year
+//
+//		// Get the current financial year
+//		String financialYear = getFinancialYear();
 
-		// Get the current financial year
-		String financialYear = getFinancialYear();
+//		Optional<String> latestBillNumber = getLastSupplierBillNumber();
 
-		Optional<String> latestBillNumber = getLastSupplierBillNumber();
-
-		if (latestBillNumber.isPresent()) {
-			String[] lastNumber = { "" }; // Array to hold the last number
-
-			latestBillNumber.ifPresent(input -> {
-				String pattern = "(\\d+)$";
-				Pattern r = Pattern.compile(pattern);
-				Matcher m = r.matcher(input);
-
-				if (m.find()) {
-					lastNumber[0] = m.group(1);
-				} else {
-					System.out.println("No match found.");
-				}
-			});
-
-			// Construct the bill number in the format: sup/financial year/number
-			String billNumber = "Sup/001/" + financialYear + "/" + "0000" + (Integer.parseInt(lastNumber[0]) + 1);
-
-			return billNumber;
-
-		} else {
-			return "Sup/001/" + financialYear + "/" + "00001";
-		}
-	}
+//		if (latestBillNumber.isPresent()) {
+//			String[] lastNumber = { "" }; // Array to hold the last number
+//
+//			latestBillNumber.ifPresent(input -> {
+//				String pattern = "(\\d+)$";
+//				Pattern r = Pattern.compile(pattern);
+//				Matcher m = r.matcher(input);
+//
+//				if (m.find()) {
+//					lastNumber[0] = m.group(1);
+//				} else {
+//					System.out.println("No match found.");
+//				}
+//			});
+//
+//			// Construct the bill number in the format: sup/financial year/number
+//			String billNumber = "Sup/001/" + financialYear + "/" + "0000" + (Integer.parseInt(lastNumber[0]) + 1);
+//
+//			return billNumber;
+//
+//		} else {
+//			return "Sup/001/" + financialYear + "/" + "00001";
+//		}
+//	}
+//
+//	// added by Raju
+//	private static String getFinancialYear() {
+//		LocalDate today = LocalDate.now();
+//		int year = today.getYear();
+//		int month = today.getMonthValue();
+//
+//		String financialYear;
+//		if (month >= 4) {
+//			// Financial year starts from April
+//			financialYear = String.format("%02d", year % 100) + "-" + String.format("%02d", (year + 1) % 100);
+//		} else {
+//			financialYear = String.format("%02d", (year - 1) % 100) + "-" + String.format("%02d", year % 100);
+//		}
+//		return financialYear;
+//	}
 
 	// added by Raju
-	private static String getFinancialYear() {
-		LocalDate today = LocalDate.now();
-		int year = today.getYear();
-		int month = today.getMonthValue();
-
-		String financialYear;
-		if (month >= 4) {
-			// Financial year starts from April
-			financialYear = String.format("%02d", year % 100) + "-" + String.format("%02d", (year + 1) % 100);
-		} else {
-			financialYear = String.format("%02d", (year - 1) % 100) + "-" + String.format("%02d", year % 100);
-		}
-		return financialYear;
-	}
-
-	// added by Raju
-	public Optional<String> getLastSupplierBillNumber() {
-		return supplierBillRepository.findMaxBillNumberStartingWithSup();
-	}
+//	public Optional<String> getLastSupplierBillNumber() {
+//		return supplierBillRepository.findMaxBillNumberStartingWithSup();
+//	}
 
 }

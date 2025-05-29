@@ -81,7 +81,7 @@ $(document).ready(function()
 	
 	
 	
-/*	$('#approvalDepartment').change(function(){
+	$('#approvalDepartment').change(function(){
 		$.ajax({
 			url: "/services/EGF/designations",     
 			type:'GET',
@@ -111,41 +111,7 @@ $(document).ready(function()
 				console.log("failed");
 			}
 		});
-	});*/
-	
-
-	$('#approvalDepartment').change(function(){
-		var value = document.getElementById("supplier-netPayableAmount").value;
-	    $.ajax({
-	        url: "/services/EGF/designations",     
-	        type: 'GET',
-	        data: {
-	            approvalDepartment : $('#approvalDepartment').val(),
-	            departmentRule : $('#approvalDepartment').find("option:selected").text(),
-	            type : $('#stateType').val(),
-	            currentState : $('#currentState').val(),
-	            amountRule : $('#amountRule').val(),
-	            additionalRule : $('#additionalRule').val(),
-	            pendingAction : $('#pendingActions').val(),
-	            netPayableAmount : value   
-	        },
-	        success: function (response) {
-	            $('#approvalDesignation').empty();
-	            $('#approvalDesignation').append($("<option value=''>Select from below</option>"));
-	            $.each(response, function(index, value) {
-	                $('#approvalDesignation').append($('<option>').text(value.name).attr('value', value.code));
-	            });
-	            $('#approvalDesignation').val($('#approvalDesignationValue').val());
-	            $('#approvalDesignation').trigger('change');
-	        }, 
-	        error: function (response) {
-	            bootbox.alert('json fail');
-	        }
-	    });
 	});
-
-	
-	
 	
 	
 	
