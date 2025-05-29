@@ -33,7 +33,4 @@ CREATE TABLE IF NOT EXISTS egf_vendor
         ON DELETE NO ACTION
 )
 
-TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS egf_vendor
-    OWNER to postgres;
