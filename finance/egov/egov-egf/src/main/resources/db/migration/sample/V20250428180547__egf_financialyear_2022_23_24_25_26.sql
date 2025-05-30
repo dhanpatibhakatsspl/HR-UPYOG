@@ -22,3 +22,12 @@ INSERT INTO fiscalperiod (id,name, startingdate, endingdate,isactiveforposting, 
 SELECT nextval('seq_fiscalperiod'),'202425', '01-Apr-2024', '31-Mar-2025',false, true, current_date, current_date,1,1,0, (select id from financialyear where financialyear='2024-25') 
 WHERE NOT EXISTS (SELECT 1 FROM fiscalperiod WHERE name='202425');
 
+INSERT INTO financialyear (id, financialyear, startingdate, endingdate, isactive, createddate, lastmodifieddate,lastmodifiedby,createdby,version, isactiveforposting, isclosed, transferclosingbalance) 
+SELECT nextval('seq_financialyear'), '2025-26', '01-Apr-2025', '31-Mar-2026', true, current_date, current_date, 1,1,0, true, false, false 
+WHERE NOT EXISTS (SELECT 1 FROM financialyear WHERE financialyear='2025-26');
+
+INSERT INTO fiscalperiod (id,name, startingdate, endingdate,isactiveforposting, isactive, createddate, lastmodifieddate,lastmodifiedby,createdby,version, financialyearid) 
+SELECT nextval('seq_fiscalperiod'),'202526', '01-Apr-2025', '31-Mar-2026',false, true, current_date, current_date,1,1,0, (select id from financialyear where financialyear='2025-26') 
+WHERE NOT EXISTS (SELECT 1 FROM fiscalperiod WHERE name='2025-26');
+
+
