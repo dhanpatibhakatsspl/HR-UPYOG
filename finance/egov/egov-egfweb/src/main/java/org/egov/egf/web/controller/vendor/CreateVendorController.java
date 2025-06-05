@@ -69,7 +69,7 @@ public class CreateVendorController {
 		model.addAttribute("statuses",
 				egwStatusHibDAO.getStatusByModule(FinancialConstants.STATUS_MODULE_NAME_VENDOR));
 		
-		model.addAttribute("VendorCodeAutoGeneration",vendorService.vendorCode());
+		model.addAttribute("VendorCodeAutoGeneration",vendorService.fetchLastId());
 
 	}
 

@@ -73,5 +73,8 @@ public interface WorkOrderRepository extends JpaRepository<WorkOrder, Long> {
     
     @Query(value = "SELECT nextval('seq_egf_workorder')", nativeQuery = true)
     Long getNextSeqNo();
+    
+    @Query("SELECT MAX(wo.id) FROM WorkOrder wo")
+    Long findMaxId();
 
 }

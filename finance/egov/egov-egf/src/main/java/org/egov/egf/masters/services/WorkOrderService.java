@@ -280,17 +280,24 @@ public class WorkOrderService implements EntityTypeService {
 		return Collections.emptyList();
 	}
 	
-	public synchronized String generateWorkOrderNumber() {
+public synchronized String generateWorkOrderNumber() {
+        
+        String financialYear = getFinancialYear();
+        
+        Long latestOrderNumber = getLastWorkOrderNumber();
+        
+       if (latestOrderNumber != null) {           
 
-		String financialYear = getFfinancialYear();
-	    Long nextOrderSeq = Optional.ofNullable(workOrderRepository.getNextSeqNo()).orElse(0L) + 1;   
-		String orderNumber = "WO/001/" + financialYear + "/"+ String.format("%04d", nextOrderSeq);
-		return orderNumber;
+            String orderNumber = "WO/001/" + financialYear + "/" + "0000" +(latestOrderNumber+1); 
+            return orderNumber;
+      
+      }
+      else {
+          return "WO/001/" + financialYear + "/" + "00001";
+      }
+  }
 
-		
-	}
-
-	private static String getFfinancialYear() {
+	private static String getFinancialYear() {
 		LocalDate today = LocalDate.now();
 		int year = today.getYear();
 		int month = today.getMonthValue();
@@ -304,5 +311,8 @@ public class WorkOrderService implements EntityTypeService {
 		}
 		return financialYear;
 	}
+	 public Long getLastWorkOrderNumber() {
+	      return workOrderRepository.findMaxId();
+	  }
 
 }
