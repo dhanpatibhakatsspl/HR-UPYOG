@@ -339,15 +339,20 @@ public class PurchaseOrderService implements EntityTypeService {
 
 	
 	public synchronized String generatePurchaseOrderNumber() {
-
-		String financialYear = getFfinancialYear();
-	    Long nextOrderSeq = Optional.ofNullable(purchaseOrderRepository.getNextSeqNo()).orElse(0L) + 1;   
-		String orderNumber = "PO/001/" + financialYear+ "/" + String.format("%04d", nextOrderSeq);
-		return orderNumber;
-
-		
-	}
-
+        
+        String financialYear = getFfinancialYear();
+        Long latestOrderNumber = getLastPurchaseOrderNumber(); 
+       if (latestOrderNumber != null) {           
+        String orderNumber = "PO/001/" + financialYear + "/" + "0000" +(latestOrderNumber+1); 
+        return orderNumber;
+       }
+       else {
+           return "PO/001/" + financialYear + "/" + "00001";
+      }
+    }
+	public Long getLastPurchaseOrderNumber() { 
+        return purchaseOrderRepository.findMaxId(); 
+        }
 	private static String getFfinancialYear() {
 		LocalDate today = LocalDate.now();
 		int year = today.getYear();

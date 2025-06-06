@@ -221,5 +221,21 @@ public class SupplierService implements EntityTypeService {
 	    Long nextSeq = Optional.ofNullable(supplierRepository.getNextSupplierSequence()).orElse(0L) + 1;
 	    String supCode = "Sup/001/" + String.format("%04d", nextSeq);
 	    return supCode;
-	}	
+	}
+	@Transactional
+	public String fetchLastId() {
+		
+	    Long lastId =  supplierRepository.findMaxId()+1;
+	    String supCode;
+	    if(lastId != null) {
+	    	if(lastId < 1000) 
+	    		supCode = "Sup/001/"+String.format("%04d", lastId);
+	    	else
+	    		supCode = "Sup/001/"+lastId;
+	    }
+	    else
+	    	supCode = "Sup/001/0001";
+	    return  supCode;
+	}
+
 }

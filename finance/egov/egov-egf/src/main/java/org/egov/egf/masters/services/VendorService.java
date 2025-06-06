@@ -160,5 +160,20 @@ public class VendorService implements EntityTypeService {
 	    String supCode = "Ven/001/" + String.format("%04d", nextSeq);
 	    return supCode;
 	}
+	@Transactional
+	public String fetchLastId() {
+		
+	    Long lastId =  vendorRepository.findMaxId()+1;
+	    String supCode;
+	    if(lastId != null) {
+	    	if(lastId < 1000) 
+	    		supCode = "Ven/001/"+String.format("%04d", lastId);
+	    	else
+	    		supCode = "Ven/001/"+lastId;
+	    }
+	    else
+	    	supCode = "Ven/001/0001";
+	    return  supCode;
+	}
 	
 }

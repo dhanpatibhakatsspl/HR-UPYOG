@@ -208,5 +208,20 @@ public class ContractorService implements EntityTypeService {
 	    String supCode = "Con/001/" + String.format("%04d", nextSeq);
 	    return supCode;
 	}
+	@Transactional
+	public String fetchLastId() {
+		
+	    Long lastId =  contractorRepository.findMaxId()+1;
+	    String supCode;
+	    if(lastId != null) {
+	    	if(lastId < 1000) 
+	    		supCode = "Con/001/"+String.format("%04d", lastId);
+	    	else
+	    		supCode = "Con/001/"+lastId;
+	    }
+	    else
+	    	supCode = "Con/001/0001";
+	    return  supCode;
+	}
 	
 }

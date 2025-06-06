@@ -117,7 +117,7 @@ public class CreateContractorController {
 		model.addAttribute("statuses",
 				egwStatusHibDAO.getStatusByModule(FinancialConstants.STATUS_MODULE_NAME_CONTRACTOR));
 		
-		model.addAttribute("ContractorCodeAutoGeneration",contractorService.contractorCode());
+		model.addAttribute("ContractorCodeAutoGeneration",contractorService.fetchLastId());
 
 	}
 
