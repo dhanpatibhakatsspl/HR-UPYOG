@@ -55,6 +55,7 @@ var creditAmoutrowcount=0;
 var $purchaseOrderId = 0;
 var $supplierId = 0;
 var accountCodeTemplateMap = {};
+var totalPurchaseOrderValue = 0;
 $(document).ready(function(){
 	console.log("Browser Language ",navigator.language);
 	$.i18n.properties({ 
@@ -712,3 +713,55 @@ if(clearAllDetails()){
 }
 
 }
+
+
+
+
+    function getTotalPOAmount() {
+        var purchaseOrderId = document.getElementById("purchaseOrder").value;
+		/*alert("purchaseOrderId: " + purchaseOrderId);*/
+        if (purchaseOrderId) {
+            $.ajax({
+                url: "getPurchaseOrderAmount",
+                type: "GET",
+                data: { purchaseOrderId: purchaseOrderId },
+                dataType: "json",
+                success: function(data) {
+                    var previousAmount = document.getElementById("previousBillAmount");
+                    if (previousAmount) {
+                        previousAmount.innerText = data.amount.toFixed(2);
+                    }
+                   totalPurchaseOrderValue = data.totalPurchaseOrderValue;
+         
+                },
+                error: function(error) {
+                    console.error("Error fetching purchase order amount:", error);
+                }
+            });
+        }
+    }
+
+	function comparePreviousBillAmountWithPurchaseOrderValue() {
+	
+	    var netPayableAmountText = document.getElementById("supplierNetPayableAmount").innerText || "0";
+	    var netPayableAmount = parseFloat(netPayableAmountText);
+	   
+	    var previousAmountText = document.getElementById("previousBillAmount").innerText || "0";
+	    var previousAmount = parseFloat(previousAmountText);
+	
+	    var poLimitRemaining = totalPurchaseOrderValue - previousAmount;
+		
+	    if (netPayableAmount > poLimitRemaining) {
+			
+	        bootbox.alert({
+				title : "Limit Exceeds!", 
+				message: "Net Payable Amount exceeds the Purchase Order Limit! ₹" + poLimitRemaining.toFixed(2)
+	        
+	        });
+
+	        document.getElementById("supplierNetPayableAmount").scrollIntoView({ behavior: 'smooth' });
+	        return false;
+	    } else {
+	        return true;
+	    }
+	}

@@ -51,6 +51,8 @@ import java.util.List;
 
 import org.egov.model.bills.EgBillregister;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -64,5 +66,10 @@ public interface ContractorBillRepository extends JpaRepository<EgBillregister, 
     EgBillregister findByBillnumber(final String billNumber);
 
     List<EgBillregister> findByBillnumberContainingIgnoreCase(final String billNumber);
+    
+    
+    @Query(value = "SELECT SUM(passedamount) FROM eg_billregister WHERE workordernumber = :workordernumber", nativeQuery = true)
+    Double findTotalBillAmountByWorkordernumber(@Param("workordernumber") String workordernumber);
 
+    
 }

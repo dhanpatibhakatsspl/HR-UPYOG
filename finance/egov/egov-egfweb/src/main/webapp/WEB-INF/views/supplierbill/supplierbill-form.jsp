@@ -52,41 +52,20 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <style>
-.position_alert1 {
-	position: fixed;
-	z-index: 9999;
-	top: 5px;
-	right: 780px;
-	background: #F2DEDE;
-	padding: 5px 10px;
-	border-radius: 5px;
+.alert-container {
+    position: fixed;
+    top: 5px;
+    right: 20px;
+    display: flex;
+    gap: 10px; /* consistent spacing between boxes */
+    z-index: 9999;
 }
-.position_alert2 {
-	position: fixed;
-	z-index: 9999;
-	top: 5px;
-	right: 500px;
-	background: #F2DEDE;
-	padding: 5px 10px;
-	border-radius: 5px;
-}
-.position_alert3 {
-	position: fixed;
-	z-index: 9999;
-	top: 5px;
-	right: 270px;
-	background: #F2DEDE;
-	padding: 5px 10px;
-	border-radius: 5px;
-}
-.position_alert4 {
-	position: fixed;
-	z-index: 9999;
-	top: 5px;
-	right: 20px;
-	background: #F2DEDE;
-	padding: 5px 10px;
-	border-radius: 5px;
+
+.alert-box {
+    background: #F2DEDE;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap; /* prevents text from wrapping */
 }
 </style>
 <form:form name="supplierBillForm" role="form" method="post"
@@ -100,30 +79,42 @@
 		</div>
 	</c:if>
 
-	<div class="position_alert1">
-		<spring:message code="lbl.total.debit.amount"
-			text="Total Debit Amount" />
-		: &#8377 <span id="supplierBillTotalDebitAmount"> <c:out
-				value="${supplierBillTotalDebitAmount}" default="0.0"></c:out></span>
-	</div>
-	<div class="position_alert2">
-		<spring:message code="lbl.total.deduction.amount"
-			text="Total Deduction Amount" />
-		: &#8377 <span id="supplierBillTotalCreditAmount"> <c:out
-				value="${supplierBillTotalCreditAmount}" default="0.0"></c:out></span>
-	</div>
-	<div class="position_alert3">
-		<spring:message code="lbl.netpayable.amount" text="Net Payable Amount" />
-		: &#8377 <span id="supplierNetPayableAmount"><c:out
-				value="${supplierNetPayableAmount}" default="0.0"></c:out></span>
-	</div>
+	<div class="alert-container">
+		<div class="alert-box">
+			<spring:message code="lbl.total.debit.amount" text="Total Debit Amount" />
+			: &#8377; <span id="supplierBillTotalDebitAmount">
+				<c:out value="${supplierBillTotalDebitAmount}" default="0.0" />
+			</span>
+		</div>
 	
+		<div class="alert-box">
+			<spring:message code="lbl.total.deduction.amount" text="Total Deduction Amount" />
+			: &#8377; <span id="supplierBillTotalCreditAmount">
+				<c:out value="${supplierBillTotalCreditAmount}" default="0.0" />
+			</span>
+		</div>
 	
-	<div class="position_alert4">
-		<spring:message code="lbl.toal.budget.amount" text="Total Budget Amount" />
-		: &#8377 <span id="budgetAmount"><c:out
-				value="${totalBudgetAmount}" default="0.0"></c:out></span>
+		<div class="alert-box">
+			<spring:message code="lbl.netpayable.amount" text="Net Payable Amount" />
+			: &#8377; <span id="supplierNetPayableAmount">
+				<c:out value="${supplierNetPayableAmount}" default="0.0" />
+			</span>
+		</div>
+	
+		<div class="alert-box">
+			<spring:message code="lbl.toal.budget.amount" text="Total Budget Amount" />
+			: &#8377; <span id="budgetAmount">
+				<c:out value="${totalBudgetAmount}" default="0.0" />
+			</span>
+		</div>
+		<div class="alert-box">
+			<spring:message code="lbl.previousbill.amount" text="Previous Bill Amount" />
+			: &#8377; <span id="previousBillAmount">
+				<c:out value="${previousBillAmount}" default="0.0" />
+			</span>
+		</div>
 	</div>
+
 
 	<form:hidden path="" id="cutOffDate" value="${cutOffDate}" />
 	<form:hidden path="" name="mode" id="mode" value="${mode}" />
@@ -197,3 +188,6 @@
 	src="<cdn:url value='/resources/global/js/egov/patternvalidation.js?rnd=${app_release_no}' context='/services/egi'/>"></script>
 <script
 	src="<cdn:url value='/resources/global/js/egov/inbox.js?rnd=${app_release_no}' context='/services/egi'/>"></script>
+	
+			
+

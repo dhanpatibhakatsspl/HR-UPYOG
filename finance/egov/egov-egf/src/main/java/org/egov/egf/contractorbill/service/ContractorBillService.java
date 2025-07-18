@@ -382,6 +382,7 @@ public class ContractorBillService {
             return b.getNextNumber(bill);
         }
     }
+    
 
     public void validateSubledgeDetails(EgBillregister egBillregister) {
         final List<EgBillPayeedetails> payeeDetails = new ArrayList<>();
@@ -689,4 +690,12 @@ public class ContractorBillService {
         List<Designation> desgnList = microServiceUtil.getDesignation(desgnCode);
         return !desgnList.isEmpty() ? desgnList.get(0) : null;
     }
+    
+	public Double getTotalBillAmountByOrderNumber(String workOrderNumber) {
+        Double totalBillAmount = contractorBillRepository.findTotalBillAmountByWorkordernumber(workOrderNumber);
+        if (totalBillAmount == null)
+            totalBillAmount = 0.0;
+        return totalBillAmount;
+    
+	}
 }
