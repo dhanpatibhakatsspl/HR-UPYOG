@@ -105,7 +105,7 @@
 			<span class="mandatory"></span>
 		</label>
 		<div class="col-sm-3 add-margin">
-			<form:select path="workordernumber" data-first-option="false" id="purchaseOrder" class="form-control" required="required" onchange="getPurchaseItemsByOrderId()" >
+			<form:select path="workordernumber" data-first-option="false" id="purchaseOrder" class="form-control" required="required" onchange="getPurchaseItemsByOrderId(); getTotalPOAmount();" >
 				<form:option value=""><spring:message code="lbl.select" text="Select"/></form:option>
 				<form:options items="${purchaseOrders}" itemValue="name" itemLabel="orderNumber" />
 			</form:select>

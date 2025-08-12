@@ -98,7 +98,7 @@
 			<span class="mandatory"></span>
 		</label>
 		<div class="col-sm-3 add-margin">
-			<form:select path="" data-first-option="false" id="contractor" class="form-control" required="required"  >
+			<form:select path="" data-first-option="false" id="contractor"  class="form-control" required="required"  >
 				<form:option value=""><spring:message code="lbl.select" text="Select"/></form:option>
 				<form:options items="${contractors}" itemValue="id" itemLabel="name" />
 			</form:select>
@@ -108,10 +108,10 @@
 			<span class="mandatory"></span>
 		</label>
 		<div class="col-sm-3 add-margin">
-			<form:select path="workordernumber" data-first-option="false" id="workOrder" class="form-control" required="required"  >
+			<form:select path="workordernumber" data-first-option="false" id="workOrder" onchange="getWorkOrderAmount();" class="form-control" required="required"  >
 				<form:option value=""><spring:message code="lbl.select" text="Select"/></form:option>
 				<form:options items="${workOrders}" itemValue="name" itemLabel="orderNumber" />
-			</form:select>
+			</form:select>	
 			<form:errors path="workordernumber" cssClass="add-margin error-msg" />
 		</div>
 	
@@ -221,3 +221,12 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+
+
+
+
+

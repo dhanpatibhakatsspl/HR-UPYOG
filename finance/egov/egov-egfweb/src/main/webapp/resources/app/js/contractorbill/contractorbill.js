@@ -55,6 +55,7 @@ var creditAmoutrowcount=0;
 var $workOrderId = 0;
 var $contractorId = 0;
 var accountCodeTemplateMap = {};
+var totalWorkOrderValue = 0;
 $(document).ready(function(){
 	console.log("Browser Language ",navigator.language);
 	$.i18n.properties({ 
@@ -713,3 +714,57 @@ function populateAccountCodeTemplateDetails(selectedTemp){
   }
 	
 }
+
+
+
+    function getWorkOrderAmount() {
+        var workOrderId = document.getElementById("workOrder").value;
+
+        if (workOrderId) {
+            $.ajax({
+                url: "getWorkOrderAmount",
+                type: "GET",
+                data: { workOrderId: workOrderId },
+                dataType: "json",
+                success: function(data) {
+                    var previousAmount = document.getElementById("previousBillAmount");
+                    if (previousAmount) {
+                        previousAmount.innerText = data.amount.toFixed(2);
+                    }
+                    totalWorkOrderValue = data.totalWorkOrderValue;
+
+         
+                },
+                error: function(error) {
+                    console.error("Error fetching work order amount:", error);
+                }
+            });
+        }
+    }
+
+	function comparePreviousBillAmountWithWorkOrderValue() {
+	
+	    var netPayableAmountText = document.getElementById("contractorNetPayableAmount").innerText || "0";
+	    var netPayableAmount = parseFloat(netPayableAmountText);
+	   
+	    var previousAmountText = document.getElementById("previousBillAmount").innerText || "0";
+	    var previousAmount = parseFloat(previousAmountText);
+	
+	    var woLimitRemaining = totalWorkOrderValue - previousAmount;
+	
+	    if (netPayableAmount > woLimitRemaining) {
+	        bootbox.alert({
+			    title: "Limit Exceeds!",
+			    message: "Net Payable Amount exceeds the Work Order Limit! ₹" + woLimitRemaining.toFixed(2)
+			});
+
+	        document.getElementById("contractorNetPayableAmount").scrollIntoView({ behavior: 'smooth' });
+	        return false;
+	    } else {
+	        return true;
+	    }
+	}
+
+
+
+

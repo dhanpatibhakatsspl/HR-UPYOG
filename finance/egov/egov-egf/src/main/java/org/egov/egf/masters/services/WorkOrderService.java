@@ -314,5 +314,13 @@ public synchronized String generateWorkOrderNumber() {
 	 public Long getLastWorkOrderNumber() {
 	      return workOrderRepository.findMaxId();
 	  }
+	 
+		public double getTotalWorkOrderValueByOrderNumber(String orderNumber) {
+			WorkOrder workOrder = workOrderRepository.findByOrderNumber(orderNumber);
+			if (workOrder != null) {
+				return workOrder.getOrderValue().doubleValue();
+			}
+			return 0.0;
+		}
 
 }

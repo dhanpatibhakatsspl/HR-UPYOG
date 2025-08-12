@@ -60,8 +60,10 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -79,6 +81,7 @@ import org.egov.commons.service.ChartOfAccountsService;
 import org.egov.egf.budget.model.BudgetControlType;
 import org.egov.egf.budget.service.BudgetControlTypeService;
 import org.egov.egf.commons.CommonsUtil;
+import org.egov.egf.contractorbill.service.ContractorBillService;
 import org.egov.egf.masters.repository.PurchaseItemRepository;
 import org.egov.egf.masters.services.PurchaseOrderService;
 import org.egov.egf.masters.services.SupplierService;
@@ -102,6 +105,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.HTTPUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -186,6 +190,9 @@ public class CreateSupplierBillController extends BaseBillController {
 
 	@Autowired
 	private CommonsUtil commonsUtil;
+	
+	@Autowired
+	private ContractorBillService contractorBillService;
 
 	@Autowired
 	private PurchaseItemRepository purchaseItemRepository;
@@ -239,12 +246,12 @@ public class CreateSupplierBillController extends BaseBillController {
 		//System.out.println(egBillregister.getPurchaseItems().size());
 			
 		
-		if (FinancialConstants.BUTTONFORWARD.equalsIgnoreCase(workFlowAction) && !commonsUtil
-				.isValidApprover(egBillregister, Long.valueOf(request.getParameter(APPROVAL_POSITION)))) {
+		if (FinancialConstants.BUTTONFORWARD.equalsIgnoreCase(workFlowAction) && !commonsUtil.isValidApprover(egBillregister, Long.valueOf(request.getParameter(APPROVAL_POSITION)))) {
 			populateDataOnErrors(egBillregister, model, request);
 			model.addAttribute("errorMessage", getLocalizedMessage(INVALID_APPROVER, null, null));
 			return SUPPLIERBILL_FORM;
 		}
+		
 		egBillregister.setCreatedBy(ApplicationThreadLocals.getUserId());
 		if (StringUtils.isBlank(egBillregister.getExpendituretype()))
 			egBillregister.setExpendituretype(FinancialConstants.STANDARD_EXPENDITURETYPE_PURCHASE);
@@ -582,4 +589,26 @@ public class CreateSupplierBillController extends BaseBillController {
 		// If the loop completes and no matching item is found
 		return "unavailable";
 	}
+	
+	@GetMapping("/getPurchaseOrderAmount")
+	public ResponseEntity<Map<String, Object>> getPurchaseOrderAmount(@RequestParam String purchaseOrderId) {
+		Map<String, Object> response = new HashMap<>();
+		try {
+			PurchaseOrder purchaseOrder = purchaseOrderService.getByOrderNumber(purchaseOrderId);
+			Double totalBillAmount = contractorBillService.getTotalBillAmountByOrderNumber(purchaseOrderId);
+			if (purchaseOrder != null) {
+				response.put("amount", totalBillAmount);
+				response.put("totalPurchaseOrderValue", purchaseOrder.getOrderValue());
+				response.put("status", "success");
+			}
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			response.put("status", "error");
+			response.put("message", "An error occurred while fetching Purchase Order amount");
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+	}
+	
+	
 }
