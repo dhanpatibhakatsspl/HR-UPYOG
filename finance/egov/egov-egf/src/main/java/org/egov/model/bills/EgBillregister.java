@@ -84,6 +84,8 @@ public class EgBillregister extends StateAware implements java.io.Serializable {
     @NotNull
     private Date billdate;
     
+    private Integer currentquantity;
+    
     @NotNull
     @Min(1)
     private BigDecimal billamount;
@@ -156,6 +158,8 @@ public class EgBillregister extends StateAware implements java.io.Serializable {
     private String approvalComent;
     @Transient
     private String purchaseObject;
+    
+    
     
     
 	public String getPurchaseObject() {
@@ -497,7 +501,17 @@ public class EgBillregister extends StateAware implements java.io.Serializable {
             this.documentDetail.addAll(documentDetail);
     }
 
-    public enum BillStatus {
+    public Integer getCurrentquantity() {
+		return currentquantity;
+	}
+
+	public void setCurrentquantity(Integer currentquantity) {
+		this.currentquantity = currentquantity;
+	}
+
+
+
+	public enum BillStatus {
         CREATED, APPROVED, REJECTED, CANCELLED
     }
 }
