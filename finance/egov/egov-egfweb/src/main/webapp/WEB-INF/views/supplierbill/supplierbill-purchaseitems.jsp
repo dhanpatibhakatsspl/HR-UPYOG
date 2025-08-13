@@ -53,8 +53,12 @@
 	<div class="panel-title">Purchase-Items</div>
 </div>
 <div id="dynamicPurchaseItemList" class="panel-body"></div>
+<input type="hidden" id="quantitiesField" name="quantities"/>
 
 <script>
+
+
+
 var purchaseList;
 
 function getPurchaseItemsByOrderId() {
@@ -71,7 +75,7 @@ function getPurchaseItemsByOrderId() {
             // Prepare jsonObjectArray based on dataList
             for (var i = 0; i < dataList.length; i++) {
                 var item = dataList[i];
-                
+                console.log(item);
                 var jsonObject = {
                     id: item.id,
                     itemCode: item.itemCode,
@@ -119,6 +123,18 @@ function getPurchaseItemsByOrderId() {
             // Append generated table HTML
             $('#dynamicPurchaseItemList').append(tableHTML);
 
+            $('#egBillregister').on('submit', function () {
+                var quantities = [];
+
+                $('#tbldebitdetails1 tbody tr').each(function () {
+                    var qtyText = $(this).find('.quantity-input').text().trim();
+                    var qty = parseFloat(qtyText) || 0;
+                    quantities.push(qty);
+                });
+
+                $('#quantitiesField').val(quantities.join(','));
+            });
+			
             // Update the amount based on user input
             $(document).on('input', '.editable.quantity', function () {
                 var row = $(this).closest('tr');
@@ -161,16 +177,18 @@ function getPurchaseItemsByOrderId() {
             // Event listener for quantity change to check availability
             $(document).on('input', '.editable.quantity', function () {
                 var row = $(this).closest('tr');
-                var orderNumber = row.find('.orderNumber').text(); // Get order number from the row
+                var orderNum = orderNumber; 
                 var quantity = parseFloat($(this).text()) || 0;
-
+                
                 $.ajax({
                     type: 'POST',
-                    url: '/services/EGF/supplierbill/checkQuantity',
-                    data: { orderNumber: orderNumber, quantity: quantity },
+                    url: '/services/EGF/supplierbill/checkQuantity',          	
+                    data: { orderNumber: orderNum, quantity: quantity },
                     success: function (response) {
+                        console.log(response);
                         if (response === 'available') {
-                            bootbox.alert('Quantity is available.'); /* Modified by Heeralal Gupta */
+                            // bootbox.alert('Quantity is available.'); /* Modified by Heeralal Gupta */
+                            console.log("Quantity Available");
                         } else {
                             bootbox.alert('Quantity is unavailable or exceeds available quantity.'); /* Modified by Heeralal Gupta */
                         }

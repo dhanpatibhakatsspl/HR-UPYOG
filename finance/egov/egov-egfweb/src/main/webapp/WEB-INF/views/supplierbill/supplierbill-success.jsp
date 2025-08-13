@@ -51,15 +51,80 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script>
-			function processRequest(){
-		
-				
-				
-				
+	function processRequest(){	
 		console.log('posted the message');
 	}
 </script>
+<style>
+    table.upyog-table {
+        border-collapse: collapse;
+        width: -webkit-fill-available;
+        table-layout: fixed;
+        font-size: 13px;
+        margin:20px;
+    }
+    table.upyog-table th{
+       background-color: antiquewhite;
+    }
+    table.upyog-table th, table.upyog-table td {
+        border: 1px solid black;
+        padding: 6px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .rotate-text {
+       /*  writing-mode: vertical-rl;
+        transform: rotate(180deg); */
+    }
+</style>
+<style>
+    table.bill-table {
+        border-collapse: collapse;
+        width: -webkit-fill-available;
+        font-size: 14px;
+        table-layout: fixed;
+        margin:20px;
+    }
+    table.bill-table th, table.bill-table td {
+        border: 1px solid black;
+        text-align: center;
+        padding: 6px;
+        vertical-align: middle;
+    }
+    table.bill-table th{
+       background-color: antiquewhite;
+    }
+</style>
+<style>
+		 table.final-bill th{
+		       background-color: antiquewhite;
+		    }
+        table.final-bill {
+            border-collapse: collapse;
+            width: -webkit-fill-available;
+            font-size: 14px;
+            margin-bottom: 20px;
+            margin:20px;
+        }
+        table.final-bill th,
+        table.final-bill td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 6px;
+        }
+        .remarks-cell {
+            width: 12%;
+        }
+        .notes-section {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .notes-section p {
+            margin: 4px 0;
+        }
+    </style>
 <div id="main">
 <div class="row">
 	<div class="col-md-12">
@@ -72,6 +137,135 @@
 					</c:forEach>
 				</div>
 			</div>
+			<!-- First Bill or First & Final Bill -->
+			<c:if test="${billType == 'First Bill' || billType == 'First & Final Bill'}">
+			    <table class="upyog-table" border="1" cellspacing="0" cellpadding="5">
+			        <thead>
+			            <tr>
+			                <th rowspan="3">Date</th>
+			                <th rowspan="3" class="rotate-text">Name of Contractor or Supplier and reference to agreement</th>
+			                <th rowspan="3" class="rotate-text">Item of Work or Supplies (under “Sub-head” and “Sub-rule” of estimate)</th>
+			                <th rowspan="3" class="rotate-text">Quantity</th>
+			                <th rowspan="3" class="rotate-text">Rate With GST<br>(₹)</th>
+			                <th rowspan="3" class="rotate-text">Unit</th>
+			                <th colspan="3" style="font-weight: bold;">Total amount payable to contractor or supplier</th>
+			            </tr>
+			            <tr>
+			                <th rowspan="2">Amount<br>(₹)</th>
+			                <th rowspan="2">In Figure</th>
+			                <th rowspan="2">In Words</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <tr>
+			                <td>${billDate}</td>
+			                <td>${supplier.name}</td>
+			                <td>${purchaseItems.itemCode}</td>        
+			                <td>${qty}</td>
+			                <td>${purchaseItems.unitValueWithGst}</td>
+			                <td>${purchaseItems.unit}</td>
+			                <td>₹${supplierBill.passedamount}</td>
+			                <td>₹${supplierBill.passedamount}</td>
+			                <td>${amountInWords} Rupees Only /-</td>
+			            </tr>
+			        </tbody>
+			    </table>
+			</c:if>
+			
+			<!-- Running Bill -->
+			<c:if test="${billType == 'Running Bill'}">
+			   <table class="bill-table" border="1">
+				    <tr>
+				    	<th rowspan="2">Item of Works or Supplies</th>
+				        <th rowspan="2">Unit</th>
+				        <th rowspan="2">Rate</th>				  	
+				        <th rowspan="2">Quantity executed (or supplied) upto date</th>			        
+				        <th rowspan="2">Date</th>
+				        <th colspan="2">Amount (₹)</th> 
+				        <th rowspan="2">Remarks</th>
+				    </tr>
+				    <tr>
+				        <th>Since previous bills </th>
+				        <th>Up to date </th>
+				    </tr>
+				
+				    <c:forEach var="bill" items="${runningBill}" varStatus="status">
+				        <tr>
+				            <c:if test="${status.first}">
+				            	<td rowspan="${fn:length(runningBill)}">${purchaseItems.itemCode}</td>	
+				                <td rowspan="${fn:length(runningBill)}">${purchaseItems.unit}</td>
+				                <td rowspan="${fn:length(runningBill)}">${purchaseItems.unitValueWithGst}</td>			                			        
+				            </c:if>
+							
+							<td>${bill.currentquantity}</td>
+							<td><fmt:formatDate value="${bill.billdate}" pattern="dd-MM-yyyy" /></td>
+				            <td>₹${bill.passedamount}</td>
+								
+				            <c:if test="${status.first}">
+				                <td rowspan="${fn:length(runningBill)}">₹${totalAmount}</td>
+				                <td rowspan="${fn:length(runningBill)}">Work ongoing</td>
+				            </c:if>
+				        </tr>
+				    </c:forEach>
+				</table>
+			</c:if>
+			
+			<!-- Final Bill -->
+			<c:if test="${billType == 'Final Bill'}">
+			    <table class="bill-table" border="1">
+				    <tr>
+				    	<th rowspan="2">Item of Works or Supplies</th>
+				        <th rowspan="2">Unit</th>
+				        <th rowspan="2">Rate</th>				  	
+				        <th rowspan="2">Quantity executed (or supplied) upto date</th>			        
+				        <th rowspan="2">Date</th>
+				        <th colspan="2">Amount (₹)</th> 
+				        <th rowspan="2">Remarks</th>
+				    </tr>
+				    <tr>
+				        <th>Since previous bills </th>
+				        <th>Up to date </th>
+				    </tr>
+				
+				    <c:forEach var="bill" items="${runningBill}" varStatus="status">
+				        <tr>
+				            <c:if test="${status.first}">
+				            	<td rowspan="${fn:length(runningBill)}">${purchaseItems.itemCode}</td>	
+				                <td rowspan="${fn:length(runningBill)}">${purchaseItems.unit}</td>
+				                <td rowspan="${fn:length(runningBill)}">${purchaseItems.unitValueWithGst}</td>			                			        
+				            </c:if>
+							
+							<td>${bill.currentquantity}</td>
+							<td><fmt:formatDate value="${bill.billdate}" pattern="dd-MM-yyyy" /></td>
+				            <td>₹${bill.passedamount}</td>
+								
+				            <c:if test="${status.first}">
+				                <td rowspan="${fn:length(runningBill)}">₹${totalAmount}</td>
+				                <td rowspan="${fn:length(runningBill)}">Work ongoing</td>
+				            </c:if>
+				        </tr>
+				    </c:forEach>
+				    <tr>
+			            <th colspan="5" style="text-align: left;">
+			                <div class="notes-section">
+			                    <p><strong>A.</strong> Total value of Work done or supplies made till date -</p>
+			                    <p><strong>In Figure</strong></p>
+			                    <p><strong>In Words </strong></p>
+			                    <p><strong>B.</strong> Dated value of Work or supplies shown on previous bill -</p>
+			                    <p><strong>In Figures </strong></p>
+			                    <p><strong>In Words</strong></p>
+			                    <p><strong>C.</strong> Net value of work of supplies since previous bill -</p>
+			                    <p><strong>In Figures </strong></p>
+			                    <p><strong>In Words</strong></p>
+			                </div>
+			            </th>
+			            <td></td>
+			            <td></td>
+			            <td></td>
+			        </tr>
+				</table>
+			</c:if>
+			
 		</div>
 	</div>			
 	<div class="text-center"><input type="button" name="button2" id="button2" value="Close" class="btn btn-default" onclick="window.parent.postMessage('close','*');window.close();"/></div>		

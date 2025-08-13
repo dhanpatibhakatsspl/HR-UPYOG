@@ -48,17 +48,13 @@
 package org.egov.egf.supplierbill.service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -193,6 +189,7 @@ public class SupplierBillService {
 		this.supplierBillRepository = supplierBillRepository;
 		this.scriptExecutionService = scriptExecutionService;
 	}
+	
 
 	public Session getCurrentSession() {
 		return entityManager.unwrap(Session.class);
@@ -751,5 +748,10 @@ public class SupplierBillService {
 //	public Optional<String> getLastSupplierBillNumber() {
 //		return supplierBillRepository.findMaxBillNumberStartingWithSup();
 //	}
+	
+	
+	public List<EgBillregister> getRunnigBillDetails(String orderNumber) {
+        return supplierBillRepository.findByWorkordernumber(orderNumber);
+    }
 
 }

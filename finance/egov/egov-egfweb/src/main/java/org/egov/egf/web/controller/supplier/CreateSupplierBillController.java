@@ -58,6 +58,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -87,6 +88,7 @@ import org.egov.egf.masters.services.PurchaseOrderService;
 import org.egov.egf.masters.services.SupplierService;
 import org.egov.egf.supplierbill.service.SupplierBillService;
 import org.egov.egf.utils.FinancialUtils;
+import org.egov.egf.web.controller.contractor.CreateContractorBillController;
 import org.egov.egf.web.controller.expensebill.BaseBillController;
 import org.egov.eis.web.contract.WorkflowContainer;
 import org.egov.infra.admin.master.service.AppConfigValueService;
@@ -193,6 +195,7 @@ public class CreateSupplierBillController extends BaseBillController {
 	
 	@Autowired
 	private ContractorBillService contractorBillService;
+	
 
 	@Autowired
 	private PurchaseItemRepository purchaseItemRepository;
@@ -235,17 +238,26 @@ public class CreateSupplierBillController extends BaseBillController {
 			egBillregister.setBilldate(new Date());
 		}
 		return SUPPLIERBILL_FORM;
+		
 	}
 
 	@PostMapping(value = "/create")
 	public String create(@Valid @ModelAttribute("egBillregister") final EgBillregister egBillregister,
 			final Model model, final BindingResult resultBinder, final HttpServletRequest request,
-			@RequestParam @SafeHtml final String workFlowAction) throws IOException, ParseException {
+			@RequestParam @SafeHtml final String workFlowAction, @RequestParam("quantities") String quantities) throws IOException, ParseException {
 		
 		//model.addAttribute("billNumberGenerationAuto", supplierBillService.generateSupBillNumber());
 		//System.out.println(egBillregister.getPurchaseItems().size());
-			
-		
+		String lastQty = "";
+		try {
+			String[] quantity = quantities.split(",");
+		    if (quantity.length > 0) {
+		        lastQty = quantity[quantity.length - 1];
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		egBillregister.setCurrentquantity(Integer.parseInt(lastQty));
 		if (FinancialConstants.BUTTONFORWARD.equalsIgnoreCase(workFlowAction) && !commonsUtil.isValidApprover(egBillregister, Long.valueOf(request.getParameter(APPROVAL_POSITION)))) {
 			populateDataOnErrors(egBillregister, model, request);
 			model.addAttribute("errorMessage", getLocalizedMessage(INVALID_APPROVER, null, null));
@@ -320,7 +332,7 @@ public class CreateSupplierBillController extends BaseBillController {
 					savedEgBillregister.getState(), savedEgBillregister.getId(), approvalPosition, approverName);
 
 			return "redirect:/supplierbill/success?approverDetails=" + approverDetails + "&billNumber="
-					+ savedEgBillregister.getBillnumber();
+					+ savedEgBillregister.getBillnumber() + "&qty=" + lastQty;
 
 		}
 	}
@@ -454,7 +466,7 @@ public class CreateSupplierBillController extends BaseBillController {
 	}
 
 	@GetMapping(value = "/success")
-	public String showSuccessPage(@RequestParam("billNumber") @SafeHtml final String billNumber, final Model model,
+	public String showSuccessPage(@RequestParam("billNumber") @SafeHtml final String billNumber, @RequestParam("qty") @SafeHtml final String qty, final Model model,
 			final HttpServletRequest request) {
 		final String[] keyNameArray = request.getParameter(APPROVER_DETAILS).split(",");
 		Long id = 0L;
@@ -472,11 +484,42 @@ public class CreateSupplierBillController extends BaseBillController {
 			model.addAttribute(APPROVER_NAME, approverName);
 
 		final EgBillregister supplierBill = supplierBillService.getByBillnumber(billNumber);
-
+		PurchaseItems purchaseItems = purchaseOrderService.getPurchaseItemsByOrderNumber(supplierBill.getWorkordernumber());
+		PurchaseOrder purchaseOrder = purchaseOrderService.getByOrderNumber(supplierBill.getWorkordernumber());
+		List<EgBillregister> runningBill = supplierBillService.getRunnigBillDetails(supplierBill.getWorkordernumber());
+		double totalAmount = 0.0;
+		for (EgBillregister bill : runningBill) {
+			if (bill.getPassedamount() != null)
+				totalAmount += bill.getPassedamount().doubleValue();
+		}
+		
 		final String message = getMessageByStatus(supplierBill, approverName, nextDesign);
-
-		model.addAttribute("message", message);
-
+		
+		if(supplierBill.getBilltype() != null && supplierBill.getBilltype().equals("First & Final Bill") || supplierBill.getBilltype().equals("First Bill")) {
+			model.addAttribute("supplier", supplierService.getById(purchaseOrder.getSupplier().getId()));
+			model.addAttribute("billType", supplierBill.getBilltype());
+			model.addAttribute("supplierBill", supplierBill);
+			model.addAttribute("billDate", supplierBill.getBilldate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().toString());
+			model.addAttribute("amountInWords", CreateContractorBillController.convert(supplierBill.getPassedamount().longValue()));
+			model.addAttribute("qty", qty);
+			model.addAttribute("purchaseItems", purchaseItems);
+		}else if (supplierBill.getBilltype() != null && supplierBill.getBilltype().equals("Running Bill")) {
+			model.addAttribute("supplier", supplierService.getById(purchaseOrder.getSupplier().getId()));
+			model.addAttribute("billType", supplierBill.getBilltype());			
+			model.addAttribute("purchaseItems", purchaseItems);
+			model.addAttribute("totalAmount", totalAmount);
+			model.addAttribute("runningBill", runningBill);
+		} else if (supplierBill.getBilltype() != null && supplierBill.getBilltype().equals("Final Bill")) {
+			model.addAttribute("supplier", supplierService.getById(purchaseOrder.getSupplier().getId()));
+			model.addAttribute("billType", supplierBill.getBilltype());			
+			model.addAttribute("purchaseItems", purchaseItems);
+			model.addAttribute("totalAmount", totalAmount);
+			model.addAttribute("runningBill", runningBill);
+		} else {
+			System.out.println("Other Bill");
+		}
+		
+		model.addAttribute("message", message);		
 		return "supplierbill-success";
 	}
 
@@ -578,7 +621,6 @@ public class CreateSupplierBillController extends BaseBillController {
 	@ResponseBody
 	public String checkQuantity(@RequestParam String orderNumber, @RequestParam int quantity) {
 		List<PurchaseItems> purchaseItems = purchaseItemRepository.findbyOrderNumber(orderNumber);
-
 		for (PurchaseItems purchaseItem : purchaseItems) {
 			// Check if the quantity is available for each PurchaseItems object
 			if (quantity <= purchaseItem.getQuantity()) {

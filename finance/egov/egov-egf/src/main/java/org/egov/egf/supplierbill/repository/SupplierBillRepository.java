@@ -67,6 +67,7 @@ public interface SupplierBillRepository extends JpaRepository<EgBillregister, Lo
 
     List<EgBillregister> findByBillnumberContainingIgnoreCase(final String billNumber);
     
+    List<EgBillregister> findByWorkordernumber(final String workOrderNumber);
     
 //    @Query("SELECT max(e.billnumber) FROM EgBillregister e WHERE e.billnumber LIKE 'Sup/001%'")
 //    Optional<String> findMaxBillNumberStartingWithSup();

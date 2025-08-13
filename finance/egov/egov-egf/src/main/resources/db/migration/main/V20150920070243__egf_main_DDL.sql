@@ -123,7 +123,8 @@ CREATE TABLE eg_billregister (
     billapprovalstatus character varying(50),
     po character varying(50),
     state_id bigint,
-    version bigint
+    version bigint,
+    currentquantity integer
 );
 CREATE SEQUENCE seq_eg_billregister
     START WITH 1

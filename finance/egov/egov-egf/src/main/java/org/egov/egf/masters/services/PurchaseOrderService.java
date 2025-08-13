@@ -377,7 +377,15 @@ public class PurchaseOrderService implements EntityTypeService {
 	    BigDecimal amount = budgetDetailRepository.findApprovedAmountByDepartment(dept);
 	    return amount != null ? amount : BigDecimal.ZERO;
 	}
+	
+	public PurchaseItems getPurchaseItemsByOrderNumber(String orderNumber) {
+		List<PurchaseItems> purchaseItems = purchaseItemRepository.findbyOrderNumber(orderNumber);
+		if (purchaseItems != null && !purchaseItems.isEmpty()) {
+			return purchaseItems.get(0); // Assuming you want the first item
+		}
+		return null; // or throw an exception if needed
+	}
 
-	// ======================= Added By Heeralal Gupta End ================================
+	// ======================= Heeralal Gupta End ================================
 
 }
