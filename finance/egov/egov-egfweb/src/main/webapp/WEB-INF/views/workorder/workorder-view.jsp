@@ -72,6 +72,10 @@
               <spring:message code="lbl.name" text="Name"/>
             </div>
             <div class="col-sm-3 add-margin view-content">${workOrder.name}</div>
+            <div class="col-xs-3 add-margin">
+              <spring:message code="workorder.type" text="Order Type"/>
+            </div>
+            <div class="col-sm-3 add-margin view-content">${workOrder.orderType}</div>
           </div>
           <div class="row add-border">
             <div class="col-xs-3 add-margin">

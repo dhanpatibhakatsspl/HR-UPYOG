@@ -103,6 +103,18 @@
 					</form:select>
 					<form:errors path="fundId" cssClass="add-margin error-msg" />
 				</div>
+				<label class="col-sm-2 control-label text-right" for="name"><spring:message code="workorder.type" text="Order Type" />
+				</label>
+				<div class="col-sm-3 add-margin">
+								<form:select path="orderType" id="orderType"
+									class="form-control">
+									<form:option value="">
+										<spring:message code="lbl.select" text="Select" />
+									</form:option>
+									<form:options items="${orderTypes}" />
+								</form:select>
+								<form:errors path="orderType" cssClass="add-margin error-msg" />
+							</div>
 			</div>
             <div class="form-group">
               <div class="text-center">
@@ -129,6 +141,7 @@
           <th><spring:message code="lbl.name" text="Name"/></th>
           <th><spring:message code="workorder.ordervalue" text="Total/Order Value"/></th>
           <th><spring:message code="workorder.contractor" text="Contractor Name"/></th>
+          <th><spring:message code="workorder.type" text="Order Type" /></th>
           <th><spring:message code="workorder.active" text="Active Y/N"/></th>
         </tr>
       </thead>

@@ -73,6 +73,9 @@ public class WorkOrderSearchRequest {
 	private Long contractorId;
 
 	private Long fundId;
+	
+	@SafeHtml
+	private String orderType;
 
 	public String getOrderNumber() {
 		return orderNumber;
@@ -104,6 +107,14 @@ public class WorkOrderSearchRequest {
 
 	public void setFundId(Long fundId) {
 		this.fundId = fundId;
+	}
+	
+	public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
 	}
 
 }

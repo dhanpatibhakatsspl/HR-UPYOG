@@ -173,7 +173,7 @@ compareBudget = () =>{
 	}
 }
 
-/*================= Added by Heeralal Gupta End ===================*/
+/*================= Heeralal Gupta End ===================*/
 
 $('#fund').change(function () {
 	/*$schemeId = "";
@@ -217,55 +217,58 @@ function callAjaxSearch() {
 	drillDowntableContainer = jQuery("#resultTable");
 	jQuery('.report-section').removeClass('display-hide');
 	reportdatatable = drillDowntableContainer
-			.dataTable({
-				ajax : {
-					url : "/services/EGF/workorder/ajaxsearch/" + $('#mode').val(),
-					type : "POST",
-					"data" : getFormData(jQuery('form'))
-				},
-				"fnRowCallback" : function(row, data, index) {
-					$(row).on(
-							'click',
-							function() {
-								console.log(data.id);
-								window.open('/services/EGF/workorder/' + $('#mode').val()
-										+ '/' + data.id, '',
-										'width=800, height=600');
-							});
-				},
-				"bDestroy" : true,
-				dom: "<'row'<'col-xs-12 pull-right'f>r>t<'row buttons-margin'<'col-md-3 col-xs-6'i><'col-md-3  col-xs-6'l><'col-md-3 col-xs-6'B><'col-md-3 col-xs-6 text-right'p>>",
-				buttons: [
-						  {
-						    extend: 'print',
-						    title: 'Work Order Master',
-						    filename: 'Work Order Master'
-						},{
-						    extend: 'pdf',
-						    title: 'Work Order Master',
-						    filename: 'Work Order Master'
-						},{
-						    extend: 'excel',
-						    message : 'Work Order Master',
-						    filename: 'Work Order Master'
-						}
-						],
-				aaSorting : [],
-				columns : [ {
-					"data" : "orderNumber",
-					"sClass" : "text-left"
+		.dataTable({
+			ajax: {
+				url: "/services/EGF/workorder/ajaxsearch/" + $('#mode').val(),
+				type: "POST",
+				"data": getFormData(jQuery('form'))
+			},
+			"fnRowCallback": function(row, data, index) {
+				$(row).on(
+					'click',
+					function() {
+						
+						window.open('/services/EGF/workorder/' + $('#mode').val()
+							+ '/' + data.id, '',
+							'width=800, height=600');
+					});
+			},
+			"bDestroy": true,
+			dom: "<'row'<'col-xs-12 pull-right'f>r>t<'row buttons-margin'<'col-md-3 col-xs-6'i><'col-md-3  col-xs-6'l><'col-md-3 col-xs-6'B><'col-md-3 col-xs-6 text-right'p>>",
+			buttons: [
+				{
+					extend: 'print',
+					title: 'Work Order Master',
+					filename: 'Work Order Master'
 				}, {
-					"data" : "name",
-					"sClass" : "text-left"
-				},{
-					"data" : "orderValue",
-					"sClass" : "text-left"
-				},{
-					"data" : "contractor",
-					"sClass" : "text-left"
-				},{
-					"data" : "active",
-					"sClass" : "text-left"
-				} ]
-			});
+					extend: 'pdf',
+					title: 'Work Order Master',
+					filename: 'Work Order Master'
+				}, {
+					extend: 'excel',
+					message: 'Work Order Master',
+					filename: 'Work Order Master'
+				}
+			],
+			aaSorting: [],
+			columns: [{
+				"data": "orderNumber",
+				"sClass": "text-left"
+			}, {
+				"data": "name",
+				"sClass": "text-left"
+			}, {
+				"data": "orderValue",
+				"sClass": "text-left"
+			}, {
+				"data": "contractor",
+				"sClass": "text-left"
+			}, {
+				"data": "orderType",
+				"sClass": "text-left"
+			}, {
+				"data": "active",
+				"sClass": "text-left"
+			}]
+		});
 }
