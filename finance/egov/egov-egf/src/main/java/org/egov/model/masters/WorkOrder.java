@@ -139,7 +139,10 @@ public class WorkOrder extends AbstractAuditable implements EntityType {
 
     @Transient
     private Boolean editAllFields;
-
+    
+    @SafeHtml
+    private String orderType;
+    
     @Override
     public String getBankname() {
         return null;
@@ -328,5 +331,14 @@ public class WorkOrder extends AbstractAuditable implements EntityType {
     public void setEditAllFields(Boolean editAllFields) {
         this.editAllFields = editAllFields;
     }
+
+	public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
+    
 
 }

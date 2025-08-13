@@ -76,6 +76,18 @@
 		<form:input path="name" id="name" maxlength="100" cssClass="form-control patternvalidation" data-pattern="alphabetWithSpecialCharForContraWOAndSupplierName" required="required"/>
 		<form:errors path="name" cssClass="add-margin error-msg" />
 	</div>
+	<label class="col-sm-2 control-label text-right" for="name"> <spring:message code="workorder.type" text="Order Type" /><span class="mandatory"></span>
+	</label>
+		<div class="col-sm-3 add-margin">
+			<form:select path="orderType" id="orderDate" class="form-control"
+				required="required">
+				<form:option value="">
+					<spring:message code="lbl.select" text="Select" />
+				</form:option>
+				<form:options items="${orderTypes}" />
+			</form:select>
+			<form:errors path="name" cssClass="add-margin error-msg" />
+		</div>
 </div>
 
 <div class="form-group">

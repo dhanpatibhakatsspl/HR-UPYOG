@@ -243,6 +243,13 @@ public class WorkOrderService implements EntityTypeService {
 		if (workOrderSearchRequest.getFundId() != null) {
 			predicates.add(cb.equal(workOrders.get("fund").get("id"), workOrderSearchRequest.getFundId()));
 		}
+		if (workOrderSearchRequest.getOrderType() != null) {
+			final String orderType = "%" + workOrderSearchRequest.getOrderType().toLowerCase() + "%";
+			predicates.add(cb.isNotNull(workOrders.get("orderType")));
+			predicates.add(cb.like(
+					cb.lower(workOrders.get(workOrderEntityType.getDeclaredSingularAttribute("orderType", String.class))),
+					orderType));
+		}
 
 		createQuery.where(predicates.toArray(new Predicate[] {}));
 		final TypedQuery<WorkOrder> query = entityManager.createQuery(createQuery);

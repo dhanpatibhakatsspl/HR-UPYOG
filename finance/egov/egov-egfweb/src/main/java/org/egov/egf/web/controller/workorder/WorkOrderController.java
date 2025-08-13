@@ -48,8 +48,10 @@
 package org.egov.egf.web.controller.workorder;
 
 import java.io.IOException;
-import java.util.List;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -131,6 +133,8 @@ public class WorkOrderController {
 		model.addAttribute("departments", microserviceUtils.getDepartments());
 		model.addAttribute("contractors", contractorService.getAllActiveEntities(null));
 		model.addAttribute("orderNumberGenerationAuto",workOrderService.generateWorkOrderNumber());
+		List<String> orderType =new ArrayList<>(Arrays.asList("Construction", "Insprection", "Manual Order", "Other"));
+		model.addAttribute("orderTypes", orderType);
 	}
 
 	@PostMapping(value = "/newform")

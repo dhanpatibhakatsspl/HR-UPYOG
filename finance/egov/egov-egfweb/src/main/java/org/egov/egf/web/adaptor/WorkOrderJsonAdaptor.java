@@ -120,6 +120,10 @@ public class WorkOrderJsonAdaptor implements JsonSerializer<WorkOrder> {
             else
                 jsonObject.addProperty("active", "");
             jsonObject.addProperty("id", workOrder.getId());
+            if (workOrder.getOrderType() != null)
+				jsonObject.addProperty("orderType", workOrder.getOrderType());
+			else
+				jsonObject.addProperty("orderType", "");
         }
         return jsonObject;
     }

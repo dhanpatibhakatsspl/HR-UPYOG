@@ -881,6 +881,10 @@ function validate(){
 		bootbox.alert($.i18n.prop('msg.please.select.account.details'));
 		return false;
 	}
+	if (billamount > 100000) {
+		bootbox.alert($.i18n.prop('msg.please.select.amount.limit'));
+		return false;
+	}
 	
 	if(debitamount != Number(Number(creditamount) + Number(netpayableamount))){
 		bootbox.alert($.i18n.prop('msg.debit.and.credit.amount.is.not.matching'));
