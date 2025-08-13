@@ -81,6 +81,7 @@
 					</form:select>
 				</td>
 				<td><input type="text" id="expense-netPayableAmount" name="netPayableAmount"  class="form-control text-right" onkeyup="decimalvalue(this);" data-pattern="decimalvalue"> 
+				<span class="text-success	small" id="amountInWordsn"></span>
 				</td>
 			</tr>
 		</tbody>

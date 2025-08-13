@@ -86,6 +86,7 @@
 					</form:select>
 				</td>
 				<td><input type="text" id="supplier-netPayableAmount" name="netPayableDetails[0].creditamount"  class="form-control text-right" onkeyup="decimalvalue(this);" data-pattern="decimalvalue" value="${egBillregister.netPayableDetails[0].creditamount}"> 
+				<span class="text-success	small" id="amountInWordsn"></span>
 				</td>
 			</tr>
 		</tbody>

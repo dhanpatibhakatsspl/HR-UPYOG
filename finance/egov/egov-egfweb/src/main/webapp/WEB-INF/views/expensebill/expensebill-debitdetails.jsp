@@ -86,10 +86,11 @@
 				</td>
 				<td> 
 				  <form:input path="" name="tempDebitDetails[0].debitamount" id="tempDebitDetails[0].debitamount"
-				    data-errormsg="Debit Amount is mandatory!" onkeyup="decimalvalue(this);"
-				    onblur="calcualteNetpaybleAmount(); validateDebitAmount(this);" data-pattern="decimalvalue"
+				    data-errormsg="Debit Amount is mandatory!" onkeyup="showAmountInWords(this);decimalvalue(this);"
+				    onblur="calcualteNetpaybleAmount(); validateDebitAmount(this); showAmountInWordsn('expense');" data-pattern="decimalvalue"
 				    data-idx="0" data-optional="0"
 				    class="form-control table-input text-right debitAmount" maxlength="12" />
+				    <span class="text-success	 small" id="amountInWords"></span>
 <!-- 				  <span class="text-danger debit-error small"></span>
  -->				</td>
 					  
