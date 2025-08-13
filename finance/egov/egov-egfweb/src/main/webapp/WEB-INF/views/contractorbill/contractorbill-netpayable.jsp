@@ -85,7 +85,8 @@
 						</c:if>
 					</form:select>
 				</td>
-				<td><input type="text" id="contractor-netPayableAmount" name="netPayableDetails[0].creditamount"  class="form-control text-right" onkeyup="decimalvalue(this);" data-pattern="decimalvalue" value="${egBillregister.netPayableDetails[0].creditamount}"> 
+				<td><input type="text" id="contractor-netPayableAmount" name="netPayableDetails[0].creditamount"  class="form-control text-right" onkeyup="decimalvalue(this);" data-pattern="decimalvalue" value="${egBillregister.netPayableDetails[0].creditamount}" readonly="true"> 
+					<span class="text-success	small" id="amountInWordsn"></span>
 				</td>
 			</tr>
 		</tbody>

@@ -81,7 +81,8 @@
 					<input type="text" id="tempCreditDetails[0].creditAccountHead" name="tempCreditDetails[0].creditAccountHead"  class="form-control creditdetailname" disabled>  
 				</td>
 				<td>
-					<form:input path="" name="tempCreditDetails[0].creditamount" id="tempCreditDetails[0].creditamount" data-errormsg="Credit Amount is mandatory!" onkeyup="decimalvalue(this);" onblur="calcualteNetpaybleAmount();" data-pattern="decimalvalue" data-idx="0" data-optional="0" class="form-control table-input text-right creditAmount"   maxlength="12"  />
+					<form:input path="" name="tempCreditDetails[0].creditamount" id="tempCreditDetails[0].creditamount" data-errormsg="Credit Amount is mandatory!" onkeyup="showAmountInWordsc(this);decimalvalue(this);" onblur="calcualteNetpaybleAmount();showAmountInWordsn('expense')" data-pattern="decimalvalue" data-idx="0" data-optional="0" class="form-control table-input text-right creditAmount"   maxlength="12"  />
+				<span class="text-success	 small" id="amountInWordsc"></span>
 				</td> 
 				<td class="text-center"><span style="cursor:pointer;" onclick="addCreditDetailsRow();" tabindex="0" id="tempCreditDetails[0].addButton" data-toggle="tooltip" title="" data-original-title="press SPACE to Add!" aria-hidden="true"><i class="fa fa-plus"></i></span>
 				 <span class="add-padding credit-delete-row" onclick="deleteCreditDetailsRow(this);"><i class="fa fa-trash" data-toggle="tooltip" title="" data-original-title="Delete!"></i></span> </td>
