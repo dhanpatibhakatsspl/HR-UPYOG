@@ -58,6 +58,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,6 +97,7 @@ import org.egov.model.bills.DocumentUpload;
 import org.egov.model.bills.EgBillPayeedetails;
 import org.egov.model.bills.EgBilldetails;
 import org.egov.model.bills.EgBillregister;
+import org.egov.model.masters.Contractor;
 import org.egov.model.masters.WorkOrder;
 import org.egov.utils.FinancialConstants;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -218,6 +220,7 @@ public class CreateContractorBillController extends BaseBillController {
 			egBillregister.setBilldate(new Date());
 		}
 		return CONTRACTORBILL_FORM;
+//		return "contractorbill-success";
 	}
 
 	@PostMapping(value = "/create")
@@ -445,14 +448,25 @@ public class CreateContractorBillController extends BaseBillController {
 		}
 
 		if (id != null)
+			
 			model.addAttribute(APPROVER_NAME, approverName);
 
 		final EgBillregister contractorBill = contractorBillService.getByBillnumber(billNumber);
 
 		final String message = getMessageByStatus(contractorBill, approverName, nextDesign);
-
+		WorkOrder workOrder = workOrderService.getByOrderNumber(contractorBill.getWorkordernumber());
+		Contractor contractor = contractorService.getById(workOrder.getContractor().getId());
+		
+		model.addAttribute("billType", contractorBill.getBilltype());
+		
+		if(contractorBill.getBilltype() != null && contractorBill.getBilltype().equals("First & Final Bill") || contractorBill.getBilltype().equals("First Bill")) {
+			model.addAttribute("contractor", contractor);
+			model.addAttribute("workOrder", workOrder);	
+			model.addAttribute("billDate", contractorBill.getBilldate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().toString());
+			model.addAttribute("contractorBill", contractorBill);
+			model.addAttribute("amountInWords", convert(contractorBill.getPassedamount().longValue()));
+		}
 		model.addAttribute("message", message);
-
 		return "contractorbill-success";
 	}
 
@@ -552,6 +566,54 @@ public class CreateContractorBillController extends BaseBillController {
         }
     }
 	
+//	Converting figure to words
 	
+	private static final String[] units = {
+	        "", "One", "Two", "Three", "Four", "Five",
+	        "Six", "Seven", "Eight", "Nine", "Ten",
+	        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
+	        "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+	    };
+
+	    private static final String[] tens = {
+	        "", "", "Twenty", "Thirty", "Forty", "Fifty",
+	        "Sixty", "Seventy", "Eighty", "Ninety"
+	    };
+
+	    public static String convert(long n) {
+	        if (n == 0) return "Zero";
+
+	        return convertToIndianNumberSystem(n).trim();
+	    }
+
+	    private static String convertToIndianNumberSystem(long n) {
+	        StringBuilder result = new StringBuilder();
+
+	        if (n >= 10000000) {
+	            result.append(convertToIndianNumberSystem(n / 10000000)).append(" Crore ");
+	            n %= 10000000;
+	        }
+	        if (n >= 100000) {
+	            result.append(convertToIndianNumberSystem(n / 100000)).append(" Lakh ");
+	            n %= 100000;
+	        }
+	        if (n >= 1000) {
+	            result.append(convertToIndianNumberSystem(n / 1000)).append(" Thousand ");
+	            n %= 1000;
+	        }
+	        if (n >= 100) {
+	            result.append(convertToIndianNumberSystem(n / 100)).append(" Hundred ");
+	            n %= 100;
+	        }
+	        if (n > 0) {
+	            if (n < 20) result.append(units[(int) n]).append(" ");
+	            else {
+	                result.append(tens[(int) n / 10]).append(" ");
+	                if (n % 10 > 0) result.append(units[(int) n % 10]).append(" ");
+	            }
+	        }
+
+	        return result.toString();
+	    }
 	
 }
