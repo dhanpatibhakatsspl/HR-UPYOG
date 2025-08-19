@@ -723,7 +723,20 @@ function disableSelectedRows()
 }*/
 
 </script>
-
+<style>
+	.modeofpayment .d-flex {
+	    display: flex;
+	    align-items: center;
+	    margin-left: 10px;
+	}
+	.modeofpayment input[type="radio"] {
+	    margin-right: 7px;
+	}
+	.modeofpayment label {
+	    line-height: 1;
+	    padding-top: 7px;
+	}
+</style>
 </head>
 <body>
 
@@ -1374,16 +1387,33 @@ function disableSelectedRows()
 						<td width="10%" class="text-right view-content"><div id="totalPaymentAmount">0.00</div></td>
 					</tr>
 					<tr>
-						<td colspan="2" class="modeofpayment"><strong><s:text
-									name="payment.mode" /><span class="mandatory1">*</span></strong> <input
-							name="paymentMode" id="paymentModecheque" checked="checked"
-							value="cheque" type="radio"><label
-							for="paymentModecheque"><s:text name="lbl.cheque"/> </label> <input name="paymentMode"
-							id="paymentModecash" value="cash" type="radio"><label
-							for="paymentModecash"><s:text
-									name="cash.consolidated.cheque" /></label><input name="paymentMode"
-							id="paymentModertgs" value="rtgs" type="radio"><label
-							for="paymentModertgs"><s:text name="lbl.rtgs"/></label></td>
+						<td colspan="2" class="modeofpayment">
+							<strong><s:text name="payment.mode" /><span class="mandatory1">*</span></strong> 
+						</td>						
+					</tr>
+					<tr>
+						<td colspan="2" class="modeofpayment">
+							 <div class="d-flex">
+							 	<input name="paymentMode" id="paymentModecheque" checked="checked" value="cheque" type="radio">
+								<label for="paymentModecheque"><s:text name="lbl.cheque"/> </label>
+							 </div>
+						</td>						
+					</tr>
+					<tr>
+						<td colspan="2" class="modeofpayment">
+							<div class="d-flex">
+					            <input name="paymentMode" id="paymentModeneft" value="neft" type="radio">
+					            <label for="paymentModecash"><s:text name="lbl.neft" /></label>
+					        </div>
+						</td>
+					</tr>
+					<tr>						
+						<td colspan="2" class="modeofpayment">
+							<div class="d-flex">
+								<input name="paymentMode" id="paymentModertgs" value="rtgs" type="radio">
+								<label for="paymentModertgs"><s:text name="lbl.rtgs"/></label>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
