@@ -230,8 +230,8 @@
 																<td class="bluebox"><strong><s:text
 																			name="payment.mode" /></strong></td>
 																<td class="bluebox"><s:if
-																		test="%{paymentMode == 'cash' || paymentMode == 'Cash'}">
-																		<s:text name="cash.consolidated.cheque" />
+																		test="%{paymentMode == 'neft' || paymentMode == 'NEFT'}">
+																		<s:text name="lbl.neft" />
 																	</s:if> <s:else>
 																		<s:text name="%{paymentMode}" />
 																	</s:else></td>

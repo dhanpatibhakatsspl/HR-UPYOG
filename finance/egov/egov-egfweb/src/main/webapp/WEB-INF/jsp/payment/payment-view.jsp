@@ -249,8 +249,8 @@ function openVoucher(vid)
 																<td class="greybox"><strong><s:text
 																			name="payment.mode" /></strong></td>
 																<td class="greybox"><s:if
-																		test="%{paymentheader.type == 'cash' || paymentheader.type == 'Cash'}">
-																		<s:text name="cash.consolidated.cheque" />
+																		test="%{paymentheader.type == 'neft' || paymentheader.type == 'NEFT'}">
+																		<s:text name="lbl.neft" />
 																	</s:if> <s:else>
 																		<s:text name="%{paymentheader.type}" />
 																	</s:else></td>
