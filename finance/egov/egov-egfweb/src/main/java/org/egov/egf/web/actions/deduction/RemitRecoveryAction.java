@@ -273,10 +273,15 @@ public class RemitRecoveryAction extends BasePaymentAction {
         addDropdownData("branchList", Collections.EMPTY_LIST);
         addDropdownData("recoveryList", listRecovery);
         addDropdownData("accNumList", Collections.EMPTY_LIST);
-        modeOfCollectionMap.put(FinancialConstants.MODEOFPAYMENT_CASH, getText("cash.consolidated.cheque"));
-//        modeOfCollectionMap.put(FinancialConstants.MODEOFPAYMENT_RTGS, "RTGS");
+//      modeOfCollectionMap.put(FinancialConstants.MODEOFPAYMENT_CASH, getText("cash.consolidated.cheque"));
+        modeOfCollectionMap.put(FinancialConstants.MODEOFPAYMENT_CHEQUE, getText("cheque"));
+        modeOfCollectionMap.put(FinancialConstants.MODEOFPAYMENT_RTGS, "RTGS");
+        modeOfCollectionMap.put(FinancialConstants.MODEOFPAYMENT_NEFT, "NEFT");
         this.setPartialPayment("deduction");
-        setDefaultPaymentMode(FinancialConstants.MODEOFPAYMENT_CASH);
+//      setDefaultPaymentMode(FinancialConstants.MODEOFPAYMENT_CASH);
+//      setDefaultPaymentMode(FinancialConstants.MODEOFPAYMENT_CHEQUE);
+        setDefaultPaymentMode(FinancialConstants.MODEOFPAYMENT_NEFT);
+//      setDefaultPaymentMode(FinancialConstants.MODEOFPAYMENT_RTGS);
     }
 
     @Override
