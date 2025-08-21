@@ -198,4 +198,31 @@
 	</div>
 </div> 
 
+<div class="form-group">
+	<label class="col-sm-2 control-label text-right" for="emdAmount"> <spring:message code="workorder.emd.amount" text="EMD Amount"/><span class="mandatory"></span> 
+	</label>
+	<div class="col-sm-3 add-margin">
+		<form:input path="emdAmount" id="emdAmount" maxlength="50" cssClass="form-control" data-pattern="decimalvalue" required="required"/>
+		<form:errors path="sanctionNumber" cssClass="add-margin error-msg" />
+	</div>
+	
+	<label class="col-sm-2 control-label text-right" for="bgAmount"> <spring:message code="workorder.bg.amount" text="BG Amount"/><span class="mandatory"></span> 
+	</label>
+	<div class="col-sm-3 add-margin">
+		<form:input path="bgAmount" id="bgAmount" maxlength="50" cssClass="form-control" data-pattern="decimalvalue" required="required"/>
+		<form:errors path="sanctionNumber" cssClass="add-margin error-msg" />
+	</div>
+	
+</div> 
+
+<div class="form-group">
+	<label class="col-sm-2 control-label text-right" for="apbg"> <spring:message code="workorder.apbg" text="APBG"/><span class="mandatory"></span> 
+	</label>
+	<div class="col-sm-3 add-margin">
+		<form:input path="apbg" id="apbg" maxlength="50" cssClass="form-control" data-pattern="decimalvalue" required="required"/>
+		<form:errors path="sanctionNumber" cssClass="add-margin error-msg" />
+	</div>
+	
+</div> 
+
 <input type="hidden" name="workOrder" value="${workOrder.id}" />

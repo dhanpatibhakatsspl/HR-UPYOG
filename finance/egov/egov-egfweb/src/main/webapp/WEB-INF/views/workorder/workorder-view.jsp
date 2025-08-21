@@ -137,6 +137,25 @@
             </div>
             <div class="col-sm-3 add-margin view-content"><fmt:formatDate value="${workOrder.sanctionDate}" pattern="dd/MM/yyyy" /></div>
           </div>
+          
+          <div class="row add-border">
+            <div class="col-xs-3 add-margin">
+              <spring:message code="workorder.emd.amount" text="EMD Amount"/>
+            </div>
+            <div class="col-sm-3 add-margin view-content">${workOrder.emdAmount}</div>
+            <div class="col-xs-3 add-margin">
+              <spring:message code="workorder.bg.amount" text="BG Amount"/>
+            </div>
+            <div class="col-sm-3 add-margin view-content">${workOrder.bgAmount}</div>
+            
+          </div>
+    	  <div class="row">
+    	  	<div class="col-xs-3 add-margin">
+              <spring:message code="workorder.apbg" text="APBG"/>
+            </div>
+            <div class="col-sm-3 add-margin view-content">${workOrder.apbg}</div>
+    	  </div>
+          
         </div>
       </div>
     </div>
