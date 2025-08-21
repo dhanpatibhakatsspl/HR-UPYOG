@@ -60,6 +60,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.egov.commons.EgwStatus;
 import org.egov.commons.Fund;
@@ -130,7 +131,13 @@ public class WorkOrder extends AbstractAuditable implements EntityType {
     private String sanctionNumber;
 
     private Date sanctionDate;
-
+    
+    private BigDecimal emdAmount;
+    
+    private BigDecimal bgAmount;
+    
+    private BigDecimal apbg;
+    
     private Boolean active;
 
     @Transient
@@ -142,6 +149,7 @@ public class WorkOrder extends AbstractAuditable implements EntityType {
     
     @SafeHtml
     private String orderType;
+    
     
     @Override
     public String getBankname() {
@@ -339,6 +347,31 @@ public class WorkOrder extends AbstractAuditable implements EntityType {
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
 	}
+
+	public BigDecimal getEmdAmount() {
+		return emdAmount;
+	}
+
+	public void setEmdAmount(BigDecimal emdAmount) {
+		this.emdAmount = emdAmount;
+	}
+
+	public BigDecimal getBgAmount() {
+		return bgAmount;
+	}
+
+	public void setBgAmount(BigDecimal bgAmount) {
+		this.bgAmount = bgAmount;
+	}
+
+	public BigDecimal getApbg() {
+		return apbg;
+	}
+
+	public void setApbg(BigDecimal apbg) {
+		this.apbg = apbg;
+	}
     
+	
 
 }
