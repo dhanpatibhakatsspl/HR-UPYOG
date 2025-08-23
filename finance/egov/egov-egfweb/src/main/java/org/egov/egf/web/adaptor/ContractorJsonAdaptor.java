@@ -122,6 +122,10 @@ public class ContractorJsonAdaptor implements JsonSerializer<Contractor> {
                 jsonObject.addProperty("tinNumber", contractor.getTinno());
             else
                 jsonObject.addProperty("tinNumber", "");
+            if (contractor.getSource() != null)
+                jsonObject.addProperty("source", contractor.getSource());
+            else
+                jsonObject.addProperty("source", "");
             jsonObject.addProperty("id", contractor.getId());
         }
         return jsonObject;

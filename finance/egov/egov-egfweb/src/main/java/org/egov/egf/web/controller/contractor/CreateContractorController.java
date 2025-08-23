@@ -48,14 +48,18 @@
 package org.egov.egf.web.controller.contractor;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.egov.commons.dao.EgwStatusHibernateDAO;
 import org.egov.egf.commons.bank.service.CreateBankService;
 import org.egov.egf.masters.services.ContractorService;
 import org.egov.egf.web.adaptor.ContractorJsonAdaptor;
+import org.egov.infra.microservice.models.UserInfo;
+import org.egov.infra.microservice.utils.MicroserviceUtils;
 import org.egov.model.masters.Contractor;
 import org.egov.model.masters.ContractorSearchRequest;
 import org.egov.utils.FinancialConstants;
@@ -78,7 +82,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 /**
  * @author venki
  */
@@ -106,7 +109,10 @@ public class CreateContractorController {
 
 	@Autowired
 	private MessageSource messageSource;
-
+	
+	@Autowired
+    private MicroserviceUtils microServiceUtil;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.setDisallowedFields("id");
@@ -125,6 +131,7 @@ public class CreateContractorController {
 	public String showNewForm(@ModelAttribute(STR_CONTRACTOR) final Contractor contractor, final Model model) {
 		prepareNewForm(model);
 		model.addAttribute(STR_CONTRACTOR, new Contractor());
+		model.addAttribute("mode", "create");
 		return NEW;
 	}
 
@@ -152,6 +159,7 @@ public class CreateContractorController {
 		final Contractor contractor = contractorService.getById(id);
 		prepareNewForm(model);
 		model.addAttribute(STR_CONTRACTOR, contractor);
+		model.addAttribute("mode", "edit");
 		return EDIT;
 	}
 
@@ -177,13 +185,13 @@ public class CreateContractorController {
 	}
 
 	@PostMapping(value = "/search/{mode}")
-	public String search(@PathVariable("mode") @SafeHtml final String mode, final Model model) {
-		final ContractorSearchRequest contractorSearchRequest = new ContractorSearchRequest();
-		prepareNewForm(model);
-		model.addAttribute(STR_CONTRACTOR_SEARCH_REQUEST, contractorSearchRequest);
-		return SEARCH;
-
+	public String search(@PathVariable("mode") @SafeHtml final String mode, final Model model, HttpSession session) {
+	    final ContractorSearchRequest contractorSearchRequest = new ContractorSearchRequest();
+	    prepareNewForm(model);
+	    model.addAttribute(STR_CONTRACTOR_SEARCH_REQUEST, contractorSearchRequest);
+	    return SEARCH;
 	}
+
 
 	@PostMapping(value = "/ajaxsearch/{mode}", produces = MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody

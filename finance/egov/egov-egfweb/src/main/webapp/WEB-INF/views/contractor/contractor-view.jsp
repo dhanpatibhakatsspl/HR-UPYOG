@@ -129,6 +129,10 @@
 								text="Bank Account Number" />
 						</div>
 						<div class="col-sm-3 add-margin view-content">${contractor.bankAccount}</div>
+						<div class="col-xs-3 add-margin">
+							<spring:message code="contractor.source" text="Source" />
+						</div>
+						<div class="col-sm-3 add-margin view-content">${contractor.source}</div>
 					</div>
 					<div class="row add-border">
 						<div class="col-xs-3 add-margin">

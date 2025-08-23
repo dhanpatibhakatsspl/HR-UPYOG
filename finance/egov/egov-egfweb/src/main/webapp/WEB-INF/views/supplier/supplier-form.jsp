@@ -117,13 +117,13 @@
 	<label class="col-sm-2 control-label text-right" for="tinNumber"> <spring:message code="supplier.tinNo" text="GST/TIN No"/><span class="mandatory"></span>
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:input path="tinNumber" id="tinNumber" minlength="15" maxlength="15" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required"/>
+		<form:input path="tinNumber" id="tinNumber" minlength="15" maxlength="15" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required" readonly="${mode eq 'edit'}"/>
 		<form:errors path="tinNumber" cssClass="add-margin error-msg" />
 	</div>
 	<label class="col-sm-2 control-label text-right" for="gstRegisteredState"> <spring:message code="supplier.gst.registered.state" text="GST registered State/UT"/>
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:input path="gstRegisteredState" id="gstRegisteredState" maxlength="250" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace"/>
+		<form:input path="gstRegisteredState" id="gstRegisteredState" maxlength="250" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" readonly="${mode eq 'edit'}"/>
 		<form:errors path="gstRegisteredState" cssClass="add-margin error-msg" />
 	</div>
 </div>
@@ -132,7 +132,7 @@
 	<label class="col-sm-2 control-label text-right" for="bank"> <spring:message code="supplier.bank" text="Bank"/><span class="mandatory"></span>
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:select path="bank" data-first-option="false" id="bank" class="form-control" required="required">
+		<form:select path="bank" data-first-option="false" id="bank" class="form-control" required="required" disabled="${mode eq 'edit'}">
 			<form:option value=""><spring:message code="lbl.select" text="Select"/></form:option>
 			<form:options items="${banks}" itemValue="id" itemLabel="name" />
 		</form:select>
@@ -141,7 +141,7 @@
 	<label class="col-sm-2 control-label text-right" for="ifscCode"> <spring:message code="supplier.ifscCode" text="IFSC Code"/><span class="mandatory"></span>
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:input path="ifscCode" id="ifscCode" minlength="11" maxlength="11" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required"/>
+		<form:input path="ifscCode" id="ifscCode" minlength="11" maxlength="11" cssClass="form-control patternvalidation" data-pattern="alphanumericwithspace" required="required" readonly="${mode eq 'edit'}"/>
 		<form:errors path="ifscCode" cssClass="add-margin error-msg" />
 	</div>
 </div>
@@ -150,7 +150,7 @@
 	<label class="col-sm-2 control-label text-right" for="bankAccount"> <spring:message code="supplier.bankAccount" text="Bank Account Number"/><span class="mandatory"></span>
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:input path="bankAccount" id="bankAccount" maxlength="22" size="24" cssClass="form-control" required="required"/>
+		<form:input path="bankAccount" id="bankAccount" maxlength="22" size="24" cssClass="form-control" required="required" readonly="${mode eq 'edit'}"/>
 		<form:errors path="bankAccount" cssClass="add-margin error-msg" />
 	</div>
 	</div>

@@ -116,6 +116,7 @@ public class CreateSupplierController {
 	public String showNewForm(@ModelAttribute(STR_SUPPLIER) final Supplier supplier, final Model model) {
 		prepareNewForm(model);
 		model.addAttribute(STR_SUPPLIER, new Supplier());
+		model.addAttribute("mode", "create");
 		return NEW;
 	}
 
@@ -140,6 +141,7 @@ public class CreateSupplierController {
 		final Supplier supplier = supplierService.getById(id);
 		prepareNewForm(model);
 		model.addAttribute(STR_SUPPLIER, supplier);
+		model.addAttribute("mode", "edit");
 		return EDIT;
 	}
 
