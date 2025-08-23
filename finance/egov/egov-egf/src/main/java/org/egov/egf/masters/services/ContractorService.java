@@ -161,7 +161,12 @@ public class ContractorService implements EntityTypeService {
             predicates.add(cb.like(
                     cb.lower(contractors.get(contractorEntityType.getDeclaredSingularAttribute("code", String.class))), code));
         }
-
+        if (contractorSearchRequest.getSource() != null) {
+            final String source = "%" + contractorSearchRequest.getSource().toLowerCase() + "%";
+            predicates.add(cb.isNotNull(contractors.get("source")));
+            predicates.add(cb.like(
+                    cb.lower(contractors.get(contractorEntityType.getDeclaredSingularAttribute("source", String.class))), source));
+        }
         createQuery.where(predicates.toArray(new Predicate[] {}));
         final TypedQuery<Contractor> query = entityManager.createQuery(createQuery);
         return query.getResultList();

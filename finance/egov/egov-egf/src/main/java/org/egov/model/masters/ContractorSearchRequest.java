@@ -68,6 +68,9 @@ public class ContractorSearchRequest {
 	@Length(max = 50, message = "Maximum of 50 Characters allowed for Code")
 	@OptionalPattern(regex = FinancialConstants.alphaNumericwithspecialchar, message = "Special Characters are not allowed in Code")
 	private String code;
+    
+	@SafeHtml
+	private String source;
 
 	public String getName() {
 		return name;
@@ -83,6 +86,13 @@ public class ContractorSearchRequest {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 }

@@ -141,7 +141,6 @@
 		<form:errors path="mobileNumber" cssClass="add-margin error-msg" />
 	</div>
 </div>
-
 <div class="form-group">
 	<label class="col-sm-2 control-label text-right" for="tinNumber">
 		<spring:message code="contractor.tinNo" text='GST/TIN No' /><span
@@ -150,7 +149,7 @@
 	<div class="col-sm-3 add-margin">
 		<form:input path="tinNumber" id="tinNumber" minlength="15"
 			maxlength="15" cssClass="form-control patternvalidation"
-			data-pattern="alphanumericwithspace" required="required" />
+			data-pattern="alphanumericwithspace" required="required"  readonly="${mode eq 'edit'}"/>
 		<form:errors path="tinNumber" cssClass="add-margin error-msg" />
 	</div>
 	<label class="col-sm-2 control-label text-right"
@@ -161,7 +160,7 @@
 	<div class="col-sm-3 add-margin">
 		<form:input path="gstRegisteredState" maxlength="250"
 			id="gstRegisteredState" cssClass="form-control patternvalidation"
-			data-pattern="alphanumericwithspace" required="required" />
+			data-pattern="alphanumericwithspace" required="required" readonly="${mode eq 'edit'}"/>
 		<form:errors path="gstRegisteredState" cssClass="add-margin error-msg" />
 	</div>
 </div>
@@ -171,13 +170,12 @@
 			code="contractor.bank" text='Bank' /><span class="mandatory"></span>
 	</label>
 	<div class="col-sm-3 add-margin">
-		<form:select path="bank" data-first-option="false" id="bank"
-			class="form-control" required="required">
-			<form:option value="">
-				<spring:message code="lbl.select" text='Select' />
-			</form:option>
-			<form:options items="${banks}" itemValue="id" itemLabel="name" />
-		</form:select>
+			    <form:select path="bank" id="bank" class="form-control" required="required" disabled="${mode eq 'edit'}">
+			        <form:option value="">
+			            <spring:message code="lbl.select" text="Select" />
+			        </form:option>
+			        <form:options items="${banks}" itemValue="id" itemLabel="name" />
+			    </form:select>
 		<form:errors path="bank" cssClass="add-margin error-msg" />
 	</div>
 	<label class="col-sm-2 control-label text-right" for="ifscCode">
@@ -186,7 +184,7 @@
 	<div class="col-sm-3 add-margin">
 		<form:input path="ifscCode" id="ifscCode" minlength="11"
 			maxlength="11" cssClass="form-control patternvalidation"
-			data-pattern="alphanumericwithspace" required="required"/>
+			data-pattern="alphanumericwithspace" required="required" readonly="${mode eq 'edit'}"/>
 		<form:errors path="ifscCode" cssClass="add-margin error-msg" />
 	</div>
 </div>
@@ -198,8 +196,21 @@
 	</label>
 	<div class="col-sm-3 add-margin">
 		<form:input path="bankAccount" id="bankAccount" maxlength="22"
-			size="24" cssClass="form-control" required="required"/>
+			size="24" cssClass="form-control" required="required" readonly="${mode eq 'edit'}"/>
 		<form:errors path="bankAccount" cssClass="add-margin error-msg" />
+	</div>
+	<label class="col-sm-2 control-label text-right" for="source"> <spring:message
+			code="contractor.source" text='Source' /><span class="mandatory"></span>
+	</label>
+	<div class="col-sm-3 add-margin">
+		<form:select path="source" id="source" class="form-control" required="required">
+		    <form:option value="">Select</form:option>
+		    <form:option value="Manual">Manual</form:option>
+		    <form:option value="HEWP">HEWP</form:option>
+		    <form:option value="SWM">SWM</form:option>
+		    <form:option value="Other">Other</form:option>
+		</form:select>
+		<form:errors path="source" cssClass="add-margin error-msg" />
 	</div>
 </div>
 <div class="form-group">
