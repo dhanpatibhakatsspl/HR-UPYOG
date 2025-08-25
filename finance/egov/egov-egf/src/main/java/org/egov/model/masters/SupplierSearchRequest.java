@@ -71,6 +71,8 @@ public class SupplierSearchRequest {
 	@OptionalPattern(regex = FinancialConstants.alphaNumericwithspecialchar, message = "Special Characters are not allowed in Code")
 	@SafeHtml
 	private String code;
+	
+	private String source;
 
 	public String getName() {
 		return name;
@@ -86,6 +88,13 @@ public class SupplierSearchRequest {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getSource() {
+		return source;
+	}
+	
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 }

@@ -130,6 +130,9 @@ function callAjaxSearch() {
 					"data" : "code",
 					"sClass" : "text-left"
 				}, {
+					"data" : "source",
+					"sClass" : "text-left"
+				},{
 					"data" : "status",
 					"sClass" : "text-left"
 				} ]

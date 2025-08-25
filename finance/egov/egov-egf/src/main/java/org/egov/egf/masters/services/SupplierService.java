@@ -174,6 +174,13 @@ public class SupplierService implements EntityTypeService {
 					cb.lower(suppliers.get(supplierEntityType.getDeclaredSingularAttribute("code", String.class))),
 					code));
 		}
+		if (supplierSearchRequest.getSource() != null) {
+			final String source = "%" + supplierSearchRequest.getSource().toLowerCase() + "%";
+			predicates.add(cb.isNotNull(suppliers.get("source")));
+			predicates.add(cb.like(
+					cb.lower(suppliers.get(supplierEntityType.getDeclaredSingularAttribute("source", String.class))),
+					source));
+		}
 
 		createQuery.where(predicates.toArray(new Predicate[] {}));
 		createQuery.orderBy(cb.asc(suppliers.get("name")));

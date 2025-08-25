@@ -153,7 +153,20 @@
 		<form:input path="bankAccount" id="bankAccount" maxlength="22" size="24" cssClass="form-control" required="required" readonly="${mode eq 'edit'}"/>
 		<form:errors path="bankAccount" cssClass="add-margin error-msg" />
 	</div>
+	<label class="col-sm-2 control-label text-right" for="source"> <spring:message
+			code="contractor.source" text='Source' /><span class="mandatory"></span>
+	</label>
+	<div class="col-sm-3 add-margin">
+		<form:select path="source" id="source" class="form-control" required="required">
+		    <form:option value="">Select</form:option>
+		    <form:option value="Manual">Manual</form:option>
+		    <form:option value="HEWP">HEWP</form:option>
+		    <form:option value="SWM">SWM</form:option>
+		    <form:option value="Other">Other</form:option>
+		</form:select>
+		<form:errors path="source" cssClass="add-margin error-msg" />
 	</div>
+</div>
 	<div class="form-group">
 	<label class="col-sm-2 control-label"><spring:message
 			code="lbl.type.contrator.supplier" /></label>
