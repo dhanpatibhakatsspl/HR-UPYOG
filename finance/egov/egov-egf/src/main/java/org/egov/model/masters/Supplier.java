@@ -153,6 +153,9 @@ public class Supplier extends AbstractAuditable implements EntityType {
     @Length(max = 22, message = "Maximum of 22 Characters allowed for Bank Account")
     @OptionalPattern(regex = FinancialConstants.numericwithoutspecialchar, message = "Only allowed numeric in account No")
     private String bankAccount;
+    
+    @SafeHtml
+    private String source;
 
     @SafeHtml
     @Length(max = 10)
@@ -405,4 +408,11 @@ public class Supplier extends AbstractAuditable implements EntityType {
     public void setSupplierType(SupplierTypeEnum supplierType) {
         this.supplierType = supplierType;
     }
+    public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
 }

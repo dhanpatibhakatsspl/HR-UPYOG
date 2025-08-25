@@ -122,6 +122,10 @@ public class SupplierJsonAdaptor implements JsonSerializer<Supplier> {
 				jsonObject.addProperty("tinNumber", supplier.getTinno());
 			else
 				jsonObject.addProperty("tinNumber", "");
+			if (supplier.getSource() != null)
+				jsonObject.addProperty("source", supplier.getSource());
+			else
+				jsonObject.addProperty("source", "");
 			jsonObject.addProperty("id", supplier.getId());
 		}
 		return jsonObject;
