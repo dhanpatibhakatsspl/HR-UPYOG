@@ -188,13 +188,13 @@ function getRow(obj) {
 function showAmountInWords(input) {
     const amount = input.value;
     const words = convertNumberToWords(amount);
-    var amountInWords = "In Words :- " + words+ " Ruppes Only /- "
+    var amountInWords = words+ " Ruppes Only "
     document.getElementById('amountInWords').innerText = amountInWords || '';
 }
 function showAmountInWordsc(input) {
     const amount = input.value;
     const words = convertNumberToWords(amount);
-    var amountInWordsc = "In Words :- " + words+ " Ruppes Only /- "
+    var amountInWordsc = words+ " Ruppes Only "
     document.getElementById('amountInWordsc').innerText = amountInWordsc || '';
 }
 function showAmountInWordsn(type) {
