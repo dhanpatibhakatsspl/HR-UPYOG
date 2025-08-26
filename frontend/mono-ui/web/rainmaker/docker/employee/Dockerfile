@@ -1,5 +1,6 @@
 
-FROM upyogio/alpine-node-builder-12:yarn AS build
+FROM upyogio/alpine-node-builder-14:yarn AS build
+#upyogio/alpine-node-builder-12:yarn AS build
 ARG WORK_DIR
 WORKDIR /app
 ENV NODE_OPTIONS "--max-old-space-size=1792"
