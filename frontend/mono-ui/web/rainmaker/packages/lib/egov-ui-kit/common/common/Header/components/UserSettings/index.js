@@ -12,6 +12,14 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _regenerator = require("babel-runtime/regenerator");
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -62,6 +70,8 @@ var _get2 = _interopRequireDefault(_get);
 
 var _actions = require("egov-ui-kit/redux/app/actions");
 
+var _api = require("../../../../../utils/api");
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -70,7 +80,8 @@ var UserSettings = function (_Component) {
   (0, _inherits3.default)(UserSettings, _Component);
 
   function UserSettings() {
-    var _ref;
+    var _ref,
+        _this2 = this;
 
     var _temp, _this, _ret;
 
@@ -85,7 +96,8 @@ var UserSettings = function (_Component) {
       displayAccInfo: false,
       tenantSelected: (0, _localStorageUtils.getTenantId)(),
       tempTenantSelected: (0, _localStorageUtils.getTenantId)(),
-      open: false
+      open: false,
+      profilePic: null
     }, _this.style = {
       baseStyle: {
         background: "#ffffff",
@@ -121,7 +133,75 @@ var UserSettings = function (_Component) {
         width: "102px",
         marginBottom: "24px"
       }
-    }, _this.onChange = function (event, index, value) {
+    }, _this.fetchUserPhoto = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+      var userInfo, tenantId, uuid, userPayload, photoId, fileResponse, fileUrl;
+      return _regenerator2.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              userInfo = _this.props.userInfo;
+
+              console.log("user6661", userInfo);
+              tenantId = userInfo.tenantId;
+              uuid = userInfo.uuid;
+
+              if (!(!uuid || !tenantId)) {
+                _context.next = 7;
+                break;
+              }
+
+              return _context.abrupt("return");
+
+            case 7:
+              _context.next = 9;
+              return (0, _api.httpRequest)("/user/_search", "search", [], {
+                uuid: [uuid],
+                tenantId: tenantId
+              });
+
+            case 9:
+              userPayload = _context.sent;
+
+              console.log("userPayyyy", userPayload);
+              photoId = userPayload.user[0].photo;
+
+              if (photoId) {
+                _context.next = 14;
+                break;
+              }
+
+              return _context.abrupt("return");
+
+            case 14:
+              _context.next = 16;
+              return (0, _api.httpRequest)("/filestore/v1/files/url", "", [{ key: "tenantId", value: "pg" }, { key: "fileStoreIds", value: photoId }], {}, {}, {}, true, true);
+
+            case 16:
+              fileResponse = _context.sent;
+
+              console.log("fileRess567", fileResponse);
+              fileUrl = fileResponse.fileStoreIds[0].url;
+
+              if (fileUrl) {
+                _this.setState({ profilePic: fileUrl });
+              }
+              _context.next = 25;
+              break;
+
+            case 22:
+              _context.prev = 22;
+              _context.t0 = _context["catch"](0);
+
+              console.error("Failed to fetch profile photo", _context.t0);
+
+            case 25:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, _this2, [[0, 22]]);
+    })), _this.onChange = function (event, index, value) {
       _this.setState((0, _extends3.default)({}, _this.state, { languageSelected: value }));
       _this.props.fetchLocalizationLabel(value);
     }, _this.handleTenantChange = function () {
@@ -166,6 +246,11 @@ var UserSettings = function (_Component) {
   }
 
   (0, _createClass3.default)(UserSettings, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.fetchUserPhoto();
+    }
+  }, {
     key: "toggleAccInfo",
 
 
@@ -184,13 +269,14 @@ var UserSettings = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _state = this.state,
           languageSelected = _state.languageSelected,
           displayAccInfo = _state.displayAccInfo,
           tenantSelected = _state.tenantSelected,
-          open = _state.open;
+          open = _state.open,
+          profilePic = _state.profilePic;
       var style = this.style;
       var _props = this.props,
           onIconClick = _props.onIconClick,
@@ -250,11 +336,11 @@ var UserSettings = function (_Component) {
             "div",
             {
               onClick: function onClick() {
-                _this2.toggleAccInfo();
+                _this3.toggleAccInfo();
               },
               className: "userSettingsInnerContainer"
             },
-            _react2.default.createElement(_components.Image, { width: "33px", circular: true, source: userInfo.photo || _download2.default }),
+            _react2.default.createElement(_components.Image, { width: "33px", circular: true, source: profilePic || _download2.default }),
             _react2.default.createElement(_components.Icon, { action: "navigation", name: "arrow-drop-down", color: "#767676", style: style.arrowIconStyle }),
             _react2.default.createElement(
               "div",
@@ -279,9 +365,9 @@ var UserSettings = function (_Component) {
   return UserSettings;
 }(_react.Component);
 
-var mapStateToProps = function mapStateToProps(_ref2) {
-  var app = _ref2.app,
-      common = _ref2.common;
+var mapStateToProps = function mapStateToProps(_ref3) {
+  var app = _ref3.app,
+      common = _ref3.common;
   var locale = app.locale;
   var stateInfoById = common.stateInfoById;
 

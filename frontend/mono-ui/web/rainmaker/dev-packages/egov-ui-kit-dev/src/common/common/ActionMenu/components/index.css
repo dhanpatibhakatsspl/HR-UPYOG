@@ -24,10 +24,6 @@
   transform: rotate(-20deg); }
 
 @media only screen and (min-width: 768px) {
-  .sideMenuItem {
-    border-bottom: #556f8b solid 1px;
-    border-top: #0d1218 solid 1px;
-    height: 43px; }
   .sideMenuItem:hover,
   .sideMenuItem.selected {
     background-color: #486480; }
@@ -57,9 +53,7 @@
       height: 28px !important;
       width: 28px !important; }
   .menuStyle > .label-text {
-    color: #fff !important;
-    padding-left: 10px;
-    height: 38px; } }
+    color: #fff !important; } }
 
 .menuStyle > .label-text {
   color: rgba(0, 0, 0, 0.87); }
@@ -70,7 +64,7 @@
   padding: 15px 0 0 5px; }
 
 .menuStyle {
-  margin-left: 13px;
+  margin-left: 15px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
