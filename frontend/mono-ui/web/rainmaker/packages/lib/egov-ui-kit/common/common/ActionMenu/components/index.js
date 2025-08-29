@@ -74,13 +74,10 @@ var styles = (0, _defineProperty3.default)({
     height: "21px",
     width: "21px",
     margin: 0,
-    position: "relative",
-    left: "12px",
-    top: "-3px"
+    position: "relative"
   },
   arrowIconStyle: {
-    right: "-10px",
-    top: "-3px"
+    right: "-10px"
   },
   defaultMenuItemStyle: {
     display: "flex",
@@ -91,7 +88,7 @@ var styles = (0, _defineProperty3.default)({
     paddingLeft: 0
   },
   inputIconStyle: {
-    margin: "0px 0px 0px 9px",
+    margin: "0",
     bottom: "15px",
     top: "auto",
     right: "6px"

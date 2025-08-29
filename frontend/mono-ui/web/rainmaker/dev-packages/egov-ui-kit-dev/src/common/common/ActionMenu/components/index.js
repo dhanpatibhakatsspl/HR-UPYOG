@@ -24,12 +24,9 @@ const styles = {
     width: "21px",
     margin: 0,
     position: "relative",
-    left: "12px",
-    top: "-3px",
   },
   arrowIconStyle: {
     right: "-10px",
-    top: "-3px",
   },
   defaultMenuItemStyle: {
     display: "flex",
@@ -40,7 +37,7 @@ const styles = {
     paddingLeft: 0,
   },
   inputIconStyle: {
-    margin: "0px 0px 0px 9px",
+    margin: "0",
     bottom: "15px",
     top: "auto",
     right: "6px",
