@@ -1,9 +1,0 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var paybuttonJsonpath = exports.paybuttonJsonpath = "components.div.children.footer.children.";
-var componentJsonpath = exports.componentJsonpath = "components.div.children.formwizardFirstStep.children.paymentDetails.children.cardContent.children.AmountToBePaid.children.cardContent.children.amountDetailsCardContainer.children.displayAmount";
-var radioButtonJsonPath = exports.radioButtonJsonPath = "components.div.children.formwizardFirstStep.children.paymentDetails.children.cardContent.children.AmountToBePaid.children.cardContent.children.amountDetailsCardContainer.children.AmountToPaidButton";
-var numberPattern = exports.numberPattern = /^[1-9]{3,9}$/i;
