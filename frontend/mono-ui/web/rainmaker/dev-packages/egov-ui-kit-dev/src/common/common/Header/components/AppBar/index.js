@@ -58,7 +58,7 @@ const EgovAppBar = ({
         title={
           <div className="citizen-header-logo-label">
             <div className="citizen-header-logo">
-              <img src={ulbLogo ? ulbLogo : pbLogo} onError={(event) => event.target.setAttribute("src", pbLogo)} />
+              <img src={ulbLogo ? ulbLogo : pbLogo} onError={(event) => event.target.setAttribute("src", pbLogo)} style={{ width: "45px", height: "auto" }} />
             </div>
             <Label containerStyle={{ marginLeft: "0px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
             {titleAddon && (
@@ -106,7 +106,7 @@ const EgovAppBar = ({
         )}
 
         <div className="appbar-right-logo">
-          <img src={logoImage?logoImage:digitLogo} />
+          <img src={logoImage?logoImage:digitLogo} style={{ height: "35px", width: "auto" }}/>
         </div>
         <div className="icon-button">
           {refreshButton && (
