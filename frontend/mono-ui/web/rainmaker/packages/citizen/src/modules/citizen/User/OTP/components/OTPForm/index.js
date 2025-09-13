@@ -24,7 +24,7 @@ const OTP = ({ handleFieldChange, form, phoneNumber, resendOTP ,logoUrl,history,
         <div>
           <div className="rainmaker-displayInline" style={{ justifyContent: "center"  ,alignItems:"center",marginBottom: "24px"}}>
             <div style={{ }}>
-              <Image className="mseva-logo" source={logoUrl?logoUrl:`${logo}`} />
+              <Image className="mseva-logo" source={logoUrl?logoUrl:`${logo}`} style={{ width: "40px", height: "auto" }}/>
             </div >
           <div style={{marginLeft:"7px" }}>
           <Label bold={true}  fontSize= "23px" label="|" />

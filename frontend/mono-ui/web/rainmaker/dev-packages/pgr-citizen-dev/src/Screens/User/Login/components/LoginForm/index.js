@@ -16,7 +16,7 @@ const LoginForm = ({ handleFieldChange, form }) => {
       textChildren={
         <div>
           <div className="web-user-logo" style={{ marginBottom: "24px" }}>
-            <Image className="mseva-logo employee-login-logo" source={`${logo}`} />
+            <Image className="mseva-logo employee-login-logo" source={`${logo}`} style={{ width: "40px", height: "auto" }}/>
           </div>
           <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="CORE_COMMON_LOGIN" />
           <Field fieldKey="phone" field={fields.phone} handleFieldChange={handleFieldChange} />
