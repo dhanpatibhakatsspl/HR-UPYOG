@@ -1,10 +1,14 @@
 import React from "react";
 
 const CustomButton = ({ text, onClick, selected }) => {
+        console.log("button clicked", text);
+
   return (
     <React.Fragment>
+
       <button tabIndex="0" type="button" className={selected ? "customBtn-selected" : "customBtn"} onClick={onClick}>
         {text}
+        
       </button>
     </React.Fragment>
   );
