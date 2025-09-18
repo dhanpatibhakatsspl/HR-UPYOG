@@ -43,7 +43,7 @@ class Layout extends Component {
                     {/* <div className="row"> */}
                     <Spinner />
                     <main role="main" 
-                    // style={{ backgroundColor:isNurtDashboard()? "#EEEEEE":'#f4f7fb' }} 
+                    // style={{ backgroundColor:isNurtDashboard()? "#EEEEEE":'#f4f7fb' }}
                     style={{ backgroundColor:"#EEEEEE" }} 
                     className={classes.main}>
                     {/* <SideBar /> */}
@@ -52,15 +52,13 @@ class Layout extends Component {
                 </div>
                 <div style={{ width: '100%', bottom: 0 }}>
                     <div style={{ display: 'flex', justifyContent: 'center', color:"#22394d" }}>
-                        {/* <img style={{ cursor: "pointer", display: "inline-flex", height: '1.4em' }} alt={"Powered by DIGIT"} src={`${sourceUrl}/digit-footer.png`} onError={"this.src='./../digit-footer.png'"} onClick={() => {
+                        <img style={{ cursor: "pointer", display: "inline-flex", height: '1.4em' }} alt={"Powered by DIGIT"} src={`${sourceUrl}/digit-footer.png`} onError={"this.src='./../digit-footer.png'"} onClick={() => {
                         window.open('https://www.digit.org/', '_blank').focus();
-                        }}></img> */}
-                        {/* <span style={{ margin: "0 10px" }}>|</span> */}
-                        <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open('https://sparrowsoftech.com/', '_blank').focus();}} >Municipal Corporation of Haryana
-|
-Designed & Developed By Sparrow Softech Pvt. Ltd.Copyright © 2025</span>
+                        }}>UPYOG License</img>
                         <span style={{ margin: "0 10px" }}>|</span>
-                        <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open(pdfUrl, '_blank').focus();}}></span>
+                        <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open('https://sparrowsoftech.com/', '_blank').focus();}} >Copyright © 2025 Municipal Corporation of Haryana</span>
+                        <span style={{ margin: "0 10px" }}>|</span>
+                        <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open(pdfUrl, '_blank').focus();}}>Designed & Developed By sparrow Softech Pvt Ltd</span>
                     </div>
                 </div>
             </div>
