@@ -110,16 +110,16 @@ class App extends Component {
         {loading && <LoadingIndicator />}
         <CommonShareContainer componentId="rainmaker-common-share" />
 
-        {!loginScreens && !dashboardScreen && isFixedFooter&& <div className={"jk-footer"} style={{ width: '100%', position: 'fixed', bottom: 0, color:"#22394d" }} >
+         {!loginScreens && !dashboardScreen && isFixedFooter&& <div className={"jk-footer"} style={{ width: '100%', position: 'fixed', bottom: 0, color:"#22394d" }} >
             {/* <img style={{ display: "inline-flex", height: '1.4em' }} className={"jk-footer-image-cursor"} alt={"Powered by DIGIT"} src={`${sourceUrl}/digit-footer.png`} onError={"this.src='./../digit-footer.png'"} onClick={() => {
               window.open('https://www.digit.org/', '_blank').focus();
             }}></img>
             <span style={{ margin: "0 10px" }}>|</span> */}
-            <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open('https://sparrowsoftech.com/', '_blank').focus();}} >Municipal Corporation of Haryana
-|
-Designed & Developed By Sparrow Softech Pvt. Ltd.Copyright © 2025</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open(pdfUrl, '_blank').focus();}}>UPYOG License</span>
             <span style={{ margin: "0 10px" }}>|</span>
-            <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open(pdfUrl, '_blank').focus();}}>UPYOG License</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open('https://ulbharyana.gov.in/', '_blank').focus();}} >Copyright © 2025 Municipal Corporation of Haryana</span>
+            <span style={{ margin: "0 10px" }}>|</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open('https://sparrowsoftech.com/', '_blank').focus();}} >Designed & Developed By Sparrow Softech Pvt Ltd</span>
         </div>}
 
         {!loginScreens && !dashboardScreen && !isFixedFooter&&<div style={{ width: '100%', display: 'flex', flexFlow: 'column', position:"fixed", bottom: "0" }}>
@@ -128,11 +128,11 @@ Designed & Developed By Sparrow Softech Pvt. Ltd.Copyright © 2025</span>
               window.open('https://www.digit.org/', '_blank').focus();
             }}></img>
             <span style={{ margin: "0 10px" }}>|</span> */}
-            <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open('https://sparrowsoftech.com/', '_blank').focus();}} >Municipal Corporation of Haryana
-|
-Designed & Developed By Sparrow Softech Pvt. Ltd.Copyright © 2025</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open(pdfUrl, '_blank').focus();}}>UPYOG License</span>
             <span style={{ margin: "0 10px" }}>|</span>
-            <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open(pdfUrl, '_blank').focus();}}>UPYOG License</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open('https://ulbharyana.gov.in/', '_blank').focus();}} >Copyright © 2025 Municipal Corporation of Haryana</span>
+            <span style={{ margin: "0 10px" }}>|</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open('https://sparrowsoftech.com/', '_blank').focus();}} >Designed & Developed By Sparrow Softech Pvt Ltd</span>
           </div>
         </div>}
         
@@ -142,11 +142,11 @@ Designed & Developed By Sparrow Softech Pvt. Ltd.Copyright © 2025</span>
               window.open('https://www.digit.org/', '_blank').focus();
             }}></img>
             <span style={{ margin: "0 10px" }}>|</span> */}
-            <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open('https://sparrowsoftech.com/', '_blank').focus();}} >Municipal Corporation of Haryana
-|
-Designed & Developed By Sparrow Softech Pvt. Ltd.Copyright © 2025</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open(pdfUrl, '_blank').focus();}}>UPYOG License</span>
             <span style={{ margin: "0 10px" }}>|</span>
-            <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open(pdfUrl, '_blank').focus();}}>UPYOG License</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open('https://ulbharyana.gov.in/', '_blank').focus();}} >Copyright © 2025 Municipal Corporation of Haryana</span>
+            <span style={{ margin: "0 10px" }}>|</span>
+            <span style={{ cursor: "pointer", fontSize: "14px", fontWeight: "400"}} onClick={() => { window.open('https://sparrowsoftech.com/', '_blank').focus();}} >Designed & Developed By Sparrow Softech Pvt Ltd</span>
           </div>
         </div>}
       </div>
