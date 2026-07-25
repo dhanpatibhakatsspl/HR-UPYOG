@@ -83,7 +83,11 @@ public class MSDGSMSServiceImpl extends BaseSMSService {
 //        }
         sms.setMessage(finalmessage);
         String url = smsProperties.getUrl();
-        log.info("----------------------- Properties URL------------------- = {}", url);
+        log.info("-------- Properties URL----------- = {}", url);
+        if ("https://msdgweb.mgov.gov.in/esms/sendsmsrequest".equals(url)) {
+            url = "https://msdgweb.mgov.gov.in/esms/sendsmsrequestDLT";
+        }
+        log.info("-------- Updated URL----------- = {}", url);
         final MultiValueMap<String, String> requestBody = bodyBuilder.getSmsRequestBody(sms);
         postProcessor(requestBody);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, getHttpHeaders());
