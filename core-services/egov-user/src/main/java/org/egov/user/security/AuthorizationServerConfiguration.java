@@ -62,10 +62,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		endpoints.tokenServices(customTokenServices()).authenticationManager(customAuthenticationManager);
 	}
 
-	@Bean
-	public JedisConnectionFactory connectionFactory() throws Exception {
-		return new JedisConnectionFactory(new JedisShardInfo(host));
-	}
+//	@Bean
+//	public JedisConnectionFactory connectionFactory() throws Exception {
+//		return new JedisConnectionFactory(new JedisShardInfo(host));
+//	}
 
 	@Bean
 	public RedisTemplate<String, String> redisTemplate(JedisConnectionFactory connectionFactory) {

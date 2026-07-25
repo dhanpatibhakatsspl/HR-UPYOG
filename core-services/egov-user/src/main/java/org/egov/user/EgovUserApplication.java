@@ -108,9 +108,16 @@ public class EgovUserApplication {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public TokenStore tokenStore() {
+//        RedisTokenStore redisTokenStore = new RedisTokenStore(connectionFactory());
+//        redisTokenStore.setAuthenticationKeyGenerator(customAuthenticationKeyGenerator);
+//        return redisTokenStore;
+//    }
+    
     @Bean
-    public TokenStore tokenStore() {
-        RedisTokenStore redisTokenStore = new RedisTokenStore(connectionFactory());
+    public TokenStore tokenStore(JedisConnectionFactory connectionFactory) {
+        RedisTokenStore redisTokenStore = new RedisTokenStore(connectionFactory);
         redisTokenStore.setAuthenticationKeyGenerator(customAuthenticationKeyGenerator);
         return redisTokenStore;
     }
