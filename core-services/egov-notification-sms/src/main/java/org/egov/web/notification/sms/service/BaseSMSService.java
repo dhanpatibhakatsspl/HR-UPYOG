@@ -105,28 +105,28 @@ abstract public class BaseSMSService implements SMSService, SMSBodyBuilder {
          * RuntimeException(SMS_RESPONSE_NOT_SUCCESSFUL); }
          */
 
-        StringTokenizer tokenizer = new StringTokenizer(responseString, "&");
-        HashMap<String,String> responseMap = new HashMap<String, String>();
-        String pair = null, pname = null, pvalue = null;
-        while (tokenizer.hasMoreTokens()) {
-            pair = (String)tokenizer.nextToken();
-            if(pair!=null) {
-                StringTokenizer strTok = new StringTokenizer(pair, "=");
-                pname = ""; pvalue = "";
-                if(strTok.hasMoreTokens()) {
-                    pname = (String)strTok.nextToken().trim();
-                    if(strTok.hasMoreTokens())
-                        pvalue=(String)strTok.nextToken().trim();
-                    responseMap.put(pname, pvalue);
-                }
-
-            }
-        }
+//        StringTokenizer tokenizer = new StringTokenizer(responseString, "&");
+//        HashMap<String,String> responseMap = new HashMap<String, String>();
+//        String pair = null, pname = null, pvalue = null;
+//        while (tokenizer.hasMoreTokens()) {
+//            pair = (String)tokenizer.nextToken();
+//            if(pair!=null) {
+//                StringTokenizer strTok = new StringTokenizer(pair, "=");
+//                pname = ""; pvalue = "";
+//                if(strTok.hasMoreTokens()) {
+//                    pname = (String)strTok.nextToken().trim();
+//                    if(strTok.hasMoreTokens())
+//                        pvalue=(String)strTok.nextToken().trim();
+//                    responseMap.put(pname, pvalue);
+//                }
+//
+//            }
+//        }
         boolean status = responseString.contains("402");
 
         if(!status) {
-            log.error("Error response from third party api: info:"+responseMap.get("info"));
-            throw new RuntimeException(responseMap.get("info"));
+            log.error("Error response from third party api");
+            throw new RuntimeException();
         }
 
         log.info("executeAPI() end");

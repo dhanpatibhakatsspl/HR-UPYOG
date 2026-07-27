@@ -1,26 +1,35 @@
 package org.egov.web.notification.sms;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.*;
+import java.security.KeyStore;
+
+import javax.annotation.PostConstruct;
+import javax.net.ssl.SSLContext;
+
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
 import org.egov.hash.HashService;
 import org.egov.tracer.config.TracerConfiguration;
-import org.egov.web.notification.sms.config.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.boot.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ExitCodeGenerator;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.*;
-import org.springframework.context.*;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.*;
-import org.springframework.kafka.annotation.*;
-import org.springframework.util.*;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @Import(TracerConfiguration.class)
@@ -47,10 +56,36 @@ public class EgovNotificationSmsApplication {
         }
     }
 
-    @Primary
+//    @Primary
+//    @Bean
+//    public RestTemplate getRestTemplate() {
+//        return new RestTemplate();
+//    }
+    
     @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
+    @Primary
+    public RestTemplate getRestTemplate() throws Exception {
+
+        KeyStore trustStore = KeyStore.getInstance("JKS");
+
+        ClassPathResource resource =
+                new ClassPathResource("certs/sms-truststore.jks");
+
+        trustStore.load(resource.getInputStream(),
+                "changeit".toCharArray());
+
+        SSLContext sslContext = SSLContexts.custom()
+                .loadTrustMaterial(trustStore, null)
+                .build();
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setSSLContext(sslContext)
+                .build();
+
+        HttpComponentsClientHttpRequestFactory factory =
+                new HttpComponentsClientHttpRequestFactory(httpClient);
+
+        return new RestTemplate(factory);
     }
 
     @Primary
