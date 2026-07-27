@@ -1,6 +1,7 @@
 package org.egov.user.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CaptchaController {
 
     @Autowired
+    @Qualifier("captchaRedisTemplate")
     private RedisTemplate<String, String> redisTemplate;
 
     private static final int CAPTCHA_EXPIRY_SECONDS = 120;
