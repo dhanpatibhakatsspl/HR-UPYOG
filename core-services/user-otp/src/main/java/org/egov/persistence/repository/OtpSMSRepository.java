@@ -64,7 +64,7 @@ public class OtpSMSRepository {
             log.info("Localization Service didn't return any msgs so using default...");
             localisedMsgs.put(LOCALIZATION_KEY_REGISTER_SMS, "Dear Citizen, Your OTP to complete your mSeva Registration is %s.");
             localisedMsgs.put(LOCALIZATION_KEY_LOGIN_SMS, "Dear Citizen, Your Login OTP is %s.");
-            localisedMsgs.put(LOCALIZATION_KEY_PWD_RESET_SMS, "Dear User, Your OTP for password reset in the UPYOG Application is %s.This OTP is valid for 10 minutes. Do not share it with anyone. Regards, DULB Haryana");        }
+            localisedMsgs.put(LOCALIZATION_KEY_PWD_RESET_SMS, "Dear User, Your OTP for password reset in the UPYOG Application is %s. This OTP is valid for 10 minutes. Do not share it with anyone. Regards, DULB Haryana");        }
         String message = null;
 
         if (otpRequest.isRegistrationRequestType())
