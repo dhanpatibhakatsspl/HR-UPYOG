@@ -27,6 +27,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -109,6 +110,7 @@ public class EgovUserApplication {
     }
 
     @Bean
+    @Primary
     public TokenStore tokenStore() {
         RedisTokenStore redisTokenStore = new RedisTokenStore(connectionFactory());
         redisTokenStore.setAuthenticationKeyGenerator(customAuthenticationKeyGenerator);
@@ -116,6 +118,7 @@ public class EgovUserApplication {
     }
 
     @Bean
+    @Primary
     public JedisConnectionFactory connectionFactory() {
         return new JedisConnectionFactory(new JedisShardInfo(host));
     }

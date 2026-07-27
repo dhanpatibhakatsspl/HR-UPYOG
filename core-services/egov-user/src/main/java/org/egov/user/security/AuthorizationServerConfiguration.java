@@ -5,6 +5,7 @@ import static org.egov.user.config.UserServiceConstants.USER_CLIENT_ID;
 import org.egov.user.security.oauth2.custom.CustomTokenEnhancer;
 import org.egov.user.security.oauth2.custom.CustomTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -62,11 +63,18 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		endpoints.tokenServices(customTokenServices()).authenticationManager(customAuthenticationManager);
 	}
 
-	@Bean
+	@Bean("captchaConnectionFactory")
 	public JedisConnectionFactory connectionFactory() throws Exception {
 		return new JedisConnectionFactory(new JedisShardInfo(host));
 	}
 
+	@Bean("captchaRedisTemplate")
+	public RedisTemplate<String, String> redisTemplate( @Qualifier("captchaConnectionFactory")JedisConnectionFactory connectionFactory) {
+		RedisTemplate<String, String> template = new RedisTemplate<>();
+		template.setConnectionFactory(connectionFactory);
+		return template;
+		}
+	
 	@Bean
 	public DefaultTokenServices customTokenServices() {
 //        DefaultTokenServices tokenServices = new DefaultTokenServices();

@@ -26,6 +26,7 @@ import org.egov.user.domain.service.utils.EncryptionDecryptionUtil;
 import org.egov.user.domain.service.utils.PasswordCryptoUtil;
 import org.egov.user.web.contract.auth.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -80,6 +81,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private PasswordCryptoUtil passwordCryptoUtil;
     
     @Autowired
+    @Qualifier("captchaRedisTemplate")
     private RedisTemplate<String, String> redisTemplate;
 
 
