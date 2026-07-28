@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 public class CaptchaController {
 
     @Autowired
-    @Qualifier("captchaRedisTemplate")
     private RedisTemplate<String, String> redisTemplate;
 
     private static final int CAPTCHA_EXPIRY_SECONDS = 120;

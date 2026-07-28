@@ -34,7 +34,8 @@ public class TokenService {
     @Value("${roles.state.level.enabled}")
     private boolean isRoleStateLevel;
 
-    private TokenService(TokenStore tokenStore, ActionRestRepository actionRestRepository) {
+    @Autowired
+    public TokenService(TokenStore tokenStore, ActionRestRepository actionRestRepository) {
         this.tokenStore = tokenStore;
         this.actionRestRepository = actionRestRepository;
     }

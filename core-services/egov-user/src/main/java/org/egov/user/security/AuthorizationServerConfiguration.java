@@ -63,17 +63,18 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		endpoints.tokenServices(customTokenServices()).authenticationManager(customAuthenticationManager);
 	}
 
-	@Bean("captchaConnectionFactory")
-	public JedisConnectionFactory connectionFactory() throws Exception {
-		return new JedisConnectionFactory(new JedisShardInfo(host));
-	}
+//	@Bean("captchaConnectionFactory")
+//	public JedisConnectionFactory connectionFactory() throws Exception {
+//		return new JedisConnectionFactory(new JedisShardInfo(host));
+//	}
 
-	@Bean("captchaRedisTemplate")
-	public RedisTemplate<String, String> redisTemplate( @Qualifier("captchaConnectionFactory")JedisConnectionFactory connectionFactory) {
-		RedisTemplate<String, String> template = new RedisTemplate<>();
-		template.setConnectionFactory(connectionFactory);
-		return template;
-		}
+//	@Bean("captchaRedisTemplate")
+//	public RedisTemplate<String, String> redisTemplate( @Qualifier("captchaConnectionFactory")JedisConnectionFactory connectionFactory) {
+//		RedisTemplate<String, String> template = new RedisTemplate<>();
+//		template.setConnectionFactory(connectionFactory);
+//		return template;
+//		}
+	
 	
 	@Bean
 	public DefaultTokenServices customTokenServices() {

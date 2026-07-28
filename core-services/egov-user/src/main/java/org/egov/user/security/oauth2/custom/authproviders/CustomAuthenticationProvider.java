@@ -81,7 +81,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private PasswordCryptoUtil passwordCryptoUtil;
     
     @Autowired
-    @Qualifier("captchaRedisTemplate")
     private RedisTemplate<String, String> redisTemplate;
 
 
