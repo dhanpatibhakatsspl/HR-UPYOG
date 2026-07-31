@@ -224,27 +224,25 @@ abstract public class BaseSMSService implements SMSService, SMSBodyBuilder {
         return headers;
     }
 
-    @PostConstruct
-    protected void setupSSL() {
-        if (!smsProperties.isVerifySSL()) {
+	@PostConstruct
+	protected void setupSSL() {
+		
+		if (!smsProperties.isVerifySSL()) {
+			try {
+				TrustStrategy trustStrategy = (chain, authType) -> true;
+				SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, trustStrategy).build();
+				SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext,
+						NoopHostnameVerifier.INSTANCE);
+				CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
+				HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
+						httpClient);
 
-            SSLContext ctx = null;
-            try {
+				restTemplate.setRequestFactory(requestFactory);
 
-                ctx =  SSLContext.getInstance("SSL");
-                ctx.init(null, null, SecureRandom.getInstance("SHA1PRNG"));
-
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            }
-            SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(ctx, new NoopHostnameVerifier());
-            CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf).build();
-            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-            requestFactory.setHttpClient(httpClient);
-            restTemplate.setRequestFactory(requestFactory);
-        }
-    }
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
 
 }

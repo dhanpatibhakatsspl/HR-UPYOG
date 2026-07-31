@@ -56,37 +56,37 @@ public class EgovNotificationSmsApplication {
         }
     }
 
-//    @Primary
-//    @Bean
-//    public RestTemplate getRestTemplate() {
-//        return new RestTemplate();
-//    }
-    
-    @Bean
     @Primary
-    public RestTemplate getRestTemplate() throws Exception {
-
-        KeyStore trustStore = KeyStore.getInstance("JKS");
-
-        ClassPathResource resource =
-                new ClassPathResource("certs/sms-truststore.jks");
-
-        trustStore.load(resource.getInputStream(),
-                "changeit".toCharArray());
-
-        SSLContext sslContext = SSLContexts.custom()
-                .loadTrustMaterial(trustStore, null)
-                .build();
-
-        CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLContext(sslContext)
-                .build();
-
-        HttpComponentsClientHttpRequestFactory factory =
-                new HttpComponentsClientHttpRequestFactory(httpClient);
-
-        return new RestTemplate(factory);
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
     }
+    
+//    @Bean
+//    @Primary
+//    public RestTemplate getRestTemplate() throws Exception {
+//
+//        KeyStore trustStore = KeyStore.getInstance("JKS");
+//
+//        ClassPathResource resource =
+//                new ClassPathResource("certs/sms-truststore.jks");
+//
+//        trustStore.load(resource.getInputStream(),
+//                "changeit".toCharArray());
+//
+//        SSLContext sslContext = SSLContexts.custom()
+//                .loadTrustMaterial(trustStore, null)
+//                .build();
+//
+//        CloseableHttpClient httpClient = HttpClients.custom()
+//                .setSSLContext(sslContext)
+//                .build();
+//
+//        HttpComponentsClientHttpRequestFactory factory =
+//                new HttpComponentsClientHttpRequestFactory(httpClient);
+//
+//        return new RestTemplate(factory);
+//    }
 
     @Primary
     @Bean
